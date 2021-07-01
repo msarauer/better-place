@@ -8,5 +8,9 @@
 // (app.use())
 
 // route imports
+const usersRoutes = require("./routes/users");
+
+
 
 // routes
+app.use("api/users", usersRoutes(db));
