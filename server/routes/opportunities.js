@@ -15,8 +15,6 @@ module.exports = (db) => {
       });
   });
 
-  
- 
 
   // POST NEW OPPORTUNITIES
   router.post("/", (req, res) => {
@@ -42,6 +40,8 @@ module.exports = (db) => {
         res.status(500).json({ error: e.message });
       });
   });
+
+ 
 
   return router;
 };
