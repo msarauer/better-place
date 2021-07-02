@@ -44,7 +44,6 @@ const NavBar = (props: Props) => {
             <Typography className={classes.text}>Categories</Typography>
             <MenuIcon className={classes.text} />
           </IconButton>
-        
           <Button className={classes.text} >Login</Button>
           </Grid>
         </ToolBar>
