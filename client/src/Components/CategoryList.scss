@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Cardo:400i|Rubik:400,700&display=swap");
 
-$imageIds: "1517021897933-0e0319cfbc28", "1533903345306-15d1c30952de",
-  "1545243424-0ce743321e11", "1531306728370-e2ebd9d7bb99";
+$imageIds: "1518709414768-a88981a4515d", "1586781383963-8e66f88077ec",
+  "1498159437376-9098d049dd5d", "1541976844346-f18aeac57b06";
 
 $bp-md: 600px;
 $bp-lg: 800px;
@@ -32,6 +32,7 @@ body {
   grid-gap: 1rem;
   padding: 1rem;
   max-width: 1024px;
+  top: 10px;
   margin: 0 auto;
   font-family: var(--font-sans);
 

@@ -73,7 +73,7 @@ const SmallText = styled.h5`
 `;
 
 const InnerContainer = styled.div`
-  width: 100%;
+  width: 120%;
   display: flex;
   flex-direction: column;
   padding: 0 1.8em;

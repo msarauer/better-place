@@ -1,10 +1,7 @@
 import React from 'react'
 
-interface Props {
-  
-}
 
-const Category = (props: Props) => {
+const Category = (props) => {
   return (
     <div>
       <h1>Hello from CATEGORY</h1>

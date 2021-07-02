@@ -1,10 +1,8 @@
 import React from 'react'
 
-interface Props {
-  
-}
 
-const Login = (props: Props) => {
+
+const Login = (props) => {
   return (
     <div>
       <h1>Hello from LOGIN</h1>
