@@ -1,16 +1,65 @@
-// imports
-// ENV variables
-// Web server config
+const Express = require('express');
+const app = Express();
+const BodyParser = require('body-parser');
+const PORT = 8000;
+const morgan = require('morgan');
+const cookieSession = require("cookie-session");
+const cookieParser = require("cookie-parser");
+require("dotenv").config();
+const cors = require("cors");
+// Express Configuration
+app.use(cors())
+app.use(BodyParser.urlencoded({ extended: false }));
+app.use(BodyParser.json());
+app.use(Express.static('public'));
+app.use(morgan("dev"));
+app.use(
+  cookieSession({
+    name: "session",
+    keys: ["key"],
+  })
+);
+app.use(cookieParser());
 
-// PG database/client setup (pool)
+// const dbConnectionURL = `postgres://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`;
 
-// middleware
-// (app.use())
+//PG database cleint/connection setup
+const { Pool } = require("pg");
+const dbParams = require("./lib/db.js");
+console.log('test:', dbParams)
+const db = new Pool(dbParams);
+db.connect();
 
-// route imports
+// Sample GET route
+// App.get('/api/data', (req, res) => res.json({
+//   message: "Seems to work!",
+// }));
+
+const userRoutes = require('./routes/user');
 const usersRoutes = require("./routes/users");
+const reviewRoutes = require('./routes/review');
+const reviewsRoutes = require('./routes/reviews');
+const categoryRoutes = require("./routes/category");
+const categoriesRoutes = require("./routes/categories");
+const opportunityRoutes = require("./routes/opportunity");
+const opportunitiesRoutes = require("./routes/opportunities");
+const userOpportunitiesRoutes = require('./routes/users_opportunities');
 
+// const opportunities = require("./routes/opportunities");
 
 
 // routes
-app.use("api/users", usersRoutes(db));
+app.use("/api/user", userRoutes(db));
+app.use("/api/users", usersRoutes(db));
+app.use("/api/review", reviewRoutes(db));
+app.use("/api/reviews", reviewsRoutes(db));
+app.use("/api/category", categoryRoutes(db));
+app.use("/api/categories", categoriesRoutes(db));
+app.use("/api/opportunity", opportunityRoutes(db));
+app.use("/api/opportunities", opportunitiesRoutes(db));
+
+
+app.listen(PORT, () => {
+  // eslint-disable-next-line no-console
+  console.log(`Express seems to be listening on port ${PORT} so that's pretty good 👍`);
+});

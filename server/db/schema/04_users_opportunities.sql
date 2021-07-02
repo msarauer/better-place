@@ -1,6 +1,6 @@
 SET TIMEZONE = 'SystemV/PST8PDT';
 
-DROP TABLE IF EXISTS users_opportunities
+DROP TABLE IF EXISTS users_opportunities;
 
 CREATE TABLE users_opportunities (
   id SERIAL PRIMARY KEY NOT NULL,
