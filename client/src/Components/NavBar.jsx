@@ -19,6 +19,7 @@ import SearchBar from "material-ui-search-bar";
 import { useState } from "react";
 import Drawer from "@material-ui/core/Drawer";
 import AccountBox from "./accountBox/AccountBox";
+import GeoLocation from "./GeoLocation";
 
 const useStyles = makeStyles({
   root: {
@@ -72,6 +73,8 @@ const NavBar = (props) => {
             className={classes.search}
             placeholder="Search for location..."
           ></SearchBar>
+                    {/* GEO LOCATION */}
+                    <GeoLocation />
           <Grid container justify="flex-end" justify-content="space-between">
             <IconButton>
               <Typography className={classes.text}>Categories</Typography>
