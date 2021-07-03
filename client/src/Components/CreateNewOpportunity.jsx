@@ -7,13 +7,13 @@ import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
 import Select from '@material-ui/core/Select';
 import { MenuItem } from "@material-ui/core";
 import { InputLabel } from "@material-ui/core";
-import { FormControl, Checkbox } from "@material-ui/core";
+import { FormControl, Checkbox, Paper } from "@material-ui/core";
 
 const useStyles = makeStyles({
   field: {
     marginTop: 20,
     marginBottom: 20,
-    display: 'block'
+    // display: 'block'
   },
   dropdown: {
     marginBottom: 20,
@@ -58,58 +58,66 @@ const CreateNewOpportunity = () => {
 
   // (host_id , name , number_of_volunteers_needed, location, date, time_commitment, category_id)
   return (
-    <Grid container>
+    <Paper>
       <form noValidate autoComplete="off" onSubmit={handleSubmit}>
-        <FormControl>
+        <FormControl style = {{width: '100%', "margin-left": 10, "margin-right": 10}}>
+      
           <TextField 
-          onChange={(e) => setTitle(e.target.value)}
-          className={classes.field}
-          label="Name"
-          variant="outlined"
-          fullWidth
-          required
-          helperText="Give your need a short name."
-          error={titleError}
+            onChange={(e) => setTitle(e.target.value)}
+            className={classes.field}
+            label="Name"
+            variant="outlined"
+            fullWidth
+            required
+            helperText="Give your need a short name."
+            error={titleError}
           />
+            <Grid item xs='6' >
           <TextField 
-          onChange={(e) => setDescription(e.target.value)}
-          className={classes.field}
-          label="Description"
-          variant="outlined"
-          fullWidth
-          multiline
-          rows={4}
-          required
-          helperText="Provide a short description of your need."
-          error={descriptionError}
+            onChange={(e) => setDescription(e.target.value)}
+            className={classes.field}
+            label="Description"
+            variant="outlined"
+            fullWidth
+            multiline
+            rows={4}
+            required
+            helperText="Provide a short description of your need."
+            error={descriptionError}
           />
+          </Grid>
           <TextField
-          select
-          className={classes.dropdown}
-          label="Category"
-          name="Category"
+            select
+            className={classes.dropdown}
+            label="Category"
+            name="Category"
           >
             <MenuItem value="Physical">Physical</MenuItem>
             <MenuItem value="Home Repair">Home Repair</MenuItem>
           </TextField>
 
           <TextField
-          select
-          className={classes.dropdown}
-          label="Sub-Category"
-          name="Sub-Category"
+            select
+            className={classes.dropdown}
+            label="Sub-Category"
+            name="Sub-Category"
           >
             <MenuItem value="10">Ten</MenuItem>
             <MenuItem value="20">Twenty</MenuItem>
           </TextField>
 
           <TextField
-          type="number"
-          className={classes.dropdown}
-          label="# of Volunteers Required"
-          name="# of Volunteers Required"
+            type="number"
+            className={classes.dropdown}
+            label="# of Volunteers Required"
+            name="# of Volunteers Required"
           >
           </TextField>
+          <Checkbox
+            label="Use Default Address"
+          >
+
+          </Checkbox>
         
           <Button
             type="submit"
@@ -119,14 +127,10 @@ const CreateNewOpportunity = () => {
           >
             Submit
           </Button>
-          <Checkbox
-          label="Use Default Address"
-          >
-
-          </Checkbox>
         </FormControl>
       </form>
-    </Grid>
+    </Paper>
+    
   )
 }
 

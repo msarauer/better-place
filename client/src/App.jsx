@@ -36,6 +36,8 @@ function App() {
       <Search />
       {/* Conditional for SearchList */}
       <OpportunityList location={city} category={category} />
+      <br />
+      <CreateNewOpportunity/>
     </div>
   );
 }
