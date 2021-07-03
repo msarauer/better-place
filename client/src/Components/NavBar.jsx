@@ -41,7 +41,7 @@ const useStyles = makeStyles({
 });
 
 
-const NavBar = (props) => {
+const NavBar = ({ handleLocation, city, country }) => {
   const classes = useStyles();
 
   const [state, setState] = React.useState({
@@ -74,7 +74,7 @@ const NavBar = (props) => {
             placeholder="Search for location..."
           ></SearchBar>
                     {/* GEO LOCATION */}
-                    <GeoLocation />
+                    <GeoLocation handleLocation={handleLocation} city={city} country={country} />
           <Grid container justify="flex-end" justify-content="space-between">
             <IconButton>
               <Typography className={classes.text}>Categories</Typography>

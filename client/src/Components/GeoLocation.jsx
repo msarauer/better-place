@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 
-const GeoLocation = () => {
-  const [city, setCity] = useState("What is your Location?");
-  const [country, setCountry] = useState("");
+const GeoLocation = ({handleLocation, city, country}) => {
+  // const [city, setCity] = useState("What is your Location?");
+  // const [country, setCountry] = useState("");
 
   const getCoordinates = () => {
     const options = {
@@ -53,8 +53,9 @@ const GeoLocation = () => {
         // console.log("WHAT WE GONNA GET------", response.address);
         let country = response.address.country;
         let city = response.address.city;
-        setCity(city);
-        setCountry(country);
+        // setCity(city);
+        // setCountry(country);
+        handleLocation(city, country);
         // console.log(city);
         return;
       }
