@@ -9,3 +9,10 @@ ToDo List
 - API/Database/Routes
 
 - Wireframe/design
+
+Video Text
+
+-help your community
+-grow your neighborhood
+-make connections
+-better-place

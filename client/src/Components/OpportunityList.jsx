@@ -1,150 +1,293 @@
-// const OpportunityList = ({ articles }) => (
-//   {articles.map(article => (
-//     <Article key={article.id} {...article} />
-//   ))}
-// );
+// import React, { useEffect } from 'react'
 
-// /**
-//  * AFTER:
-//  */
-// import FlipMove from 'react-flip-move';
 
-// const TopArticles = ({ articles }) => (
-//   <FlipMove>
-//     {articles.map(article => (
-//       <Article key={article.id} {...article} />
-//     ))}
-//   </FlipMove>
-// );
-
-// export default OpportunityList;
-
-// import * as React from "react";
-// import { DataGrid } from "@material-ui/data-grid";
-
-// const columns = [
-//   { field: "id", headerName: "ID", width: 90 },
+// const fakeRows = [
 //   {
-//     field: "firstName",
-//     headerName: "First name",
-//     width: 150,
-//     editable: true,
+//     id: 1,
+//     host_id: 2,
+//     name: 'Cleaning out ditches',
+//     number_of_volunteers_needed: 10,
+//     location: 'xxx',
+//     date: 'today',
+//     time_commitment: '2 days',
+//     category_name: 'Family' 
 //   },
 //   {
-//     field: "lastName",
-//     headerName: "Last name",
-//     width: 150,
-//     editable: true,
+//     id: 2,
+//     host_id: 3,
+//     name: 'Take Grandma to the clinic',
+//     number_of_volunteers_needed: 1,
+//     location: 'xxx',
+//     date: 'today',
+//     time_commitment: '3 days',
+//     category_name: 'Family' 
 //   },
 //   {
-//     field: "age",
-//     headerName: "Age",
-//     type: "number",
-//     width: 110,
-//     editable: true,
+//     id: 3,
+//     host_id: 2,
+//     name: 'Add supports to my barn',
+//     number_of_volunteers_needed: 1,
+//     location: 'xxx',
+//     date: 'today',
+//     time_commitment: '1 days',
+//     category_name: 'Family' 
 //   },
 //   {
-//     field: "fullName",
-//     headerName: "Full name",
-//     description: "This column has a value getter and is not sortable.",
-//     sortable: false,
-//     width: 160,
-//     valueGetter: (params) =>
-//       `${params.getValue(params.id, "firstName") || ""} ${
-//         params.getValue(params.id, "lastName") || ""
-//       }`,
-//   },
-// ];
+//     id: 4,
+//     host_name: 2,
+//     name: 'Feed elders at the lodge',
+//     number_of_volunteers_needed: 2,
+//     location: 'xxx',
+//     date: 'today',
+//     time_commitment: '5 days',
+//     category_name: 1
+//   }
+// ]
 
-// const rows = [
-//   { id: 1, lastName: "Snow", firstName: "Jon", age: 35 },
-//   { id: 2, lastName: "Lannister", firstName: "Cersei", age: 42 },
-//   { id: 3, lastName: "Lannister", firstName: "Jaime", age: 45 },
-//   { id: 4, lastName: "Stark", firstName: "Arya", age: 16 },
-//   { id: 5, lastName: "Targaryen", firstName: "Daenerys", age: null },
-//   { id: 6, lastName: "Melisandre", firstName: null, age: 150 },
-//   { id: 7, lastName: "Clifford", firstName: "Ferrara", age: 44 },
-//   { id: 8, lastName: "Frances", firstName: "Rossini", age: 36 },
-//   { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
-// ];
+// const Login = (props) => {
 
-// export default function DataGridDemo() {
+//   // useEffect(() => {
+//   //   axios({
+//   //     method: 'get',
+//   //     url: '/'
+//   //   })
+//   // }, [])
+  
+//   const list = fakeRows.map((opportunity) => {
+//     return (
+//     <li>
+//       <p>{opportunity.name}</p>
+//       <p>{opportunity.number_of_volunteers_needed}</p>
+//       <p>{opportunity.location}</p>
+//       <p>{opportunity.date}</p>
+//       <p>{opportunity.time_commitment}</p>
+//       <p>{opportunity.category_name}</p>
+//     </li>
+//     )
+//   })
+
 //   return (
-//     <div style={{ height: 400, width: "100%" }}>
-//       <DataGrid
-//         rows={rows}
-//         columns={columns}
-//         pageSize={5}
-//         checkboxSelection
-//         disableSelectionOnClick
-//       />
+//     <div>
+//       <ui>
+//         {list}
+//       </ui>
 //     </div>
-//   );
+//   )
 // }
 
-// import React from "react";
-// import { makeStyles } from "@material-ui/core/styles";
-// import List from "@material-ui/core/List";
-// import ListItem from "@material-ui/core/ListItem";
-// import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
-// import ListItemText from "@material-ui/core/ListItemText";
-// import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-// import Checkbox from "@material-ui/core/Checkbox";
-// import Avatar from "@material-ui/core/Avatar";
+// export default Login
 
-// const useStyles = makeStyles((theme) => ({
-//   root: {
-//     width: "80%",
-//     margin: "0 auto",
-//     backgroundColor: theme.palette.background.paper,
-//   },
-// }));
 
-// export default function OpportunityList() {
-//   const classes = useStyles();
-//   const [checked, setChecked] = React.useState([1]);
 
-//   const handleToggle = (value) => () => {
-//     const currentIndex = checked.indexOf(value);
-//     const newChecked = [...checked];
 
-//     if (currentIndex === -1) {
-//       newChecked.push(value);
-//     } else {
-//       newChecked.splice(currentIndex, 1);
-//     }
 
-//     setChecked(newChecked);
-//   };
 
-//   const data = ["Help with chores", "help sweep", "help feed the animals"];
 
-//   return (
-//     <List dense className={classes.root}>
-//       {data.map((value) => {
-//         const index = data.indexOf(value);
-//         const labelId = `checkbox-list-secondary-label-${index}`;
-//         return (
-//           <ListItem key={index} button>
-//             <ListItemAvatar>
-//               <Avatar
-//                 alt={`Avatar n°${index + 1}`}
-//                 src={`/static/images/avatar/${index + 1}.jpg`}
-//               />
-//             </ListItemAvatar>
-//             <ListItemText id={labelId} primary={`${value}`} />
-//             <ListItemText id={labelId} primary={`${value}`} />
-//             <ListItemSecondaryAction>
-//               <Checkbox
-//                 edge="end"
-//                 onChange={handleToggle(index)}
-//                 checked={checked.indexOf(index) !== -1}
-//                 inputProps={{ "aria-labelledby": labelId }}
-//               />
-//             </ListItemSecondaryAction>
-//           </ListItem>
-//         );
-//       })}
-//     </List>
-//   );
-// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import React from 'react';
+import PropTypes from 'prop-types';
+import { makeStyles } from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
+import Collapse from '@material-ui/core/Collapse';
+import IconButton from '@material-ui/core/IconButton';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+
+const useRowStyles = makeStyles({
+  root: {
+    '& > *': {
+      borderBottom: 'unset',
+    },
+  },
+});
+
+// 
+
+function createData(name, calories, fat, carbs, protein, price) {
+  return {
+    name,
+    calories,
+    fat,
+    carbs,
+    protein,
+    price,
+    history: [
+      { date: '2020-01-05', customerId: '11091700', amount: 3 },
+      { date: '2020-01-02', customerId: 'Anonymous', amount: 1 },
+    ],
+  };
+}
+
+function Row(props) {
+  const { row } = props;
+  const [open, setOpen] = React.useState(false);
+  const classes = useRowStyles();
+
+  return (
+    <React.Fragment>
+      <TableRow className={classes.root}>
+        <TableCell>
+          <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
+            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+          </IconButton>
+        </TableCell>
+        <TableCell component="th" scope="row">
+          {row.name}
+        </TableCell>
+        <TableCell align="right">{row.host_name}</TableCell>
+        <TableCell align="right">{row.location}</TableCell>
+        <TableCell align="right">{row.time_commitment}</TableCell>
+        <TableCell align="right">{row.category_name}</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <Box margin={1}>
+              <Typography variant="h6" gutterBottom component="div">
+                History
+              </Typography>
+              <Table size="small" aria-label="purchases">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Date</TableCell>
+                    <TableCell>Customer</TableCell>
+                    <TableCell align="right">Amount</TableCell>
+                    <TableCell align="right">Total price ($)</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {row.history.map((historyRow) => (
+                    <TableRow key={historyRow.date}>
+                      <TableCell component="th" scope="row">
+                        {historyRow.date}
+                      </TableCell>
+                      <TableCell>{historyRow.customerId}</TableCell>
+                      <TableCell align="right">{historyRow.amount}</TableCell>
+                      <TableCell align="right">
+                        {Math.round(historyRow.amount * row.price * 100) / 100}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </Box>
+          </Collapse>
+        </TableCell>
+      </TableRow>
+    </React.Fragment>
+  );
+}
+
+
+const rows = [
+  {
+    id: 1,
+    host_id: 2,
+    name: 'Cleaning out ditches',
+    number_of_volunteers_needed: 10,
+    location: 'xxx',
+    date: 'today',
+    time_commitment: '2 days',
+    category_name: 'Family',
+     history: [
+      { date: '2020-01-05', customerId: '11091700', amount: 3 },
+      { date: '2020-01-02', customerId: 'Anonymous', amount: 1 },
+    ]
+  },
+  {
+    id: 2,
+    host_id: 3,
+    name: 'Take Grandma to the clinic',
+    number_of_volunteers_needed: 1,
+    location: 'xxx',
+    date: 'today',
+    time_commitment: '3 days',
+    category_name: 'Family',
+     history: [
+      { date: '2020-01-05', customerId: '11091700', amount: 3 },
+      { date: '2020-01-02', customerId: 'Anonymous', amount: 1 },
+    ]
+  },
+  {
+    id: 3,
+    host_id: 2,
+    name: 'Add supports to my barn',
+    number_of_volunteers_needed: 1,
+    location: 'xxx',
+    date: 'today',
+    time_commitment: '1 days',
+    category_name: 'Family',
+     history: [
+      { date: '2020-01-05', customerId: '11091700', amount: 3 },
+      { date: '2020-01-02', customerId: 'Anonymous', amount: 1 },
+    ]
+  },
+  {
+    id: 4,
+    host_name: 2,
+    name: 'Feed elders at the lodge',
+    number_of_volunteers_needed: 2,
+    location: 'xxx',
+    date: 'today',
+    time_commitment: '5 days',
+    category_name: 1,
+     history: [
+      { date: '2020-01-05', customerId: '11091700', amount: 3 },
+      { date: '2020-01-02', customerId: 'Anonymous', amount: 1 },
+    ]
+  }
+]
+
+
+// const fakeRows = [
+//   createData('Help Grandma get some groceries', 159, 6.0, 24, 4.0, 3.99),
+//   createData('Take my Mother to the hospital on Monday', 237, 9.0, 37, 4.3, 4.99),
+//   createData('Help paint our barn', 262, 16.0, 24, 6.0, 3.79),
+//   createData('Help me clean the ditches by town hall', 305, 3.7, 67, 4.3, 2.5),
+//   createData('Help out at the elementary back sale', 356, 16.0, 49, 3.9, 1.5),
+// ];
+
+export default function CollapsibleTable() {
+  return (
+    <TableContainer component={Paper}>
+      <Table aria-label="collapsible table">
+        <TableHead>
+          <TableRow>
+            <TableCell />
+            <TableCell>Title</TableCell>
+            <TableCell align="right">Host</TableCell>
+            <TableCell align="right">Distance</TableCell>
+            <TableCell align="right">Time Commitment</TableCell>
+            <TableCell align="right">Volunteers Needed&nbsp;(g)</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {rows.map((row) => (
+            <Row key={row.name} row={row} />
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+}

@@ -1,17 +1,16 @@
-const Express = require('express');
+const Express = require("express");
 const app = Express();
-const BodyParser = require('body-parser');
 const PORT = 8000;
-const morgan = require('morgan');
+const morgan = require("morgan");
 const cookieSession = require("cookie-session");
 const cookieParser = require("cookie-parser");
 require("dotenv").config();
 const cors = require("cors");
 // Express Configuration
-app.use(cors())
-app.use(BodyParser.urlencoded({ extended: false }));
-app.use(BodyParser.json());
-app.use(Express.static('public'));
+app.use(cors());
+app.use(Express.urlencoded({ extended: false }));
+app.use(Express.json());
+app.use(Express.static("public"));
 app.use(morgan("dev"));
 app.use(
   cookieSession({
@@ -26,7 +25,7 @@ app.use(cookieParser());
 //PG database cleint/connection setup
 const { Pool } = require("pg");
 const dbParams = require("./lib/db.js");
-console.log('test:', dbParams)
+console.log("test:", dbParams);
 const db = new Pool(dbParams);
 db.connect();
 
@@ -35,18 +34,17 @@ db.connect();
 //   message: "Seems to work!",
 // }));
 
-const userRoutes = require('./routes/user');
+const userRoutes = require("./routes/user");
 const usersRoutes = require("./routes/users");
-const reviewRoutes = require('./routes/review');
-const reviewsRoutes = require('./routes/reviews');
+const reviewRoutes = require("./routes/review");
+const reviewsRoutes = require("./routes/reviews");
 const categoryRoutes = require("./routes/category");
 const categoriesRoutes = require("./routes/categories");
 const opportunityRoutes = require("./routes/opportunity");
 const opportunitiesRoutes = require("./routes/opportunities");
-const userOpportunitiesRoutes = require('./routes/users_opportunities');
+const userOpportunitiesRoutes = require("./routes/users_opportunities");
 
 // const opportunities = require("./routes/opportunities");
-
 
 // routes
 app.use("/api/user", userRoutes(db));
@@ -58,8 +56,9 @@ app.use("/api/categories", categoriesRoutes(db));
 app.use("/api/opportunity", opportunityRoutes(db));
 app.use("/api/opportunities", opportunitiesRoutes(db));
 
-
 app.listen(PORT, () => {
   // eslint-disable-next-line no-console
-  console.log(`Express seems to be listening on port ${PORT} so that's pretty good 👍`);
+  console.log(
+    `Express seems to be listening on port ${PORT} so that's pretty good 👍`
+  );
 });
