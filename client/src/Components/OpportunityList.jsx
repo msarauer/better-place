@@ -3,7 +3,7 @@
 // import { MessageOutlined, LikeOutlined, StarOutlined } from '@ant-design/icons';
 
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 // import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -307,15 +307,17 @@ let rows = [
 
 export default function CollapsibleTable() {
 
-
-  axios({
-    method: 'get',
-    url: 'https://localhost:3000',
+  const [rows, setRows] = useState([]);
+  
+  useEffect(() => {
+    axios.get('/api/opportunities')
+    .then((data) => {
+    setRows(data.data.opportunities);
+    console.log(data.data);
   })
-  .then ((data) => {
-    rows = data.rows
-  })
-
+  .catch((e) => {console.log('axiosError:', e)}) 
+  }, []);
+  
 
 
   return (

@@ -7,8 +7,8 @@ export default function CategoryListSmall() {
   return (
 <div>
   <CategoryListSmallCard />
-  <CategoryListSmallCard />
-  <CategoryListSmallCard />
+  {/* <CategoryListSmallCard />
+  <CategoryListSmallCard /> */}
 </div>
   );
 }

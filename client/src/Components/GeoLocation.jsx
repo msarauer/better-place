@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const GeoLocation = () => {
+  const [city, setCity] = useState("What is your Location?");
+  const [country, setCountry] = useState("");
+
   const getCoordinates = () => {
     const options = {
       enableHighAccuracy: true,
@@ -13,7 +16,7 @@ const GeoLocation = () => {
       let lat = crd.latitude.toString();
       let lng = crd.longitude.toString();
       let coordinates = [lat, lng];
-      console.log(`Latitude: ${lat}, Longitude: ${lng}`);
+      // console.log(`Latitude: ${lat}, Longitude: ${lng}`);
       getCity(coordinates);
       return;
     };
@@ -44,19 +47,37 @@ const GeoLocation = () => {
     xhr.onreadystatechange = processRequest;
     xhr.addEventListener("readystatechange", processRequest, false);
 
-    
-
     function processRequest(e) {
       if (xhr.readyState == 4 && xhr.status == 200) {
         let response = JSON.parse(xhr.responseText);
+        // console.log("WHAT WE GONNA GET------", response.address);
+        let country = response.address.country;
         let city = response.address.city;
-        console.log(city);
+        setCity(city);
+        setCountry(country);
+        // console.log(city);
         return;
       }
     }
   };
-  getCoordinates();
-  return <div>Geo</div>;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        getCoordinates();
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  return (
+    <div>
+      {city}, {country}
+    </div>
+  );
 };
 
 export default GeoLocation;
