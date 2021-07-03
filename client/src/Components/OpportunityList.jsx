@@ -187,7 +187,12 @@ export default function CollapsibleTable({ location, category }) {
 
   useEffect(() => {
     console.log('column:', column)
-    setRows(columnSort(rows, column))
+    if (column) {
+      setRows(columnSort(rows, column))
+    }
+    if (!column) {
+      setRows(rows)
+    }
   }, [rows, column])
   
 
