@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import NavBar from "./Components/NavBar";
@@ -8,7 +8,7 @@ import Search from "./Components/Search";
 import Category from "./Components/Category";
 import CategoryList from "./Components/CategoryList";
 import CategoryListSmall from "./Components/CategoryListSmall";
-import DataTable from "./Components/OpportunityList";
+import OpportunityList from "./Components/OpportunityList";
 // import OpportunityItem from "./Components/OpportunityItem";
 import CreateNewOpportunity from "./Components/CreateNewOpportunity";
 import AccountBox from "./Components/accountBox/AccountBox";
@@ -17,42 +17,27 @@ import Drawer from "@material-ui/core/Drawer";
 import Button from "@material-ui/core/Button";
 
 function App() {
+
+  const [city, setCity] = useState("What is your Location?");
+  const [country, setCountry] = useState("");
+  const [category, setCategory] = useState(undefined);
+
+  const handleLocation = (city, country) => {
+    setCity(city)
+    setCountry(country)
+  }
+
   return (
     <div className="App">
-      <NavBar />
-      <CreateNewOpportunity/>
+      <NavBar handleLocation={handleLocation} city={city} country={country} />
+      <Header />
+      <CategoryList handleClick={() => setCategory}/>
+      <CategoryListSmall />
+      <Search />
+      {/* Conditional for SearchList */}
+      <OpportunityList location={city} category={category} />
     </div>
   );
 }
 
 export default App;
-
-// <App>
-// 	<NavBar>
-//  		<Logo>
-//   	<Location>
-// 		<LinkList>
-// 		  <Link>
-// 		  <Link>
-//  	    <Login>
-//  	  </LinkList>
-//  	</NavBar>
-//   <Jumbotron>
-
-//   <CategoryList>
-//    	<Category>
-// 		<Category>
-// 		<Category>
-// 		<Category>
-// 		<Category>
-//   </CategoryList>
-
-//   {categoryIsSelected &&  (
-//   <SearchList>
-// 		<SearchItem>
-// 		<SearchItem>
-// 		<SearchItem>
-// 		<SearchItem>
-//   </SearchList>
-//   )}
-// </App>

@@ -2,8 +2,6 @@ const express = require("express");
 const router = express.Router();
 
 module.exports = (db) => {
-
-
   // GET ONE OPPORTUNITY BY ID
   router.get("/:id", (req, res) => {
     db.query(`SELECT * FROM opportunities WHERE id = $1`, [req.params.id])
@@ -17,9 +15,8 @@ module.exports = (db) => {
       });
   });
 
-
-   // UPDATE OPPORTUNITY
-   router.put("/:id", (req, res) => {
+  // UPDATE OPPORTUNITY
+  router.put("/:id", (req, res) => {
     db.query(
       `UPDATE opportunities SET name=$1, number_of_volunteers_needed=$2, location=$3, date=$4, time_commitment=$5, category_id=$6 WHERE id = $7 RETURNING *`,
       [
@@ -41,10 +38,9 @@ module.exports = (db) => {
         res.status(500).json({ error: e.message });
       });
   });
-  
 
-   // DELETE OPPORTUNITY
-   router.delete("/:id", (req, res) => {
+  // DELETE OPPORTUNITY
+  router.delete("/:id", (req, res) => {
     db.query(`DELETE FROM opportunities WHERE id = $1`, [req.params.id])
       .then((data) => {
         res.json({
@@ -56,8 +52,6 @@ module.exports = (db) => {
         res.status(500).json({ error: e.message });
       });
   });
-  
-  
-  return router;
 
-}
+  return router;
+};
