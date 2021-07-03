@@ -10,6 +10,7 @@ import CategoryList from "./Components/CategoryList";
 import CategoryListSmall from "./Components/CategoryListSmall";
 import DataTable from "./Components/OpportunityList";
 // import OpportunityItem from "./Components/OpportunityItem";
+import CreateNewOpportunity from "./Components/CreateNewOpportunity";
 import AccountBox from "./Components/accountBox/AccountBox";
 import Grid from "@material-ui/core/Grid";
 import Drawer from "@material-ui/core/Drawer";
@@ -19,12 +20,7 @@ function App() {
   return (
     <div className="App">
       <NavBar />
-      <Header />
-      <CategoryList />
-      <CategoryListSmall />
-      <Search />
-      {/* Conditional for SearchList */}
-      <DataTable />
+      <CreateNewOpportunity/>
     </div>
   );
 }
