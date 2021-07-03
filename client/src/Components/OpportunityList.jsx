@@ -165,19 +165,19 @@ function Row(props) {
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box margin={1}>
               <Typography variant="h6" gutterBottom component="div">
-                History
+                
               </Typography>
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Date</TableCell>
-                    <TableCell>Customer</TableCell>
-                    <TableCell align="right">Amount</TableCell>
-                    <TableCell align="right">Total price ($)</TableCell>
+                    <TableCell>Date</TableCell>                           {/*Date*/}
+                    <TableCell>Description</TableCell>                       {/*Customer*/}
+                    <TableCell align="right">Progress</TableCell>           {/*Amount*/}
+                    <TableCell align="right">image</TableCell>  {/*Total Price*/}
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {row.history.map((historyRow) => (
+                  {/* {row.history.map((historyRow) => (
                     <TableRow key={historyRow.date}>
                       <TableCell component="th" scope="row">
                         {historyRow.date}
@@ -188,7 +188,7 @@ function Row(props) {
                         {Math.round(historyRow.amount * row.price * 100) / 100}
                       </TableCell>
                     </TableRow>
-                  ))}
+                  ))} */}
                 </TableBody>
               </Table>
             </Box>
@@ -203,13 +203,14 @@ function Row(props) {
 const rows = [
   {
     id: 1,
-    host_id: 2,
+    host_name: 2,
     name: 'Cleaning out ditches',
     number_of_volunteers_needed: 10,
     location: 'xxx',
     date: 'today',
     time_commitment: '2 days',
     category_name: 'Family',
+    description: 'I think it would be nice if a few of us got together and cleaned out some of the ditches by the local church!',
      history: [
       { date: '2020-01-05', customerId: '11091700', amount: 3 },
       { date: '2020-01-02', customerId: 'Anonymous', amount: 1 },
@@ -217,13 +218,14 @@ const rows = [
   },
   {
     id: 2,
-    host_id: 3,
+    host_name: 3,
     name: 'Take Grandma to the clinic',
     number_of_volunteers_needed: 1,
     location: 'xxx',
     date: 'today',
     time_commitment: '3 days',
     category_name: 'Family',
+    description: 'I have to work but my Grandma has an appointment for the clinic, could someone please take her?',
      history: [
       { date: '2020-01-05', customerId: '11091700', amount: 3 },
       { date: '2020-01-02', customerId: 'Anonymous', amount: 1 },
@@ -231,13 +233,14 @@ const rows = [
   },
   {
     id: 3,
-    host_id: 2,
+    host_name: 2,
     name: 'Add supports to my barn',
     number_of_volunteers_needed: 1,
     location: 'xxx',
     date: 'today',
     time_commitment: '1 days',
     category_name: 'Family',
+    description: 'My barn is about to collapse!! I need someone to help me get the support beams up please.',
      history: [
       { date: '2020-01-05', customerId: '11091700', amount: 3 },
       { date: '2020-01-02', customerId: 'Anonymous', amount: 1 },
@@ -252,6 +255,7 @@ const rows = [
     date: 'today',
     time_commitment: '5 days',
     category_name: 1,
+    description: 'We are understaffed due to covid and it would be nice to have a couple volunteers help out during',
      history: [
       { date: '2020-01-05', customerId: '11091700', amount: 3 },
       { date: '2020-01-02', customerId: 'Anonymous', amount: 1 },
@@ -279,7 +283,7 @@ export default function CollapsibleTable() {
             <TableCell align="right">Host</TableCell>
             <TableCell align="right">Distance</TableCell>
             <TableCell align="right">Time Commitment</TableCell>
-            <TableCell align="right">Volunteers Needed&nbsp;(g)</TableCell>
+            <TableCell align="right">Volunteers Needed</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

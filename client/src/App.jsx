@@ -7,6 +7,7 @@ import Login from "./Components/Login";
 import Search from "./Components/Search";
 import Category from "./Components/Category";
 import CategoryList from "./Components/CategoryList";
+import CategoryListSmall from "./Components/CategoryListSmall";
 import DataTable from "./Components/OpportunityList";
 // import OpportunityItem from "./Components/OpportunityItem";
 import AccountBox from "./Components/accountBox/AccountBox";
@@ -20,6 +21,7 @@ function App() {
       <NavBar />
       <Header />
       <CategoryList />
+      <CategoryListSmall />
       <Search />
       {/* Conditional for SearchList */}
       <DataTable />
