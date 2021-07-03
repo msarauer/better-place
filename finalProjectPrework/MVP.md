@@ -77,3 +77,5 @@
       * time commitment (satellite options)
 
       * current distance or city/ address search
+
+navigator.geolocation.getCurrentPosition((data)=> console.log(data))

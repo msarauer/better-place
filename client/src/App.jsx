@@ -7,8 +7,8 @@ import Login from "./Components/Login";
 import Search from "./Components/Search";
 import Category from "./Components/Category";
 import CategoryList from "./Components/CategoryList";
-// import OpportunityList from "./Components/OpportunityList";
-import OpportunityItem from "./Components/OpportunityItem";
+import DataTable from "./Components/OpportunityList";
+// import OpportunityItem from "./Components/OpportunityItem";
 import AccountBox from "./Components/accountBox/AccountBox";
 import Grid from "@material-ui/core/Grid";
 import Drawer from "@material-ui/core/Drawer";
@@ -19,11 +19,10 @@ function App() {
     <div className="App">
       <NavBar />
       <Header />
-      <br />
       <CategoryList />
       <Search />
       {/* Conditional for SearchList */}
-      {/* <OpportunityList articles={[1, 2, 3]} /> */}
+      <DataTable />
     </div>
   );
 }
