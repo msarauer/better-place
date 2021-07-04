@@ -73,6 +73,17 @@ const HeaderPicture = styled.img`
   height: 175px;
   margin-left: 20px;
   margin-top: 10px;
+  margin-bottom: 40px;
+`;
+
+const HeaderEditPicture = styled.img`
+  display: inline;
+  /* margin: 0 auto; */
+  border-radius: 50%;
+  width: 175px;
+  height: 175px;
+  margin-left: 20px;
+  margin-bottom: 40px;
 `;
 
 const SmallText = styled.h5`
@@ -172,7 +183,9 @@ const AccountBox = () => {
           )}
           {active === "signup" && (
             <HeaderContainer>
-              <HeaderText>PICTURE</HeaderText>
+              <HeaderText>
+                <HeaderEditPicture src={userPicture} height={250} />
+              </HeaderText>
             </HeaderContainer>
           )}
         </TopContainer>
