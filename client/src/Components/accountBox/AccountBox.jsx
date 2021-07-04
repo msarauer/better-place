@@ -1,10 +1,9 @@
-import { useState } from 'react'
-import styled from "styled-components"
+import { useState } from "react";
+import styled from "styled-components";
 import LoginForm from "./LoginForm";
-import { motion } from "framer-motion"
-import SignupForm from './SignupForm';
-import { AccountContext } from './accountContext';
-
+import { motion } from "framer-motion";
+import SignupForm from "./SignupForm";
+import { AccountContext } from "./accountContext";
 
 const BoxContainer = styled.div`
   width: 280px;
@@ -18,7 +17,6 @@ const BoxContainer = styled.div`
   overflow: hidden;
 `;
 
-
 const TopContainer = styled.div`
   width: 100%;
   height: 250px;
@@ -28,7 +26,6 @@ const TopContainer = styled.div`
   padding: 0 1.8em;
   padding-right: 5em;
 `;
-
 
 const BackDrop = styled(motion.div)`
   width: 300%;
@@ -41,8 +38,12 @@ const BackDrop = styled(motion.div)`
   top: -350px;
   left: -150px;
   transform: rotate(-20deg);
-  background: rgb(26,188,156);
-  background: linear-gradient(90deg, rgba(26,188,156,1) 20%, rgba(0,153,255,1) 98%);
+  background: rgb(26, 188, 156);
+  background: linear-gradient(
+    90deg,
+    rgba(26, 188, 156, 1) 20%,
+    rgba(0, 153, 255, 1) 98%
+  );
   z-index: 10;
 `;
 
@@ -51,7 +52,6 @@ const HeaderContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 75px;
-  
 `;
 
 const HeaderText = styled.h2`
@@ -84,50 +84,47 @@ const backdropVariants = {
     width: "300%",
     height: "1500px",
     borderRadius: "20%",
-    tranform: "rotate(60deg)"
+    tranform: "rotate(60deg)",
   },
   collapsed: {
     width: "160%",
     height: "590px",
     borderRadius: "50%",
-    tranform: "rotate(60deg)"
-  }
-}
+    tranform: "rotate(60deg)",
+  },
+};
 
 const expandingTransition = {
   type: "spring",
   duration: 2.3,
   stiffness: 30,
-}
-
+};
 
 const AccountBox = () => {
-  const [isExpanded, setExpanded] = useState(false)
+  const [isExpanded, setExpanded] = useState(false);
   const [active, setActive] = useState("signin");
 
-
   const playExpandedAnimation = () => {
-    setExpanded(true)
+    setExpanded(true);
     setTimeout(() => {
       setExpanded(false);
-    }, expandingTransition.duration * 1000 - 1500)
-  }
-
+    }, expandingTransition.duration * 1000 - 1500);
+  };
 
   const switchToSignup = () => {
     playExpandedAnimation();
     setTimeout(() => {
-      setActive("signup")
-    }, 600)
-  }
+      setActive("signup");
+    }, 600);
+  };
   const switchToSignin = () => {
     playExpandedAnimation();
     setTimeout(() => {
-      setActive("signin")
-    }, 600)
-  }
+      setActive("signin");
+    }, 600);
+  };
 
-  const contextValue = { switchToSignup, switchToSignin }
+  const contextValue = { switchToSignup, switchToSignin };
 
   return (
     <AccountContext.Provider value={contextValue}>
@@ -161,7 +158,6 @@ const AccountBox = () => {
       </BoxContainer>
     </AccountContext.Provider>
   );
-}
+};
 
-
-export default AccountBox
+export default AccountBox;

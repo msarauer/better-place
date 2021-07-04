@@ -1,38 +1,104 @@
-import { BoldLink, BoxContainer, FormContainer, Input, MutedLink, SubmitButton } from "./common"
-import { Marginer } from './Marginer';
+import {
+  BoldLink,
+  BoxContainer,
+  FormContainer,
+  Input,
+  MutedLink,
+  SubmitButton,
+} from "./common";
+import { Marginer } from "./Marginer";
 import { AccountContext } from "./accountContext";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import UploadButtons from "./UploadButtons.jsx";
+import axios from "axios";
 
+const SignupForm = ({ onSave }) => {
+  const { switchToSignin } = useContext(AccountContext);
 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [address, setAddress] = useState("");
+  const [bio, setBio] = useState("");
+  const [profilePic, setProfilePic] = useState(""); // Some sort of defult image maybe?
 
-const SignupForm = (props) => {
-  const {switchToSignin} = useContext(AccountContext)
+  const handleSubmit = (e) => {
+    const userSave = (data) => {
+      axios
+        .post("/api/users", data)
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((e) => {
+          console.log("post error:", e.message);
+        });
+    };
 
+    const saveData = {
+      email,
+      password,
+      name,
+      phone_number: phoneNumber,
+      address,
+      bio,
+      picture_url: profilePic,
+    };
+    userSave(saveData);
+  };
 
   return (
     <BoxContainer>
-      <FormContainer>
-        <Input type="email" placeholder="Email" />
-        <Input type="password" placeholder="Password" />
+      <FormContainer onSubmit={handleSubmit}>
+        <Input
+          type="email"
+          placeholder="Email"
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <Input
+          type="password"
+          placeholder="Password"
+          onChange={(e) => setPassword(e.target.value)}
+        />
         <Input type="password" placeholder="Confirm Password" />
-        <Input type="text" placeholder="Full Name" />
-        <Input type="text" placeholder="PhoneNumber" />
-        <Input type="text" placeholder="Address" />
-        <Input type="textarea" placeholder="Bio" />
-        <UploadButtons />
-
+        {/*  I forget how to get the passwords to be same, something to do with password digest in database*/}
+        <Input
+          type="text"
+          placeholder="Full Name"
+          onChange={(e) => setName(e.target.value)}
+        />
+        <Input
+          type="text"
+          placeholder="PhoneNumber"
+          onChange={(e) => setPhoneNumber(e.target.value)}
+        />
+        <Input
+          type="text"
+          placeholder="Address"
+          onChange={(e) => setAddress(e.target.value)}
+        />
+        <Input
+          type="textarea"
+          placeholder="Bio"
+          onChange={(e) => setBio(e.target.value)}
+        />
+        <UploadButtons onChange={(e) => setProfilePic(e.target.value)} />
+        <SubmitButton type="submit">SignUp</SubmitButton>
       </FormContainer>
       <Marginer direction="vertical" margin={10} />
-      <Marginer direction="vertical" margin='1.6em' />
-      <SubmitButton type="submit">SignUp</SubmitButton>
-      <Marginer direction="vertical" margin='1.6em' />
-      <MutedLink href="#">Already have an account? <BoldLink href='#' onClick={switchToSignin}>SignIn</BoldLink></MutedLink>
+      <Marginer direction="vertical" margin="1.6em" />
+      <Marginer direction="vertical" margin="1.6em" />
+      <MutedLink href="#">
+        Already have an account?{" "}
+        <BoldLink href="#" onClick={switchToSignin}>
+          SignIn
+        </BoldLink>
+      </MutedLink>
     </BoxContainer>
-  )
-}
+  );
+};
 
-export default SignupForm
+export default SignupForm;
 
 // name VARCHAR(255) NOT NULL,
 //   email VARCHAR(255) NOT NULL,

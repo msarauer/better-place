@@ -19,7 +19,7 @@ import SearchBar from "material-ui-search-bar";
 import { useState } from "react";
 import Drawer from "@material-ui/core/Drawer";
 import AccountBox from "./accountBox/AccountBox";
-import ProfileBox from "./profileBox/ProfileBox"
+import ProfileBox from "./profileBox/ProfileBox";
 import GeoLocation from "./GeoLocation";
 
 const useStyles = makeStyles({
@@ -47,7 +47,6 @@ const useStyles = makeStyles({
   },
 });
 
-
 const NavBar = ({ handleLocation, city, country }) => {
   const classes = useStyles();
 
@@ -56,9 +55,7 @@ const NavBar = ({ handleLocation, city, country }) => {
   });
   const [profile, setProfile] = React.useState({
     right: false,
-  })
-
-  
+  });
 
   const toggleLogin = (anchor, open) => (event) => {
     if (
@@ -93,8 +90,12 @@ const NavBar = ({ handleLocation, city, country }) => {
             className={classes.search}
             placeholder="Search for location..."
           ></SearchBar>
-                    {/* GEO LOCATION */}
-                    <GeoLocation handleLocation={handleLocation} city={city} country={country} />
+          {/* GEO LOCATION */}
+          <GeoLocation
+            handleLocation={handleLocation}
+            city={city}
+            country={country}
+          />
           <Grid container justify="flex-end" justify-content="space-between">
             <IconButton>
               <Typography className={classes.text}>Categories</Typography>
