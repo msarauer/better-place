@@ -18,10 +18,10 @@ module.exports = (db) => {
 
   // USED to join tables together to grab all opportunites that a volunteer has done. This is for the profile page
 
-  router.get("/:id", (res, req) => {
+  router.get("/:id", (req, res) => {
     db.query(
-      `SELECT * FROM users_opportunities JOIN opportunities ON opportunities.id = opportunity_id WHERE user_id = 1`
-      //   [req.params.id]
+      `SELECT * FROM users_opportunities JOIN opportunities ON opportunities.id = opportunity_id WHERE user_id = $1;`,
+      [req.params.id]
     )
       .then((data) => {
         console.log("WE IN THE ROUTER BB-----", data.rows);

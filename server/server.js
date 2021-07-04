@@ -55,6 +55,7 @@ app.use("/api/category", categoryRoutes(db));
 app.use("/api/categories", categoriesRoutes(db));
 app.use("/api/opportunity", opportunityRoutes(db));
 app.use("/api/opportunities", opportunitiesRoutes(db));
+app.use("/api/users_opportunities", userOpportunitiesRoutes(db));
 
 app.listen(PORT, () => {
   // eslint-disable-next-line no-console
