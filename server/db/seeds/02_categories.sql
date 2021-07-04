@@ -1,2 +1,2 @@
 INSERT INTO categories (name) 
-VALUES ('Plumbing'), ('Carpentry'), ('Electrical'), ('Heavy Lifting'), ('Child Care'), ('Moral Support')
+VALUES ('Home Repair'), ('Physical'), ('Family'), ('Chores'), ('Education'), ('Pet Care'), ('Community'), ('Other')

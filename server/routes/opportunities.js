@@ -51,7 +51,7 @@ module.exports = (db) => {
   // POST NEW OPPORTUNITIES
   router.post("/", (req, res) => {
     db.query(
-      `INSERT INTO opportunities (host_id , name , number_of_volunteers_needed, location, date, time_commitment, category_id) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
+      `INSERT INTO opportunities (host_id , name , number_of_volunteers_needed, location, date, time_commitment, category_id, description) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`,
       [
         req.body.host_id,
         req.body.name,
@@ -60,6 +60,7 @@ module.exports = (db) => {
         req.body.date,
         req.body.time_commitment,
         req.body.category_id,
+        req.body.description,
       ]
     )
 

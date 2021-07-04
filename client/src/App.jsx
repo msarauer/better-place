@@ -7,38 +7,55 @@ import Login from "./Components/Login";
 import Search from "./Components/Search";
 import Category from "./Components/Category";
 import CategoryList from "./Components/CategoryList";
-import CategoryListSmall from "./Components/CategoryListSmall";
+import CategoryListItem from "./Components/CategoryListItem";
 import OpportunityList from "./Components/OpportunityList";
-// import OpportunityItem from "./Components/OpportunityItem";
-import CreateNewOpportunity from "./Components/CreateNewOpportunity";
+import OpportunityItem from "./Components/OpportunityItem";
+import CreateNewOpportunityWithModal from "./Components/CreateNewOpportunityWithModal";
 import AccountBox from "./Components/accountBox/AccountBox";
 import Grid from "@material-ui/core/Grid";
 import Drawer from "@material-ui/core/Drawer";
 import Button from "@material-ui/core/Button";
+import axios from 'axios'
+import { BackTop } from 'antd';
 
 function App() {
 
   const [city, setCity] = useState("What is your Location?");
   const [country, setCountry] = useState("");
   const [category, setCategory] = useState(undefined);
+  const [opportunities, setOpportunities] = useState([]);
 
   const handleLocation = (city, country) => {
     setCity(city)
     setCountry(country)
+  }
+  const save = (data) => {
+    console.log(data)
+    axios.post("/api/opportunities", data)
+    .then((data)=>{
+      console.log(data);
+    })
+    .catch((e)=>{
+      console.log("post error:", e.message) ;
+    })
   }
 
   return (
     <div className="App">
       <NavBar handleLocation={handleLocation} city={city} country={country} />
       <Header />
-      <CategoryList handleClick={() => setCategory}/>
-      <CategoryListSmall />
+      <CategoryList handleClick={(data) => setCategory(data)}/>
       <Search />
       {/* Conditional for SearchList */}
-      <OpportunityList location={city} category={category} />
+      <CreateNewOpportunityWithModal opportunities={opportunities} setOpportunities={setOpportunities} onSave={save} location={city}/>
+      <OpportunityList opportunities={opportunities} setOpportunities={setOpportunities} location={city} category={category} />
       <br />
-      <CreateNewOpportunity/>
+       <BackTop />
+    Scroll down to see the bottom-right
+    <strong className="site-back-top-basic"> gray </strong>
+    button.
     </div>
+
   );
 }
 

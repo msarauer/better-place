@@ -89,6 +89,7 @@ const NavBar = ({ handleLocation, city, country }) => {
           <SearchBar
             className={classes.search}
             placeholder="Search for location..."
+            
           ></SearchBar>
           {/* GEO LOCATION */}
           <GeoLocation
