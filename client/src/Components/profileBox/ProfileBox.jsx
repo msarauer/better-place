@@ -1,12 +1,14 @@
-import { useState } from "react";
-import styled from "styled-components";
-import LoginForm from "./LoginForm";
-import { motion } from "framer-motion";
-import SignupForm from "./SignupForm";
-import { AccountContext } from "./accountContext";
+import { useState } from 'react'
+import styled from "styled-components"
+import LoginForm from "./ProfileForm";
+import { motion } from "framer-motion"
+import SignupForm from './EditForm';
+import { AccountContext } from './accountContext';
+import AlignItemsList from './AlignedItemList';
+
 
 const BoxContainer = styled.div`
-  width: 280px;
+  width: 500px;
   height: 800px;
   display: flex;
   flex-direction: column;
@@ -16,6 +18,7 @@ const BoxContainer = styled.div`
   position: relative;
   overflow: hidden;
 `;
+
 
 const TopContainer = styled.div`
   width: 100%;
@@ -27,23 +30,20 @@ const TopContainer = styled.div`
   padding-right: 5em;
 `;
 
+
 const BackDrop = styled(motion.div)`
-  width: 300%;
-  height: 800px;
+  width: 160%;
+  height: 550px;
   position: absolute;
   display: flex;
   flex-direction: column;
   border-radius: 50%;
   transform: rotate(60deg);
-  top: -350px;
-  left: -150px;
-  transform: rotate(-20deg);
-  background: rgb(26, 188, 156);
-  background: linear-gradient(
-    90deg,
-    rgba(26, 188, 156, 1) 20%,
-    rgba(0, 153, 255, 1) 98%
-  );
+  top: -400px;
+  left: -350px;
+  transform: rotate(60deg);
+  background: rgb(26,188,156);
+  background: linear-gradient(90deg, rgba(26,188,156,1) 20%, rgba(0,153,255,1) 98%);
   z-index: 10;
 `;
 
@@ -51,7 +51,8 @@ const HeaderContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  margin-bottom: 75px;
+  margin-bottom: 150px;
+  
 `;
 
 const HeaderText = styled.h2`
@@ -81,50 +82,53 @@ const InnerContainer = styled.div`
 
 const backdropVariants = {
   expanded: {
-    width: "300%",
-    height: "1500px",
+    width: "270%",
+    height: "1350px",
     borderRadius: "20%",
-    tranform: "rotate(60deg)",
+    tranform: "rotate(60deg)"
   },
   collapsed: {
     width: "160%",
-    height: "590px",
+    height: "550px",
     borderRadius: "50%",
-    tranform: "rotate(60deg)",
-  },
-};
+    tranform: "rotate(60deg)"
+  }
+}
 
 const expandingTransition = {
   type: "spring",
   duration: 2.3,
   stiffness: 30,
-};
+}
+
 
 const AccountBox = () => {
-  const [isExpanded, setExpanded] = useState(false);
+  const [isExpanded, setExpanded] = useState(false)
   const [active, setActive] = useState("signin");
 
+
   const playExpandedAnimation = () => {
-    setExpanded(true);
+    setExpanded(true)
     setTimeout(() => {
       setExpanded(false);
-    }, expandingTransition.duration * 1000 - 1500);
-  };
+    }, expandingTransition.duration * 1000 - 1500)
+  }
+
 
   const switchToSignup = () => {
     playExpandedAnimation();
     setTimeout(() => {
-      setActive("signup");
-    }, 600);
-  };
+      setActive("signup")
+    }, 600)
+  }
   const switchToSignin = () => {
     playExpandedAnimation();
     setTimeout(() => {
-      setActive("signin");
-    }, 600);
-  };
+      setActive("signin")
+    }, 600)
+  }
 
-  const contextValue = { switchToSignup, switchToSignin };
+  const contextValue = { switchToSignup, switchToSignin }
 
   return (
     <AccountContext.Provider value={contextValue}>
@@ -138,16 +142,12 @@ const AccountBox = () => {
           />
           {active === "signin" && (
             <HeaderContainer>
-              <HeaderText>Welcome</HeaderText>
-              <HeaderText>Back</HeaderText>
-              <SmallText>Please sign-in to continue!</SmallText>
+              <HeaderText>PICTURE</HeaderText>
             </HeaderContainer>
           )}
           {active === "signup" && (
             <HeaderContainer>
-              <HeaderText>Create</HeaderText>
-              <HeaderText>Account</HeaderText>
-              <SmallText>Please sign-up to continue!</SmallText>
+              <HeaderText>PICTURE</HeaderText>
             </HeaderContainer>
           )}
         </TopContainer>
@@ -158,6 +158,7 @@ const AccountBox = () => {
       </BoxContainer>
     </AccountContext.Provider>
   );
-};
+}
 
-export default AccountBox;
+
+export default AccountBox
