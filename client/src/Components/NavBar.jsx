@@ -89,7 +89,6 @@ const NavBar = ({ handleLocation, city, country }) => {
           <SearchBar
             className={classes.search}
             placeholder="Search for location..."
-            
           ></SearchBar>
           {/* GEO LOCATION */}
           <GeoLocation
@@ -111,6 +110,7 @@ const NavBar = ({ handleLocation, city, country }) => {
                   anchor={anchor}
                   open={login[anchor]}
                   onClose={toggleLogin(anchor, false)}
+                  onSubmit={toggleLogin(anchor, false)}
                 >
                   <AccountBox />
                 </Drawer>
