@@ -17,7 +17,9 @@ import axios from "axios";
 const ProfileForm = (props) => {
   const { switchToSignup } = useContext(AccountContext);
   const [user, setUser] = useState({});
+  const [opportunities, setOpportunities] = useState([]);
 
+  // Used to get specific user from id
   useEffect(() => {
     axios
       .get(`/api/user/1`) // REMEMBER TO CHANGE TO :id
@@ -29,6 +31,17 @@ const ProfileForm = (props) => {
         console.log("axiosError:", e);
       });
   }, []);
+
+  useEffect(() => {
+    axios
+      .get("/api/users_opportunities/1")
+      .then((data) => {
+        setOpportunities(data);
+      })
+      .catch((e) => {
+        console.log("axiosError:", e);
+      });
+  });
 
   console.log("THIS SHOULD BE USER OBJECT-----", user);
   return (
