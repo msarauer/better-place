@@ -4,7 +4,10 @@ const router = express.Router();
 module.exports = (db) => {
   // GET ALL OPPORTUNITIES
   router.get("/", (req, res) => {
-    db.query(`SELECT opportunities.*, categories.name as category_name, users.name as host_name FROM opportunities JOIN categories ON categories.id = category_id JOIN users ON users.id = host_id`, [])
+    db.query(
+      `SELECT opportunities.*, categories.name as category_name, users.name as host_name, users.picture_url as avatar FROM opportunities JOIN categories ON categories.id = category_id JOIN users ON users.id = host_id`,
+      []
+    )
       .then((data) => {
         const opportunities = data.rows;
         res.json({ opportunities });
@@ -16,9 +19,10 @@ module.exports = (db) => {
   });
 
   router.get("/location/:location", (req, res) => {
-    db.query(`SELECT opportunities.*, categories.name as category_name FROM opportunities JOIN categories ON categories.id = category_id WHERE location = $1`, [
-      req.params.location,
-    ])
+    db.query(
+      `SELECT opportunities.*, categories.name as category_name FROM opportunities JOIN categories ON categories.id = category_id WHERE location = $1`,
+      [req.params.location]
+    )
       .then((data) => {
         const opportunities = data.rows;
         res.json({ opportunities });
