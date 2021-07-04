@@ -19,6 +19,7 @@ import SearchBar from "material-ui-search-bar";
 import { useState } from "react";
 import Drawer from "@material-ui/core/Drawer";
 import AccountBox from "./accountBox/AccountBox";
+import ProfileBox from "./profileBox/ProfileBox"
 import GeoLocation from "./GeoLocation";
 
 const useStyles = makeStyles({
@@ -34,7 +35,7 @@ const useStyles = makeStyles({
   },
   drawerInside: {
     // width: 600,
-    height: 550,
+    height: 800,
     borderRadius: 25,
     // textTransform: "capitalize",
   },
@@ -44,14 +45,16 @@ const useStyles = makeStyles({
 const NavBar = ({ handleLocation, city, country }) => {
   const classes = useStyles();
 
-  const [state, setState] = React.useState({
-    top: false,
-    left: false,
-    bottom: false,
+  const [login, setLogin] = React.useState({
     right: false,
   });
+  const [profile, setProfile] = React.useState({
+    right: false,
+  })
 
-  const toggleDrawer = (anchor, open) => (event) => {
+  
+
+  const toggleLogin = (anchor, open) => (event) => {
     if (
       event.type === "keydown" &&
       (event.key === "Tab" || event.key === "Shift")
@@ -59,7 +62,18 @@ const NavBar = ({ handleLocation, city, country }) => {
       return;
     }
 
-    setState({ ...state, [anchor]: open });
+    setLogin({ ...login, [anchor]: open });
+  };
+
+  const toggleProfile = (anchor, open) => (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setProfile({ ...profile, [anchor]: open });
   };
 
   return (
@@ -81,16 +95,29 @@ const NavBar = ({ handleLocation, city, country }) => {
               <MenuIcon className={classes.text} />
             </IconButton>
             {/* ACCOUNT BOX ATTEMPT */}
-            {["right"].map((anchor: any) => (
+            {["right"].map((anchor) => (
               <React.Fragment key={anchor}>
-                <Button onClick={toggleDrawer(anchor, true)}>Login</Button>
+                <Button onClick={toggleLogin(anchor, true)}>Login</Button>
                 <Drawer
                   classes={{ paper: classes.drawerInside }}
                   anchor={anchor}
-                  open={state[anchor]}
-                  onClose={toggleDrawer(anchor, false)}
+                  open={login[anchor]}
+                  onClose={toggleLogin(anchor, false)}
                 >
                   <AccountBox />
+                </Drawer>
+              </React.Fragment>
+            ))}
+            {["right"].map((anchor) => (
+              <React.Fragment key={anchor}>
+                <Button onClick={toggleProfile(anchor, true)}>Profile</Button>
+                <Drawer
+                  classes={{ paper: classes.drawerInside }}
+                  anchor={anchor}
+                  open={profile[anchor]}
+                  onClose={toggleProfile(anchor, false)}
+                >
+                  <ProfileBox />
                 </Drawer>
               </React.Fragment>
             ))}

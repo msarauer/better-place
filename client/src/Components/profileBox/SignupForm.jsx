@@ -12,6 +12,7 @@ const SignupForm = (props) => {
   return (
     <BoxContainer>
       <FormContainer>
+
         <Input type="text" placeholder="Full Name" />
         <Input type="email" placeholder="Email" />
         <Input type="password" placeholder="Password" />
@@ -19,9 +20,9 @@ const SignupForm = (props) => {
       </FormContainer>
       <Marginer direction="vertical" margin={10} />
       <Marginer direction="vertical" margin='1.6em' />
-      <SubmitButton type="submit">SignUp</SubmitButton>
+      <SubmitButton type="submit">Confirm</SubmitButton>
       <Marginer direction="vertical" margin='1.6em' />
-      <MutedLink href="#">Already have an account? <BoldLink href='#' onClick={switchToSignin}>SignIn</BoldLink></MutedLink>
+      <MutedLink href="#">Changed your mind? <BoldLink href='#' onClick={switchToSignin}>Cancel</BoldLink></MutedLink>
     </BoxContainer>
   )
 }

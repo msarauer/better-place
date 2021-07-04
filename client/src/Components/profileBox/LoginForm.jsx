@@ -1,7 +1,11 @@
-import { BoldLink, BoxContainer, FormContainer, Input, MutedLink, SubmitButton } from "./common"
+import { BoldLink, BoxContainer, FormContainer, Input, MutedLink, SubmitButton, SmallText, EditLink } from "./common"
 import { Marginer } from './Marginer';
 import { AccountContext } from './accountContext'
 import { useContext } from "react";
+import AlignItemsList from "./AlignedItemList";
+
+
+
 
 
 
@@ -10,19 +14,29 @@ const LoginForm = (props) => {
   const {switchToSignup} = useContext(AccountContext)
 
   return (
+    <>
     <BoxContainer>
       <FormContainer>
-        <Input type="email" placeholder="Email" />
-        <Input type="password" placeholder="Password" />
+        <h1>Betsy</h1>
+          <SmallText>
+          Phone number
+          </SmallText>
+          <SmallText>
+          Location
+          </SmallText>
+        <SmallText>
+          I am the greatest cow to ever grace this world. None can withstand my pure glory
+          </SmallText>
       </FormContainer>
       <Marginer direction="vertical" margin={10} />
-      <MutedLink href="#">Forgot Your password?</MutedLink>
+      <MutedLink href="#"></MutedLink>
       <Marginer direction="vertical" margin='1.6em' />
-      <SubmitButton type="submit">SignIn</SubmitButton>
       <Marginer direction="vertical" margin='1.6em' />
-      <MutedLink href="#">Dont have an account? <BoldLink href='#' onClick={switchToSignup}>SignUp</BoldLink></MutedLink>
     </BoxContainer>
-  )
+    <AlignItemsList />
+      <EditLink href='#' onClick={switchToSignup}>Edit Profile</EditLink>
+</>
+)
 }
 
 export default LoginForm
