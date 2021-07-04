@@ -8,7 +8,7 @@ import { AccountContext } from './accountContext';
 
 const BoxContainer = styled.div`
   width: 280px;
-  height: 570px;
+  height: 800px;
   display: flex;
   flex-direction: column;
   border-radius: 19px;
@@ -31,16 +31,16 @@ const TopContainer = styled.div`
 
 
 const BackDrop = styled(motion.div)`
-  width: 160%;
-  height: 550px;
+  width: 300%;
+  height: 800px;
   position: absolute;
   display: flex;
   flex-direction: column;
   border-radius: 50%;
   transform: rotate(60deg);
-  top: -290px;
-  left: -70px;
-  transform: rotate(60deg);
+  top: -350px;
+  left: -150px;
+  transform: rotate(-20deg);
   background: rgb(26,188,156);
   background: linear-gradient(90deg, rgba(26,188,156,1) 20%, rgba(0,153,255,1) 98%);
   z-index: 10;
@@ -81,14 +81,14 @@ const InnerContainer = styled.div`
 
 const backdropVariants = {
   expanded: {
-    width: "233%",
-    height: "1050px",
+    width: "300%",
+    height: "1500px",
     borderRadius: "20%",
     tranform: "rotate(60deg)"
   },
   collapsed: {
     width: "160%",
-    height: "550px",
+    height: "590px",
     borderRadius: "50%",
     tranform: "rotate(60deg)"
   }

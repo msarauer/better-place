@@ -1,18 +1,21 @@
 import { BoldLink, BoxContainer, FormContainer, Input, MutedLink, SubmitButton } from "./common"
 import { Marginer } from './Marginer';
 import { AccountContext } from './accountContext'
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 
 
 const LoginForm = (props) => {
+  const [email, setEmail] = useState("Email")
+  const [password, setPassword] = useState("")
 
   const {switchToSignup} = useContext(AccountContext)
+
 
   return (
     <BoxContainer>
       <FormContainer>
-        <Input type="email" placeholder="Email" />
+        <Input type="email" placeholder="Email"/>
         <Input type="password" placeholder="Password" />
       </FormContainer>
       <Marginer direction="vertical" margin={10} />
@@ -26,3 +29,4 @@ const LoginForm = (props) => {
 }
 
 export default LoginForm
+

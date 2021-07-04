@@ -35,7 +35,7 @@ const useStyles = makeStyles({
   },
   drawerLogin: {
     // width: 600,
-    height: 550,
+    height: 750,
     borderRadius: 25,
     // textTransform: "capitalize",
   },
