@@ -1,43 +1,29 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./CategoryList.scss";
+import axios from "axios";
+import CategoryListItem from './CategoryListItem'
 
 
 const CategoryList = ({ handleClick }) => {
+
+  const [categories, setCategories] = useState();
+
+  useEffect(() => {
+
+    axios.get('/api/categories')
+    .then((data) => {
+      setCategories(data.data.categories)
+    })
+    .catch((e) => {console.log(e.message)})
+  }, [])
+
+
+
   return (
     <main className="page-content">
-      <div className="card" onClick={() => {handleClick('1')}}>
-        <div className="content">
-          <h2 className="title">Home Repair</h2>
-          <p className="copy">
-            From electrical to plumbing - find neighbors who need your skills
-          </p>
-          <button className="btn">View More</button>
-        </div>
-      </div>
-      <div className="card" onClick={() => {handleClick('2')}}>
-        <div className="content">
-          <h2 className="title">Physical</h2>
-          <p className="copy">
-            Offer a helping hand to someone in your community who needs help
-            with heavy lifting
-          </p>
-          <button className="btn">View More</button>
-        </div>
-      </div>
-      <div className="card" onClick={() => {handleClick('3')}}>
-        <div className="content">
-          <h2 className="title">Family</h2>
-          <p className="copy">Lend support for neighbors with family needs</p>
-          <button className="btn">View More</button>
-        </div>
-      </div>
-      <div className="card" onClick={() => {handleClick('4')}}>
-        <div className="content">
-          <h2 className="title">Other</h2>
-          <p className="copy">Find other ways to help in your community</p>
-          <button className="btn">View More</button>
-        </div>
-      </div>
+      {categories && categories.map((category) => {
+        return <CategoryListItem key={category.id} name={category.name} id={category.id} click={handleClick}/>
+      })}
     </main>
   );
 };

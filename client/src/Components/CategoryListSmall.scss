@@ -5,3 +5,21 @@ $imageIds: "1518709414768-a88981a4515d", "1586781383963-8e66f88077ec",
 
 $bp-md: 600px;
 $bp-lg: 800px;
+
+.list-container {
+  display: grid;
+  grid-gap: 1rem;
+  padding: 1rem;
+  max-width: 1024px;
+  top: 10px;
+  margin: 0 auto;
+  height: 300px;
+
+  @media (min-width: $bp-md) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: $bp-lg) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

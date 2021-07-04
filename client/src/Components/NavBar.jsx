@@ -20,6 +20,7 @@ import { useState } from "react";
 import Drawer from "@material-ui/core/Drawer";
 import AccountBox from "./accountBox/AccountBox";
 import GeoLocation from "./GeoLocation";
+import 
 
 const useStyles = makeStyles({
   root: {
@@ -72,6 +73,7 @@ const NavBar = ({ handleLocation, city, country }) => {
           <SearchBar
             className={classes.search}
             placeholder="Search for location..."
+            
           ></SearchBar>
                     {/* GEO LOCATION */}
                     <GeoLocation handleLocation={handleLocation} city={city} country={country} />

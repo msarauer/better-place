@@ -4,7 +4,10 @@ const router = express.Router();
 module.exports = (db) => {
   // GET ALL OPPORTUNITIES
   router.get("/", (req, res) => {
-    db.query(`SELECT opportunities.*, categories.name as category_name, users.name as host_name FROM opportunities JOIN categories ON categories.id = category_id JOIN users ON users.id = host_id`, [])
+    db.query(
+      `SELECT opportunities.*, categories.name as category_name, users.name as host_name, users.picture_url as avatar FROM opportunities JOIN categories ON categories.id = category_id JOIN users ON users.id = host_id`,
+      []
+    )
       .then((data) => {
         const opportunities = data.rows;
         res.json({ opportunities });
@@ -16,9 +19,10 @@ module.exports = (db) => {
   });
 
   router.get("/location/:location", (req, res) => {
-    db.query(`SELECT opportunities.*, categories.name as category_name FROM opportunities JOIN categories ON categories.id = category_id WHERE location = $1`, [
-      req.params.location,
-    ])
+    db.query(
+      `SELECT opportunities.*, categories.name as category_name FROM opportunities JOIN categories ON categories.id = category_id WHERE location = $1`,
+      [req.params.location]
+    )
       .then((data) => {
         const opportunities = data.rows;
         res.json({ opportunities });
@@ -47,7 +51,7 @@ module.exports = (db) => {
   // POST NEW OPPORTUNITIES
   router.post("/", (req, res) => {
     db.query(
-      `INSERT INTO opportunities (host_id , name , number_of_volunteers_needed, location, date, time_commitment, category_id) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
+      `INSERT INTO opportunities (host_id , name , number_of_volunteers_needed, location, date, time_commitment, category_id, description) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`,
       [
         req.body.host_id,
         req.body.name,
@@ -56,6 +60,7 @@ module.exports = (db) => {
         req.body.date,
         req.body.time_commitment,
         req.body.category_id,
+        req.body.description,
       ]
     )
 
