@@ -13,7 +13,7 @@ const Header = (props) => {
         <source src="/Videos/newbetterplace.mp4" type="video/mp4" />
       </video>
       {displayVid === "myVideo"  && <div className="spacer">&nbsp;</div>}
-      
+      <div className="spacer"></div>
     </div>
   );
 };

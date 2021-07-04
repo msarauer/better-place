@@ -20,13 +20,15 @@ module.exports = (db) => {
   router.post("/", (req, res) => {
     const data = req.body;
     db.query(
-      `INSERT INTO users (name, email, password, phone_number, address) VALUES($1, $2, $3, $4, $5) RETURNING *`,
+      `INSERT INTO users (name, email, password, phone_number, address, picture_url, bio) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
       [
         data.name, 
         data.email, 
         data.password, 
-        data.phone_number, 
-        data.address
+        data.phone_number,
+        data.address,
+        data.picture_url,
+        data.bio
       ]
     )
       .then((data) => {

@@ -82,7 +82,11 @@ const SignupForm = ({ onSave }) => {
           placeholder="Bio"
           onChange={(e) => setBio(e.target.value)}
         />
-        <UploadButtons onChange={(e) => setProfilePic(e.target.value)} />
+        <Input
+          type="textarea"
+          placeholder="Picture URL"
+          onChange={(e) => setProfilePic(e.target.value)}
+        />
         <SubmitButton type="submit">SignUp</SubmitButton>
       </FormContainer>
       <Marginer direction="vertical" margin={10} />
