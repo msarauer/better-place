@@ -55,6 +55,7 @@ app.use("/api/category", categoryRoutes(db));
 app.use("/api/categories", categoriesRoutes(db));
 app.use("/api/opportunity", opportunityRoutes(db));
 app.use("/api/opportunities", opportunitiesRoutes(db));
+app.use("/api/users_opportunities", userOpportunitiesRoutes(db));
 
 
 // Login Route
@@ -64,7 +65,7 @@ app.post("/login", (req, res) => {
   ]).then((data) => {
     const user = data.rows[0];
     if (req.body.password === user.password) {
-      return res.json({ token: true });
+      return res.json({ token: user.email });
     }
     return res.json({ token: false });
   });

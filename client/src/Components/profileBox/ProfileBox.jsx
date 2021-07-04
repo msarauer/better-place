@@ -1,11 +1,11 @@
-import { useState } from 'react'
-import styled from "styled-components"
+import { useEffect, useState } from "react";
+import styled from "styled-components";
 import LoginForm from "./ProfileForm";
-import { motion } from "framer-motion"
-import SignupForm from './EditForm';
-import { AccountContext } from './accountContext';
-import AlignItemsList from './AlignedItemList';
-
+import { motion } from "framer-motion";
+import SignupForm from "./EditForm";
+import { AccountContext } from "./accountContext";
+import AlignItemsList from "./AlignedItemList";
+import axios from "axios";
 
 const BoxContainer = styled.div`
   width: 500px;
@@ -19,7 +19,6 @@ const BoxContainer = styled.div`
   overflow: hidden;
 `;
 
-
 const TopContainer = styled.div`
   width: 100%;
   height: 250px;
@@ -29,7 +28,6 @@ const TopContainer = styled.div`
   padding: 0 1.8em;
   padding-right: 5em;
 `;
-
 
 const BackDrop = styled(motion.div)`
   width: 160%;
@@ -42,8 +40,12 @@ const BackDrop = styled(motion.div)`
   top: -400px;
   left: -350px;
   transform: rotate(60deg);
-  background: rgb(26,188,156);
-  background: linear-gradient(90deg, rgba(26,188,156,1) 20%, rgba(0,153,255,1) 98%);
+  background: rgb(26, 188, 156);
+  background: linear-gradient(
+    90deg,
+    rgba(26, 188, 156, 1) 20%,
+    rgba(0, 153, 255, 1) 98%
+  );
   z-index: 10;
 `;
 
@@ -51,8 +53,7 @@ const HeaderContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  margin-bottom: 150px;
-  
+  margin-bottom: 25px;
 `;
 
 const HeaderText = styled.h2`
@@ -62,6 +63,27 @@ const HeaderText = styled.h2`
   color: #fff;
   z-index: 10;
   margin: 0;
+`;
+
+const HeaderPicture = styled.img`
+  display: inline;
+  /* margin: 0 auto; */
+  border-radius: 50%;
+  width: 175px;
+  height: 175px;
+  margin-left: 20px;
+  margin-top: 10px;
+  margin-bottom: 40px;
+`;
+
+const HeaderEditPicture = styled.img`
+  display: inline;
+  /* margin: 0 auto; */
+  border-radius: 50%;
+  width: 175px;
+  height: 175px;
+  margin-left: 20px;
+  margin-bottom: 40px;
 `;
 
 const SmallText = styled.h5`
@@ -78,6 +100,7 @@ const InnerContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 1.8em;
+  margin-top: 5px;
 `;
 
 const backdropVariants = {
@@ -85,50 +108,61 @@ const backdropVariants = {
     width: "270%",
     height: "1350px",
     borderRadius: "20%",
-    tranform: "rotate(60deg)"
+    tranform: "rotate(60deg)",
+    zIndex: 10,
   },
   collapsed: {
     width: "160%",
-    height: "550px",
+    height: "520px",
     borderRadius: "50%",
-    tranform: "rotate(60deg)"
-  }
-}
+    tranform: "rotate(60deg)",
+  },
+};
 
 const expandingTransition = {
   type: "spring",
   duration: 2.3,
   stiffness: 30,
-}
-
+};
 
 const AccountBox = () => {
-  const [isExpanded, setExpanded] = useState(false)
+  const [isExpanded, setExpanded] = useState(false);
   const [active, setActive] = useState("signin");
+  const [userPicture, setUserPicture] = useState({});
 
+  useEffect(() => {
+    axios
+      .get(`/api/user/1`)
+      .then((data) => {
+        // console.log("THIS IS SOME DATA", data.data.users[0]);
+        setUserPicture(data.data.users[0].picture_url);
+      })
+      .catch((e) => {
+        console.log("axiosError:", e);
+      });
+  }, []);
 
   const playExpandedAnimation = () => {
-    setExpanded(true)
+    setExpanded(true);
     setTimeout(() => {
       setExpanded(false);
-    }, expandingTransition.duration * 1000 - 1500)
-  }
-
+    }, expandingTransition.duration * 1000 - 1500);
+  };
 
   const switchToSignup = () => {
     playExpandedAnimation();
     setTimeout(() => {
-      setActive("signup")
-    }, 600)
-  }
+      setActive("signup");
+    }, 600);
+  };
   const switchToSignin = () => {
     playExpandedAnimation();
     setTimeout(() => {
-      setActive("signin")
-    }, 600)
-  }
+      setActive("signin");
+    }, 600);
+  };
 
-  const contextValue = { switchToSignup, switchToSignin }
+  const contextValue = { switchToSignup, switchToSignin };
 
   return (
     <AccountContext.Provider value={contextValue}>
@@ -142,12 +176,16 @@ const AccountBox = () => {
           />
           {active === "signin" && (
             <HeaderContainer>
-              <HeaderText>PICTURE</HeaderText>
+              <HeaderText>
+                <HeaderPicture src={userPicture} height={250} />
+              </HeaderText>
             </HeaderContainer>
           )}
           {active === "signup" && (
             <HeaderContainer>
-              <HeaderText>PICTURE</HeaderText>
+              <HeaderText>
+                <HeaderEditPicture src={userPicture} height={250} />
+              </HeaderText>
             </HeaderContainer>
           )}
         </TopContainer>
@@ -158,7 +196,6 @@ const AccountBox = () => {
       </BoxContainer>
     </AccountContext.Provider>
   );
-}
+};
 
-
-export default AccountBox
+export default AccountBox;

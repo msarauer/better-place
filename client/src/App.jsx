@@ -24,7 +24,10 @@ function App() {
   const [country, setCountry] = useState("");
   const [category, setCategory] = useState(undefined);
   const [opportunities, setOpportunities] = useState([]);
-  const [token, setToken] = useState();
+  const [token, setToken] = useState('');
+  const [categories, setCategories] = useState();
+
+
 
   const handleLocation = (city, country) => {
     setCity(city)
@@ -41,14 +44,20 @@ function App() {
     })
   }
 
+  const handleToken = token => {
+    if (token) {
+      return setToken(true)
+    }
+  }
+
   return (
     <div className="App">
       <NavBar handleLocation={handleLocation} city={city} country={country} token={token} setToken={setToken} />
       <Header />
-      <CategoryList handleClick={(data) => setCategory(data)}/>
+      <CategoryList handleClick={(data) => setCategory(data)} categories={categories} setCategories={setCategories}/>
       <Search />
       {/* Conditional for SearchList */}
-      <CreateNewOpportunityWithModal opportunities={opportunities} setOpportunities={setOpportunities} onSave={save} location={city}/>
+      <CreateNewOpportunityWithModal opportunities={opportunities} setOpportunities={setOpportunities} onSave={save} location={city} categories={categories} setCategories={setCategories}/>
       <OpportunityList opportunities={opportunities} setOpportunities={setOpportunities} location={city} category={category} />
       <br />
        <BackTop />

@@ -6,10 +6,10 @@ import axios from 'axios';
 
 
 
-const LoginForm = (props) => {
+const LoginForm = ({ setToken, token}) => {
 
 
-  const {switchToSignup, setToken} = useContext(AccountContext)
+  const {switchToSignup} = useContext(AccountContext)
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
@@ -24,26 +24,29 @@ const LoginForm = (props) => {
     e.preventDefault();
     axios
       .post('/login', {email, password})
-      .then((data) => console.log(data.data))
+      .then((data) => {
+        console.log(data.data.token)
+        setToken(data.data.token)
+        console.log(token)
+      })
       .catch(e => console.log(e))
-    }
-    // setToken(token);
+  }
 
   return (
     <BoxContainer>
       <form noValidate autoComplete="off" onSubmit={handleSubmit}>
-      <FormContainer >
-        <Input
-          type="email"
-          placeholder="Email"
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <Input
-          type="password"
-          placeholder="Password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </FormContainer>
+        <FormContainer >
+          <Input
+            type="email"
+            placeholder="Email"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <Input
+            type="password"
+            placeholder="Password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </FormContainer>
       <Marginer direction="vertical" margin={60} />
       <SubmitButton type="submit">SignIn</SubmitButton>
       </form>

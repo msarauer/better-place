@@ -15,7 +15,7 @@ const CategoryList = (props) => {
           <p className="copy">
             From electrical to plumbing - find neighbors who need your skills
           </p>
-          <button className="btn">View More</button>
+      
         </div>
       </div>
   );

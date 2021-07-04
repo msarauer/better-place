@@ -4,9 +4,8 @@ import axios from "axios";
 import CategoryListItem from './CategoryListItem'
 
 
-const CategoryList = ({ handleClick }) => {
+const CategoryList = ({ handleClick, categories, setCategories }) => {
 
-  const [categories, setCategories] = useState();
 
   useEffect(() => {
 

@@ -2,7 +2,7 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles, Typography } from "@material-ui/core";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
 import Select from '@material-ui/core/Select';
 import { MenuItem } from "@material-ui/core";
@@ -24,17 +24,9 @@ const useStyles = makeStyles({
   }
 })
 
-const initialFormValues = {
-  name: '',
-  description: '',
-  defaultLocation: 'true',
-  date: new Date(),
-  timeCommitment: '',
-  category: 0,
-  subCategory: 0
-}
 
-const CreateNewOpportunity = ({ opportunities, setOpportunities, onSave, location, handleClose }) => {
+
+const CreateNewOpportunity = ({ opportunities, setOpportunities, onSave, location, handleClose, setCategories, categories }) => {
   const classes = useStyles();
   const [title, setTitle] = useState('')
   const [titleError, setTitleError] = useState(false)
@@ -42,8 +34,6 @@ const CreateNewOpportunity = ({ opportunities, setOpportunities, onSave, locatio
   const [descriptionError, setDescriptionError] = useState(false)
   const [category, setCategory] = useState('');
   const [categoryError, setCategoryError] = useState(false)
-  const [subCategory, setSubCategory] = useState('');
-  const [subCategoryError, setSubCategoryError] = useState(false)
   const [needDate, setNeedDate ] = useState(null);
   const [needDateError, setNeedDateError] = useState(false)
   const [timeCommitment, setTimeCommitment ] = useState('');
@@ -51,7 +41,14 @@ const CreateNewOpportunity = ({ opportunities, setOpportunities, onSave, locatio
   const [volunteersNeeded, setVolunteersNeeded ] = useState(0);
   const [volunteersNeededError, setVolunteersNeededError] = useState(false)
 
+  useEffect(() => {
 
+    axios.get('/api/categories')
+    .then((data) => {
+      setCategories(data.data.categories)
+    })
+    .catch((e) => {console.log(e.message)})
+  }, [])
 
    
   // INSERT INTO opportunities (host_id , name , number_of_volunteers_needed, location, date, time_commitment, category_id)
@@ -148,19 +145,12 @@ const CreateNewOpportunity = ({ opportunities, setOpportunities, onSave, locatio
               name="Category"
               error={categoryError}
             >
-              <MenuItem value="Physical">Physical</MenuItem>
-              <MenuItem value="Home Repair">Home Repair</MenuItem>
+              {categories &&categories.map((category) => {
+                console.log(category)
+                return <MenuItem key={category.id} value={category.name}>{category.name}</MenuItem>
+              })}
+
             </TextField>
-    
-          <TextField
-            select
-            className={classes.dropdown}
-            label="Sub-Category"
-            name="Sub-Category"
-          >
-            <MenuItem value="10">Ten</MenuItem>
-            <MenuItem value="20">Twenty</MenuItem>
-          </TextField>
           
           <TextField
             select

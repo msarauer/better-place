@@ -27,6 +27,7 @@ const useStyles = makeStyles({
     background:
       "linear-gradient(90deg, rgba(0,153,255,1) 20%, rgba(26,188,156,1)98%)",
   },
+  geo: {},
   text: {
     color: "#FFFFFF",
   },
@@ -39,27 +40,26 @@ const useStyles = makeStyles({
     borderRadius: 25,
     // textTransform: "capitalize",
   },
+  flex: {
+    display: "flex",
+  },
+  button: {
+    height: "2rem",
+  },
 });
-
 
 const NavBar = ({ handleLocation, city, country, token, setToken }) => {
   const classes = useStyles();
 
-  const [state, setState] = React.useState({
-    top: false,
-    left: false,
-    bottom: false,
+  const [loginPage, setLoginPage] = React.useState({
     right: false,
   });
 
-  const [profile, setProfile] = React.useState({
-    top: false,
-    left: false,
-    bottom: false,
+  const [profilePage, setProfilePage] = React.useState({
     right: false,
   });
 
-  const toggleDrawer = (anchor, open) => (event) => {
+  const toggleLogin = (anchor, open) => (event) => {
     if (
       event.type === "keydown" &&
       (event.key === "Tab" || event.key === "Shift")
@@ -67,9 +67,8 @@ const NavBar = ({ handleLocation, city, country, token, setToken }) => {
       return;
     }
 
-    setState({ ...state, [anchor]: open });
+    setLoginPage({ ...loginPage, [anchor]: open });
   };
-
 
   const toggleProfile = (anchor, open) => (event) => {
     if (
@@ -79,7 +78,7 @@ const NavBar = ({ handleLocation, city, country, token, setToken }) => {
       return;
     }
 
-    setProfile({ ...state, [anchor]: open });
+    setProfilePage({ ...profilePage, [anchor]: open });
   };
 
   return (
@@ -87,51 +86,56 @@ const NavBar = ({ handleLocation, city, country, token, setToken }) => {
       <AppBar className={classes.root}>
         <ToolBar>
           <Typography variant="h6">
-            <img src={betterplace} />
+            <img src={betterplace} alt="betterplace" />
           </Typography>
-          <SearchBar
-            className={classes.search}
-            placeholder="Search for location..."
-            
-          ></SearchBar>
-                    {/* GEO LOCATION */}
-                    <GeoLocation handleLocation={handleLocation} city={city} country={country} />
+
+          {/* GEO LOCATION */}
+          <GeoLocation
+            handleLocation={handleLocation}
+            city={city}
+            country={country}
+            className={classes.geo}
+          />
           <Grid container justify="flex-end" justify-content="space-between">
             <IconButton>
               <Typography className={classes.text}>Categories</Typography>
               <MenuIcon className={classes.text} />
             </IconButton>
             {/* ACCOUNT BOX ATTEMPT */}
-            {["right"].map((anchor: any) => (
+            {["right"].map((anchor) => (
               <React.Fragment key={anchor}>
-                {
-                  !token && (
-                  <Button onClick={toggleDrawer(anchor, true)}>Login</Button>
-                  )
-                }
-                {
-                  token && (
-                    <h1>Hello User</h1>
-                  )
-                }
+                {!token && (
+                  <Button onClick={toggleLogin(anchor, true)}>Login</Button>
+                )}
+                {token && (
+                  <div className={classes.flex}>
+                    <p>{token}</p>
+                    <button
+                      className={classes.button}
+                      onClick={() => setToken("")}
+                    >
+                      Logout
+                    </button>
+                  </div>
+                )}
                 <Drawer
                   classes={{ paper: classes.drawerInside }}
                   anchor={anchor}
-                  open={state[anchor]}
-                  onClose={toggleDrawer(anchor, false)}
+                  open={loginPage[anchor]}
+                  onClose={toggleLogin(anchor, false)}
+                  onSubmit={toggleLogin(anchor, !token)}
                 >
-                  <AccountBox />
-
+                  <AccountBox setToken={setToken} token={token} />
                 </Drawer>
               </React.Fragment>
             ))}
-           {["right"].map((anchor) => (
+            {["right"].map((anchor) => (
               <React.Fragment key={anchor}>
                 <Button onClick={toggleProfile(anchor, true)}>Profile</Button>
                 <Drawer
                   classes={{ paper: classes.drawerProfile }}
                   anchor={anchor}
-                  open={profile[anchor]}
+                  open={profilePage[anchor]}
                   onClose={toggleProfile(anchor, false)}
                 >
                   <ProfileBox />

@@ -5,6 +5,7 @@ module.exports = (db) => {
   // GET ONE OPPORTUNITY BY ID
   router.get("/:id", (req, res) => {
     db.query(`SELECT * FROM opportunities WHERE id = $1`, [req.params.id])
+
       .then((data) => {
         const opportunitiesByID = data.rows[0];
         res.json({ opportunitiesByID });

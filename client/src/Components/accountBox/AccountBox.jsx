@@ -124,7 +124,7 @@ const AccountBox = ({ token, setToken }) => {
     }, 600);
   };
 
-  const contextValue = { switchToSignup, switchToSignin, token, setToken};
+  const contextValue = { switchToSignup, switchToSignin };
 
   return (
     <AccountContext.Provider value={contextValue}>
@@ -152,7 +152,7 @@ const AccountBox = ({ token, setToken }) => {
           )}
         </TopContainer>
         <InnerContainer>
-          {active === "signin" && <LoginForm />}
+          {active === "signin" && <LoginForm setToken={setToken} token={token} />}
           {active === "signup" && <SignupForm />}
         </InnerContainer>
       </BoxContainer>

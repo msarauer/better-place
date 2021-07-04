@@ -12,7 +12,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function CreateNewOpportunityWithModal ( { onSave, location, opportunities, setOpportunities }) {
+export default function CreateNewOpportunityWithModal ( { onSave, location, opportunities, setOpportunities, categories, setCategories }) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -29,7 +29,7 @@ export default function CreateNewOpportunityWithModal ( { onSave, location, oppo
         Add your need
       </Button>
       <Dialog
-      fullWidth
+        fullWidth
         open={open}
         TransitionComponent={Transition}
         keepMounted
@@ -38,9 +38,7 @@ export default function CreateNewOpportunityWithModal ( { onSave, location, oppo
         aria-describedby="alert-dialog-slide-description"
       >
         <DialogTitle id="alert-dialog-slide-title">{""}</DialogTitle>
-        {/* <DialogContent> */}
-          <CreateNewOpportunity handleClose={handleClose} setOpportunities={setOpportunities} opportunities={opportunities} location={location}  onSave={onSave}/>
-        {/* </DialogContent> */}
+          <CreateNewOpportunity handleClose={handleClose} setOpportunities={setOpportunities} opportunities={opportunities} location={location}  onSave={onSave} categories={categories} setCategories={setCategories}/>
       </Dialog>
     </div>
   );
