@@ -33,7 +33,13 @@ const useStyles = makeStyles({
   search: {
     width: "500px",
   },
-  drawerInside: {
+  drawerLogin: {
+    // width: 600,
+    height: 550,
+    borderRadius: 25,
+    // textTransform: "capitalize",
+  },
+  drawerProfile: {
     // width: 600,
     height: 800,
     borderRadius: 25,
@@ -99,7 +105,7 @@ const NavBar = ({ handleLocation, city, country }) => {
               <React.Fragment key={anchor}>
                 <Button onClick={toggleLogin(anchor, true)}>Login</Button>
                 <Drawer
-                  classes={{ paper: classes.drawerInside }}
+                  classes={{ paper: classes.drawerLogin }}
                   anchor={anchor}
                   open={login[anchor]}
                   onClose={toggleLogin(anchor, false)}
@@ -112,7 +118,7 @@ const NavBar = ({ handleLocation, city, country }) => {
               <React.Fragment key={anchor}>
                 <Button onClick={toggleProfile(anchor, true)}>Profile</Button>
                 <Drawer
-                  classes={{ paper: classes.drawerInside }}
+                  classes={{ paper: classes.drawerProfile }}
                   anchor={anchor}
                   open={profile[anchor]}
                   onClose={toggleProfile(anchor, false)}
