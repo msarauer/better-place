@@ -12,7 +12,7 @@ import { useContext, useState } from "react";
 import UploadButtons from "./UploadButtons.jsx";
 import axios from "axios";
 
-const SignupForm = ({ onSave }) => {
+const SignupForm = ({ toggleLogin }) => {
   const { switchToSignin } = useContext(AccountContext);
 
   const [email, setEmail] = useState("");
