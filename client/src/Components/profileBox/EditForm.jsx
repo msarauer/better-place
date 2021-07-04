@@ -5,7 +5,7 @@ import { useContext } from "react";
 
 
 
-const SignupForm = (props) => {
+const EditForm = (props) => {
   const {switchToSignin} = useContext(AccountContext)
 
 
@@ -27,4 +27,4 @@ const SignupForm = (props) => {
   )
 }
 
-export default SignupForm
+export default EditForm

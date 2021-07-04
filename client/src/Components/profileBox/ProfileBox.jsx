@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import styled from "styled-components"
-import LoginForm from "./LoginForm";
+import LoginForm from "./ProfileForm";
 import { motion } from "framer-motion"
-import SignupForm from './SignupForm';
+import SignupForm from './EditForm';
 import { AccountContext } from './accountContext';
 import AlignItemsList from './AlignedItemList';
 

@@ -12,6 +12,9 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
     maxWidth: '36ch',
+    maxHeight: 350,
+    overflow: 'auto',
+    
     backgroundColor: theme.palette.background.paper,
   },
   inline: {
@@ -85,6 +88,48 @@ export default function AlignItemsList() {
                 Sandra Adams
               </Typography>
               {' — Do you have Paris recommendations? Have you ever…'}
+            </React.Fragment>
+          }
+        />
+      </ListItem>
+      <ListItem alignItems="flex-start">
+        <ListItemAvatar>
+          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+        </ListItemAvatar>
+        <ListItemText
+          primary="Brunch this weekend?"
+          secondary={
+            <React.Fragment>
+              <Typography
+                component="span"
+                variant="body2"
+                className={classes.inline}
+                color="textPrimary"
+              >
+                Ali Connors
+              </Typography>
+              {" — I'll be in your neighborhood doing errands this…"}
+            </React.Fragment>
+          }
+        />
+      </ListItem>
+      <ListItem alignItems="flex-start">
+        <ListItemAvatar>
+          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+        </ListItemAvatar>
+        <ListItemText
+          primary="Brunch this weekend?"
+          secondary={
+            <React.Fragment>
+              <Typography
+                component="span"
+                variant="body2"
+                className={classes.inline}
+                color="textPrimary"
+              >
+                Ali Connors
+              </Typography>
+              {" — I'll be in your neighborhood doing errands this…"}
             </React.Fragment>
           }
         />

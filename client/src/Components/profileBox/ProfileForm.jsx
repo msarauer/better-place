@@ -9,7 +9,7 @@ import AlignItemsList from "./AlignedItemList";
 
 
 
-const LoginForm = (props) => {
+const ProfileForm = (props) => {
 
   const {switchToSignup} = useContext(AccountContext)
 
@@ -39,4 +39,4 @@ const LoginForm = (props) => {
 )
 }
 
-export default LoginForm
+export default ProfileForm
