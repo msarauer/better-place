@@ -24,7 +24,7 @@ const ProfileForm = (props) => {
     axios
       .get(`/api/user/1`) // REMEMBER TO CHANGE TO :id
       .then((data) => {
-        // console.log("THIS IS SOME DATA", data.data.users[0]);
+        console.log("THIS IS SOME DATA", data.data.users[0]);
         setUser(data.data.users[0]);
       })
       .catch((e) => {
@@ -32,16 +32,16 @@ const ProfileForm = (props) => {
       });
   }, []);
 
-  useEffect(() => {
-    axios
-      .get("/api/users_opportunities/1")
-      .then((data) => {
-        setOpportunities(data);
-      })
-      .catch((e) => {
-        console.log("axiosError:", e);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get("/api/users_opportunities/1")
+  //     .then((data) => {
+  //       setOpportunities(data);
+  //     })
+  //     .catch((e) => {
+  //       console.log("axiosError:", e);
+  //     });
+  // }, []);
 
   console.log("THIS SHOULD BE USER OBJECT-----", user);
   return (
