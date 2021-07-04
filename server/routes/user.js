@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 
 module.exports = (db) => {
-
   // READ user
   router.get("/:id", (req, res) => {
     db.query(`SELECT * from users WHERE id = $1;`, [req.params.id])

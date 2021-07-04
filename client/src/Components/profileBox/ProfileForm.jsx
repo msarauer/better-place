@@ -41,7 +41,7 @@ const ProfileForm = (props) => {
       .catch((e) => {
         console.log("axiosError:", e);
       });
-  });
+  }, []);
 
   console.log("THIS SHOULD BE USER OBJECT-----", user);
   return (
