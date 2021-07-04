@@ -4,8 +4,8 @@ const router = express.Router();
 module.exports = (db) => {
 
   // READ user
-  router.get("/:id", (req, res) => {
-    db.query(`SELECT * from users WHERE id = $1;`, [req.params.id])
+  router.get("/:email", (req, res) => {
+    db.query(`SELECT * from users WHERE email = $1;`, [req.params.email])
       .then((data) => {
         const users = data.rows;
         res.json({ users });

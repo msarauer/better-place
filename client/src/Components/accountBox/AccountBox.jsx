@@ -100,7 +100,7 @@ const expandingTransition = {
   stiffness: 30,
 };
 
-const AccountBox = () => {
+const AccountBox = ({ token, setToken }) => {
   const [isExpanded, setExpanded] = useState(false);
   const [active, setActive] = useState("signin");
 
@@ -124,7 +124,7 @@ const AccountBox = () => {
     }, 600);
   };
 
-  const contextValue = { switchToSignup, switchToSignin };
+  const contextValue = { switchToSignup, switchToSignin, token, setToken};
 
   return (
     <AccountContext.Provider value={contextValue}>

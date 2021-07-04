@@ -24,6 +24,7 @@ function App() {
   const [country, setCountry] = useState("");
   const [category, setCategory] = useState(undefined);
   const [opportunities, setOpportunities] = useState([]);
+  const [token, setToken] = useState();
 
   const handleLocation = (city, country) => {
     setCity(city)
@@ -42,7 +43,7 @@ function App() {
 
   return (
     <div className="App">
-      <NavBar handleLocation={handleLocation} city={city} country={country} />
+      <NavBar handleLocation={handleLocation} city={city} country={country} token={token} setToken={setToken} />
       <Header />
       <CategoryList handleClick={(data) => setCategory(data)}/>
       <Search />

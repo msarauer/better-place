@@ -20,7 +20,7 @@ const CategoryList = ({ handleClick }) => {
 
 
   return (
-    <div className="after">
+    <div className="after-vid">
       <main className="page-content">
         {categories && categories.map((category) => {
           return <CategoryListItem key={category.id} name={category.name} id={category.id} click={handleClick}/>

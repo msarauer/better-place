@@ -33,31 +33,33 @@ const useStyles = makeStyles({
   search: {
     width: "500px",
   },
-  drawerLogin: {
+  drawerInside: {
     // width: 600,
-    height: 750,
-    borderRadius: 25,
-    // textTransform: "capitalize",
-  },
-  drawerProfile: {
-    // width: 600,
-    height: 800,
+    height: 550,
     borderRadius: 25,
     // textTransform: "capitalize",
   },
 });
 
-const NavBar = ({ handleLocation, city, country }) => {
+
+const NavBar = ({ handleLocation, city, country, token, setToken }) => {
   const classes = useStyles();
 
-  const [login, setLogin] = React.useState({
-    right: false,
-  });
-  const [profile, setProfile] = React.useState({
+  const [state, setState] = React.useState({
+    top: false,
+    left: false,
+    bottom: false,
     right: false,
   });
 
-  const toggleLogin = (anchor, open) => (event) => {
+  const [profile, setProfile] = React.useState({
+    top: false,
+    left: false,
+    bottom: false,
+    right: false,
+  });
+
+  const toggleDrawer = (anchor, open) => (event) => {
     if (
       event.type === "keydown" &&
       (event.key === "Tab" || event.key === "Shift")
@@ -65,8 +67,9 @@ const NavBar = ({ handleLocation, city, country }) => {
       return;
     }
 
-    setLogin({ ...login, [anchor]: open });
+    setState({ ...state, [anchor]: open });
   };
+
 
   const toggleProfile = (anchor, open) => (event) => {
     if (
@@ -76,7 +79,7 @@ const NavBar = ({ handleLocation, city, country }) => {
       return;
     }
 
-    setProfile({ ...profile, [anchor]: open });
+    setProfile({ ...state, [anchor]: open });
   };
 
   return (
@@ -91,32 +94,38 @@ const NavBar = ({ handleLocation, city, country }) => {
             placeholder="Search for location..."
             
           ></SearchBar>
-          {/* GEO LOCATION */}
-          <GeoLocation
-            handleLocation={handleLocation}
-            city={city}
-            country={country}
-          />
+                    {/* GEO LOCATION */}
+                    <GeoLocation handleLocation={handleLocation} city={city} country={country} />
           <Grid container justify="flex-end" justify-content="space-between">
             <IconButton>
               <Typography className={classes.text}>Categories</Typography>
               <MenuIcon className={classes.text} />
             </IconButton>
             {/* ACCOUNT BOX ATTEMPT */}
-            {["right"].map((anchor) => (
+            {["right"].map((anchor: any) => (
               <React.Fragment key={anchor}>
-                <Button onClick={toggleLogin(anchor, true)}>Login</Button>
+                {
+                  !token && (
+                  <Button onClick={toggleDrawer(anchor, true)}>Login</Button>
+                  )
+                }
+                {
+                  token && (
+                    <h1>Hello User</h1>
+                  )
+                }
                 <Drawer
-                  classes={{ paper: classes.drawerLogin }}
+                  classes={{ paper: classes.drawerInside }}
                   anchor={anchor}
-                  open={login[anchor]}
-                  onClose={toggleLogin(anchor, false)}
+                  open={state[anchor]}
+                  onClose={toggleDrawer(anchor, false)}
                 >
                   <AccountBox />
+
                 </Drawer>
               </React.Fragment>
             ))}
-            {["right"].map((anchor) => (
+           {["right"].map((anchor) => (
               <React.Fragment key={anchor}>
                 <Button onClick={toggleProfile(anchor, true)}>Profile</Button>
                 <Drawer

@@ -1,29 +1,54 @@
 import { BoldLink, BoxContainer, FormContainer, Input, MutedLink, SubmitButton } from "./common"
 import { Marginer } from './Marginer';
 import { AccountContext } from './accountContext'
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
+import axios from 'axios';
 
 
 
 const LoginForm = (props) => {
-  const [email, setEmail] = useState("Email")
-  const [password, setPassword] = useState("")
 
-  const {switchToSignup} = useContext(AccountContext)
 
+  const {switchToSignup, setToken} = useContext(AccountContext)
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+
+  const loginUser = (credentials) => {
+    return axios
+    .post('/login', credentials)
+    .then((data) => console.log(credentials))
+    .catch(e => console.log(e))
+  }
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+    axios
+      .post('/login', {email, password})
+      .then((data) => console.log(data.data))
+      .catch(e => console.log(e))
+    }
+    // setToken(token);
 
   return (
     <BoxContainer>
-      <FormContainer>
-        <Input type="email" placeholder="Email"/>
-
-      <Marginer direction="vertical" margin={10} />
-        <Input type="password" placeholder="Password" />
+      <form noValidate autoComplete="off" onSubmit={handleSubmit}>
+      <FormContainer >
+        <Input
+          type="email"
+          placeholder="Email"
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <Input
+          type="password"
+          placeholder="Password"
+          onChange={(e) => setPassword(e.target.value)}
+        />
       </FormContainer>
-      <Marginer direction="vertical" margin={15} />
-      <MutedLink href="#">Forgot Your password?</MutedLink>
       <Marginer direction="vertical" margin={60} />
       <SubmitButton type="submit">SignIn</SubmitButton>
+      </form>
+      <Marginer direction="vertical" margin={15} />
+      <MutedLink href="#">Forgot Your password?</MutedLink>
       <Marginer direction="vertical" margin='1.6em' />
       <MutedLink href="#">Dont have an account? <BoldLink href='#' onClick={switchToSignup}>SignUp</BoldLink></MutedLink>
     </BoxContainer>
