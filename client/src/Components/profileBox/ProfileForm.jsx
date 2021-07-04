@@ -1,42 +1,75 @@
-import { BoldLink, BoxContainer, FormContainer, Input, MutedLink, SubmitButton, SmallText, EditLink } from "./common"
-import { Marginer } from './Marginer';
-import { AccountContext } from './accountContext'
-import { useContext } from "react";
+import {
+  BoldLink,
+  BoxContainer,
+  FormContainer,
+  Input,
+  MutedLink,
+  SubmitButton,
+  SmallText,
+  EditLink,
+} from "./common";
+import { Marginer } from "./Marginer";
+import { AccountContext } from "./accountContext";
+import { useContext, useEffect, useState } from "react";
 import AlignItemsList from "./AlignedItemList";
-
-
-
-
-
+import axios from "axios";
 
 const ProfileForm = (props) => {
+  const { switchToSignup } = useContext(AccountContext);
+  const [user, setUser] = useState({});
+  const [opportunities, setOpportunities] = useState([]);
 
-  const {switchToSignup} = useContext(AccountContext)
+  // Used to get specific user from id
+  useEffect(() => {
+    axios
+      .get(`/api/user/1`) // REMEMBER TO CHANGE TO :id
+      .then((data) => {
+        // console.log("THIS IS SOME DATA", data.data.users[0]);
+        setUser(data.data.users[0]);
+      })
+      .catch((e) => {
+        console.log("axiosError:", e);
+      });
+  }, []);
 
+  useEffect(() => {
+    axios
+      .get("/api/users_opportunities/1")
+      .then((data) => {
+        setOpportunities(data);
+      })
+      .catch((e) => {
+        console.log("axiosError:", e);
+      });
+  }, []);
+
+  console.log("THIS SHOULD BE USER OBJECT-----", user);
   return (
     <>
-    <BoxContainer>
-      <FormContainer>
-        <h1>Betsy</h1>
-          <SmallText>
-          Phone number
-          </SmallText>
-          <SmallText>
-          Location
-          </SmallText>
-        <SmallText>
-          I am the greatest cow to ever grace this world. None can withstand my pure glory
-          </SmallText>
-      </FormContainer>
-      <Marginer direction="vertical" margin={10} />
-      <MutedLink href="#"></MutedLink>
-      <Marginer direction="vertical" margin='1.6em' />
-      <Marginer direction="vertical" margin='1.6em' />
-    </BoxContainer>
-    <AlignItemsList />
-      <EditLink href='#' onClick={switchToSignup}>Edit Profile</EditLink>
-</>
-)
-}
+      <BoxContainer>
+        <FormContainer>
+          <h1>{user.name}</h1>
+          <SmallText>{user.phone_number}</SmallText>
+          <SmallText>{user.address}</SmallText>
+          <SmallText>{user.bio}</SmallText>
+        </FormContainer>
+        <Marginer direction="vertical" margin={10} />
+        <MutedLink href="#"></MutedLink>
+        <Marginer direction="vertical" margin="1.6em" />
+        <Marginer direction="vertical" margin="1.6em" />
+      </BoxContainer>
 
-export default ProfileForm
+      {/* <Marginer direction="vertical" margin={-10} /> */}
+
+      <SmallText>------Completed Committments------ </SmallText>
+      <Marginer direction="vertical" margin={5} />
+      <EditLink href="#" onClick={switchToSignup}>
+        Edit Profile
+        <Marginer direction="vertical" margin={10} />
+      </EditLink>
+      <AlignItemsList />
+    </>
+  );
+};
+
+export default ProfileForm;
