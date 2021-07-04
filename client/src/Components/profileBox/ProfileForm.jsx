@@ -20,7 +20,7 @@ const ProfileForm = (props) => {
 
   useEffect(() => {
     axios
-      .get(`/api/user/1`)
+      .get(`/api/user/1`) // REMEMBER TO CHANGE TO :id
       .then((data) => {
         // console.log("THIS IS SOME DATA", data.data.users[0]);
         setUser(data.data.users[0]);
