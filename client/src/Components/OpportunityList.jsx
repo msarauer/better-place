@@ -179,7 +179,7 @@ export default function CollapsibleTable({ location, category }) {
     .then((data) => {
     setOpportunities(data.data.opportunities);
     console.log(data.data);
-    const filteredRows = rowFilter(opportunities)
+    // const filteredRows = rowFilter(opportunities);
     setRows(filteredRows);
   })
   .catch((e) => {console.log('axiosError:', e)}) 
