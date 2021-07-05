@@ -24,7 +24,7 @@ const useStyles = makeStyles({
 
 
 
-const CreateNewOpportunity = ({ opportunities, setOpportunities, onSave, location, handleClose, setCategories, categories }) => {
+const CreateNewOpportunity = ({ opportunities, setOpportunities, onSave, location, handleClose, setCategories, categories, host_id }) => {
   const classes = useStyles();
   const [title, setTitle] = useState('')
   const [titleError, setTitleError] = useState(false)
@@ -48,15 +48,6 @@ const CreateNewOpportunity = ({ opportunities, setOpportunities, onSave, locatio
     .catch((e) => {console.log(e.message)})
   }, [])
 
-   
-  // INSERT INTO opportunities (host_id , name , number_of_volunteers_needed, location, date, time_commitment, category_id)
-  // req.body.host_id,
-  // req.body.name,
-  // req.body.number_of_volunteers_needed,
-  // req.body.location,
-  // req.body.date,
-  // req.body.time_commitment,
-  // req.body.category_id,
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -86,8 +77,9 @@ const CreateNewOpportunity = ({ opportunities, setOpportunities, onSave, locatio
     if (!(title && description && category && needDate && timeCommitment && volunteersNeeded)) {
       return;
     }
+    console.log(category)
     const saveData = {
-      host_id: 1,
+      host_id: host_id,
       name: title,
       number_of_volunteers_needed: volunteersNeeded,
       number_of_volunteers_added: 0,

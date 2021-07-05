@@ -83,7 +83,7 @@ function App() {
       <CategoryList handleClick={(data) => setCategory(data)} categories={categories} setCategories={setCategories}/>
       <Search />
       {/* Conditional for SearchList */}
-      <CreateNewOpportunityWithModal opportunities={opportunities} setOpportunities={setOpportunities} onSave={save} location={city} categories={categories} setCategories={setCategories}/>
+      <CreateNewOpportunityWithModal opportunities={opportunities} setOpportunities={setOpportunities} onSave={save} location={city} categories={categories} setCategories={setCategories} host_id={token}/>
       <OpportunityList opportunities={opportunities} setOpportunities={setOpportunities} location={city} category={category} />
       <br />
        <BackTop />
