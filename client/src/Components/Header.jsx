@@ -1,4 +1,3 @@
-import { makeStyles } from "@material-ui/core";
 import "./Header.scss";
 import { useState } from "react";
 // import Carousel from 'react-bootstrap/Carousel';

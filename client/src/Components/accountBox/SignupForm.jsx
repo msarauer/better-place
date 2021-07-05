@@ -9,7 +9,6 @@ import {
 import { Marginer } from "./Marginer";
 import { AccountContext } from "./accountContext";
 import { useContext, useState } from "react";
-import UploadButtons from "./UploadButtons.jsx";
 import axios from "axios";
 
 const SignupForm = ({ toggleLogin }) => {

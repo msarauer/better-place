@@ -67,7 +67,7 @@ app.post("/login", (req, res) => {
     if (req.body.password === user.password) {
       return res.json({ token: user.email });
     }
-    return res.json({ token: false });
+    // return res.json({ token: false });
   });
 });
 

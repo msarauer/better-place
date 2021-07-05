@@ -1,16 +1,10 @@
-// // import React, { useEffect } from 'react'
-// // import { List, Avatar, Space } from 'antd';
-// // import { MessageOutlined, LikeOutlined, StarOutlined } from '@ant-design/icons';
-import { formatDate, getPercentage } from '../helpers/basic-helpers';
-import { rowFilter, columnSort } from '../helpers/filters-and-sorters';
 
+import { getPercentage } from '../helpers/basic-helpers';
+import { rowFilter } from '../helpers/filters-and-sorters';
 import 'antd/dist/antd.css';
-// import './index.css';
 import { List, Avatar, Space } from 'antd';
-import { MessageOutlined, LikeOutlined, StarOutlined, ClockCircleOutlined, PushpinOutlined } from '@ant-design/icons';
-
+import { StarOutlined, ClockCircleOutlined, PushpinOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
-import ProgressBar from './ProgressBar';
 import { Progress } from 'antd';
 const axios = require('axios');
 
@@ -92,9 +86,9 @@ const OpportunityList = ({ city, category, location, opportunities, setOpportuni
       <List.Item
         key={item.name}
         actions={[
-          <IconText icon={StarOutlined} text="Add to Favourites" key="list-vertical-star-o" />,
           <IconText icon={ClockCircleOutlined} text={item.time_commitment} key="list-vertical-star-o" />,
-          <IconText icon={PushpinOutlined} text={item.location} key="list-vertical-star-o" />
+          <IconText icon={PushpinOutlined} text={item.location} key="list-vertical-star-o" />,
+          <IconText icon={StarOutlined} text="Volunteer" key="list-vertical-star-o" />
         ]}
         extra={
           <div>

@@ -8,15 +8,8 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import betterplace from "../resources/better-place.png";
 import {
-  makeStyles,
-  createStyles,
-  fade,
-  Theme,
+  makeStyles
 } from "@material-ui/core/styles";
-import SearchIcon from "@material-ui/icons/Search";
-import InputBase from "@material-ui/core/InputBase";
-import SearchBar from "material-ui-search-bar";
-import { useState } from "react";
 import Drawer from "@material-ui/core/Drawer";
 import AccountBox from "./accountBox/AccountBox";
 import ProfileBox from "./profileBox/ProfileBox";
@@ -27,7 +20,6 @@ const useStyles = makeStyles({
     background:
       "linear-gradient(90deg, rgba(0,153,255,1) 20%, rgba(26,188,156,1)98%)",
   },
-  geo: {},
   text: {
     color: "#FFFFFF",
   },
@@ -94,7 +86,6 @@ const NavBar = ({ handleLocation, city, country, token, setToken }) => {
             handleLocation={handleLocation}
             city={city}
             country={country}
-            className={classes.geo}
           />
           <Grid container justify="flex-end" justify-content="space-between">
             <IconButton>
@@ -109,7 +100,7 @@ const NavBar = ({ handleLocation, city, country, token, setToken }) => {
                 )}
                 {token && (
                   <div className={classes.flex}>
-                    <p>{token}</p>
+                    <p>{sessionStorage.getItem('token')}</p>
                     <button
                       className={classes.button}
                       onClick={() => setToken("")}

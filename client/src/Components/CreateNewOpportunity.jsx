@@ -4,10 +4,8 @@ import Grid from "@material-ui/core/Grid";
 import { makeStyles, Typography } from "@material-ui/core";
 import { useState, useEffect } from "react";
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
-import Select from '@material-ui/core/Select';
 import { MenuItem } from "@material-ui/core";
-import { InputLabel } from "@material-ui/core";
-import { FormControl, Checkbox, Paper, FormControlLabel } from "@material-ui/core";
+import { FormControl, Paper } from "@material-ui/core";
 import axios from "axios";
 
 const useStyles = makeStyles({
@@ -107,10 +105,10 @@ const CreateNewOpportunity = ({ opportunities, setOpportunities, onSave, locatio
   // (host_id , name , number_of_volunteers_needed, location, date, time_commitment, category_id)
   return (
     <Paper style= {{width: '100%', margin: '0 auto', padding: '2%', paddingTop: '0%'}}>
-      <Typography style ={{"padding-top": 20}} >Tell us about your needs.</Typography>
+      <Typography style ={{"paddingTop": 20}} >Tell us about your needs.</Typography>
       <form noValidate autoComplete="off" onSubmit={handleSubmit}>
-        <FormControl style = {{width: '100%', "padding-left": 10, "padding-right": 10}}>
-          <Grid item xs='6'>
+        <FormControl style = {{width: '100%', "paddingLeft": 10, "paddingRight": 10}}>
+          <Grid item xs={6}>
             <TextField 
               onChange={(e) => setTitle(e.target.value)}
               className={classes.field}
@@ -120,9 +118,10 @@ const CreateNewOpportunity = ({ opportunities, setOpportunities, onSave, locatio
               required
               helperText="Give your need a short title."
               error={titleError}
+              defaultValue=""
             />
           </Grid>
-          <Grid item xs='12' >
+          <Grid item xs={12} >
           <TextField 
             onChange={(e) => setDescription(e.target.value)}
             className={classes.field}
@@ -134,6 +133,7 @@ const CreateNewOpportunity = ({ opportunities, setOpportunities, onSave, locatio
             required
             helperText="Provide a short description of your need."
             error={descriptionError}
+            defaultValue=""
           />
           </Grid>
             <TextField
@@ -144,10 +144,14 @@ const CreateNewOpportunity = ({ opportunities, setOpportunities, onSave, locatio
               label="Category"
               name="Category"
               error={categoryError}
+              defaultValue=""
+              SelectProps={{
+                multiple:true,
+                value: []
+              }}
             >
               {categories &&categories.map((category) => {
-                console.log(category)
-                return <MenuItem key={category.id} value={category.name}>{category.name}</MenuItem>
+                return <MenuItem key={category.id}>{category.name}</MenuItem>
               })}
 
             </TextField>
@@ -160,12 +164,17 @@ const CreateNewOpportunity = ({ opportunities, setOpportunities, onSave, locatio
             label="Time Commitment"
             name="Time-commitment"
             error={timeCommitmentError}
+            defaultValue=""
+            SelectProps={{
+              multiple:true,
+              value: []
+            }}
           >
-            <MenuItem value="1">Quick (minutes)</MenuItem>
-            <MenuItem value="2">Short (3 hours or less)</MenuItem>
-            <MenuItem value="3">Medium (8 hours or less)</MenuItem>
-            <MenuItem value="4">Long (Full day)</MenuItem>
-            <MenuItem value="5">Extra Long (Muliple days)</MenuItem>
+            <MenuItem >Quick (minutes)</MenuItem>
+            <MenuItem >Short (3 hours or less)</MenuItem>
+            <MenuItem >Medium (8 hours or less)</MenuItem>
+            <MenuItem >Long (Full day)</MenuItem>
+            <MenuItem >Extra Long (Muliple days)</MenuItem>
 
           </TextField>
 
@@ -177,6 +186,7 @@ const CreateNewOpportunity = ({ opportunities, setOpportunities, onSave, locatio
             label="# of Volunteers Required"
             name="# of Volunteers Required"
             error={volunteersNeededError}
+            defaultValue=""
           >
           </TextField>
           <TextField
@@ -190,8 +200,9 @@ const CreateNewOpportunity = ({ opportunities, setOpportunities, onSave, locatio
               shrink: true,
             }}
             error={needDateError}
+            defaultValue=""
           />
-          <Grid item xs='3'>
+          <Grid item xs={3}>
           <Button
             className={classes.button}
             type="submit"

@@ -1,7 +1,7 @@
 import { BoldLink, BoxContainer, FormContainer, Input, MutedLink, SubmitButton } from "./common"
 import { Marginer } from './Marginer';
 import { AccountContext } from './accountContext'
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import axios from 'axios';
 
 
@@ -13,19 +13,19 @@ const LoginForm = ({ setToken, token}) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
-  const loginUser = (credentials) => {
-    return axios
-    .post('/login', credentials)
-    .then((data) => console.log(credentials))
-    .catch(e => console.log(e))
-  }
+  // const loginUser = (credentials) => {
+  //   return axios
+  //   .post('/login', credentials)
+  //   .then((data) => console.log(credentials))
+  //   .catch(e => console.log(e))
+  // }
 
   const handleSubmit = async e => {
     e.preventDefault();
     axios
       .post('/login', {email, password})
       .then((data) => {
-        console.log(data.data.token)
+        console.log('loginToken:',data.data.token)
         setToken(data.data.token)
         console.log(token)
       })
