@@ -8,4 +8,4 @@
 --   opportunity_id INTEGER references opportunities(id) ON DELETE CASCADE
 -- );
 
-INSERT INTO users_opportunities (user_id, opportunity_id) VALUES (1,1),(2,3),(3,1)
+INSERT INTO users_opportunities (user_id, opportunity_id) VALUES (1,1),(2,3),(3,1),(1,3)

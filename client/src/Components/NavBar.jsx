@@ -103,7 +103,7 @@ const NavBar = ({ handleLocation, city, country, token, setToken }) => {
               <MenuIcon className={classes.text} />
             </IconButton>
             {/* ACCOUNT BOX ATTEMPT */}
-            {["right"].map((anchor: any) => (
+            {["right"].map((anchor) => (
               <React.Fragment key={anchor}>
                 {!token && (
                   <Button onClick={toggleLogin(anchor, true)}>Login</Button>
