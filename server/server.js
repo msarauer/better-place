@@ -57,18 +57,17 @@ app.use("/api/opportunity", opportunityRoutes(db));
 app.use("/api/opportunities", opportunitiesRoutes(db));
 app.use("/api/users_opportunities", userOpportunitiesRoutes(db));
 
-
 // Login Route
 app.post("/login", (req, res) => {
-  db.query(`SELECT email, password FROM users WHERE email = $1;`, [
-    req.body.email,
-  ]).then((data) => {
-    const user = data.rows[0];
-    if (req.body.password === user.password) {
-      return res.json({ token: user.email });
+  db.query(`SELECT * FROM users WHERE email = $1;`, [req.body.email]).then(
+    (data) => {
+      const user = data.rows[0];
+      if (req.body.password === user.password) {
+        return res.json({ token: user });
+      }
+      // return res.json({ token: false });
     }
-    // return res.json({ token: false });
-  });
+  );
 });
 
 app.listen(PORT, () => {

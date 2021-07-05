@@ -4,7 +4,11 @@ const router = express.Router();
 module.exports = (db) => {
   // GET ALL REVIEWS FOR ONE USER
   router.get("/:id", (req, res) => {
-    let query = `SELECT user_feedback, rating FROM volunteer_reviews JOIN users ON users.id = user_id WHERE user_id = $1;`;
+    let query = `SELECT users.name as user_name, users.picture_url as avatar, volunteer_reviews.id ,user_feedback, rating, (SELECT name FROM users WHERE opportunities.host_id = id) as host_name
+    FROM volunteer_reviews
+    JOIN users ON users.id = user_id
+    JOIN opportunities ON opportunity_id = opportunities.id
+    WHERE opportunities.host_id = $1;`;
     console.log(query);
     db.query(query, [req.params.id])
       .then((data) => {

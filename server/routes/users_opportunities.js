@@ -2,35 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 module.exports = (db) => {
-  //   router.get("/:id", (req, res) =>{
-  //     db.query(`SELECT * FROM users_opportunities WHERE opportunity_id = $1;`, [req.params.id])
-  //     .then((data)=>{
-  //       console.log(data)
-  //       const list = data.rows;
-  //       res.json({ list })
-  //     }).catch((e) => {
-  //       res.status(500).json({ error: e.message });
-  //     })
-  //   })
-  //   router.post("/", (req, res) => {
-  //     db.
-  //   })
-
-  // USED to join tables together to grab all opportunites that a volunteer has done. This is for the profile page
-
-  //   router.get("/:email", (req, res) => {
-  //   db.query(`SELECT * from users WHERE email = $1;`, [req.params.email])
-  //     .then((data) => {
-  //       const users = data.rows;
-  //       res.json({ users });
-  //     })
-  //     .catch((e) => {
-  //       console.log(e.message);
-  //       res.status(500).json({ error: e.message });
-  //     });
-  // });
-
-  router.get("/:email", (req, res) => {
+  router.put("/:email", (req, res) => {
     db.query(
       `SELECT host_table.picture_url as avatar, opportunities.id as opportunity_id, host_table.name as UserName, opportunities.name as opportunity_name, description, date FROM opportunities
       JOIN users_opportunities on opportunities.id = opportunity_id
@@ -45,6 +17,37 @@ module.exports = (db) => {
       .catch((e) => {
         res.status(500).json({ error: e.message });
       });
+  });
+
+  router.get("/", (req, res) => {
+    db.query("SELECT * from users_opportunities;").then((data) => {
+      const usersOpportunities = data.rows;
+      res.json({ usersOpportunities });
+    });
+  });
+
+  // complex custom post will rename/reroute too follow restful api convention
+  router.post("/", (req, res) => {
+    console.log("req.body:", req.body);
+    db.query(
+      `INSERT INTO users_opportunities (user_id , opportunity_id) VALUES ($1, $2) RETURNING *`,
+      [req.body.user_id, Number(req.body.opportunity_id)]
+    )
+      .then((data) => {
+        res.json({ data });
+      })
+      .catch((e) => {
+        res.status(500).json({ error: e.message });
+      });
+  });
+
+  router.delete("/:id", (req, res) => {
+    db.query(
+      `DELETE from users_opportunities WHERE user_id = $1 AND opportunity_id = $2;`,
+      [req.body.user_id, req.params.id]
+    ).then((data) => {
+      res.json({ data });
+    });
   });
 
   return router;

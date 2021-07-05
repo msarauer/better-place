@@ -44,6 +44,7 @@ module.exports = (db) => {
   router.delete("/:id", (req, res) => {
     db.query(`DELETE FROM opportunities WHERE id = $1`, [req.params.id])
       .then((data) => {
+        console.log(data);
         res.json({
           status: "Success",
         });
