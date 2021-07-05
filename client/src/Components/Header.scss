@@ -1,20 +1,54 @@
 .myVideo {
-  position: absolute;
-
+  position: relative;
+  width: 100vw;
   right: 0;
   top: 64px;
   min-width: 100%;
-  min-height: auto;
+  min-height: 30%;
+  max-width: 100%;
 }
 
-.noVideo {
-  display: none;
+.noVideo { 
+  
+  
+  img {
+  max-width: 100%;
+  position: relative;
+  width: 100vw;
+  height: auto;
+  right: 0;
+  top: 64px;
+  z-index: 0;
+  Filter: brightness(0.5)
+  }
+  .titleBlock {
+    position: absolute;
+    left: 20vw;
+    top: 40vw;
+    right: 0;
+    text-align: left;
+    z-index: 2;
+    color: rgb(224, 218, 218);
+    .titleSmall {
+      font-size: 2vh;
+      margin-bottom: 0;
+    }
+    .title {
+      font-size: 5vh;
+      margin-bottom: 0;
+    }
+    .title2 {
+      font-size: 1.5vh;
+      margin: 0
+    }
+  }
+
 }
 
-.spacer {
-  width: 100%;
-  margin-top: 55%;
-}
+
+
+
+
 /* Add some content at the bottom of the video/page */
 .content {
   position: fixed;

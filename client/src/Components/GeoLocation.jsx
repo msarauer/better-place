@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 const GeoLocation = ({handleLocation, city, country}) => {
   // const [city, setCity] = useState("What is your Location?");
@@ -75,8 +75,8 @@ const GeoLocation = ({handleLocation, city, country}) => {
   }, []);
 
   return (
-    <div>
-      {city}, {country}
+    <div style={{width: "300px"}}>
+      <span>{city}{country && ", "}{country}</span>
     </div>
   );
 };

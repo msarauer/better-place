@@ -2,12 +2,10 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles, Typography } from "@material-ui/core";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
-import Select from '@material-ui/core/Select';
 import { MenuItem } from "@material-ui/core";
-import { InputLabel } from "@material-ui/core";
-import { FormControl, Checkbox, Paper, FormControlLabel } from "@material-ui/core";
+import { FormControl, Paper } from "@material-ui/core";
 import axios from "axios";
 
 const useStyles = makeStyles({
@@ -24,44 +22,41 @@ const useStyles = makeStyles({
   }
 })
 
-const initialFormValues = {
-  name: '',
-  description: '',
-  defaultLocation: 'true',
-  date: new Date(),
-  timeCommitment: '',
-  category: 0,
-  subCategory: 0
-}
 
-const CreateNewOpportunity = ({ opportunities, setOpportunities, onSave, location, handleClose }) => {
+
+const CreateNewOpportunity = ({ opportunities, setOpportunities, onSave, location, handleClose, setCategories, categories, host_id }) => {
   const classes = useStyles();
+  const [users, setUsers] = useState({});
   const [title, setTitle] = useState('')
   const [titleError, setTitleError] = useState(false)
   const [description, setDescription] = useState('')
   const [descriptionError, setDescriptionError] = useState(false)
   const [category, setCategory] = useState('');
   const [categoryError, setCategoryError] = useState(false)
-  const [subCategory, setSubCategory] = useState('');
-  const [subCategoryError, setSubCategoryError] = useState(false)
-  const [needDate, setNeedDate ] = useState(null);
+  const [needDate, setNeedDate ] = useState("2021-07-17");
   const [needDateError, setNeedDateError] = useState(false)
   const [timeCommitment, setTimeCommitment ] = useState('');
   const [timeCommitmentError, setTimeCommitmentError] = useState(false)
-  const [volunteersNeeded, setVolunteersNeeded ] = useState(0);
+  const [volunteersNeeded, setVolunteersNeeded ] = useState(1);
   const [volunteersNeededError, setVolunteersNeededError] = useState(false)
 
+  useEffect(() => {
 
+    axios.get('/api/categories')
+    .then((data) => {
+      setCategories(data.data.categories)
+    })
+    .catch((e) => {console.log(e.message)})
+  }, [setCategories])
 
-   
-  // INSERT INTO opportunities (host_id , name , number_of_volunteers_needed, location, date, time_commitment, category_id)
-  // req.body.host_id,
-  // req.body.name,
-  // req.body.number_of_volunteers_needed,
-  // req.body.location,
-  // req.body.date,
-  // req.body.time_commitment,
-  // req.body.category_id,
+  useEffect(() => {
+    axios.get('/api/users')
+    .then((data) => {
+      setUsers(data.data.users);
+      console.log("users:", users)
+    })
+    .catch((e) => {console.log(e.message)})
+  }, [])
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -92,14 +87,19 @@ const CreateNewOpportunity = ({ opportunities, setOpportunities, onSave, locatio
       return;
     }
     const saveData = {
-      host_id: 1,
+      host_id: users.find((user) => {
+        if(user.email.toUpperCase() === host_id.toUpperCase()) {
+          console.log("user_id", user.id)
+          return user;
+        }
+      }).id,
       name: title,
       number_of_volunteers_needed: volunteersNeeded,
       number_of_volunteers_added: 0,
       location: location,
       date: needDate,
       time_commitment: timeCommitment,
-      category_id: 1,
+      category_id: category,
       description: description
     }
 
@@ -110,10 +110,10 @@ const CreateNewOpportunity = ({ opportunities, setOpportunities, onSave, locatio
   // (host_id , name , number_of_volunteers_needed, location, date, time_commitment, category_id)
   return (
     <Paper style= {{width: '100%', margin: '0 auto', padding: '2%', paddingTop: '0%'}}>
-      <Typography style ={{"padding-top": 20}} >Tell us about your needs.</Typography>
+      <Typography style ={{"paddingTop": 20}} >Tell us about your needs.</Typography>
       <form noValidate autoComplete="off" onSubmit={handleSubmit}>
-        <FormControl style = {{width: '100%', "padding-left": 10, "padding-right": 10}}>
-          <Grid item xs='6'>
+        <FormControl style = {{width: '100%', "paddingLeft": 10, "paddingRight": 10}}>
+          <Grid item xs={6}>
             <TextField 
               onChange={(e) => setTitle(e.target.value)}
               className={classes.field}
@@ -123,9 +123,10 @@ const CreateNewOpportunity = ({ opportunities, setOpportunities, onSave, locatio
               required
               helperText="Give your need a short title."
               error={titleError}
+              value={title}
             />
           </Grid>
-          <Grid item xs='12' >
+          <Grid  >
           <TextField 
             onChange={(e) => setDescription(e.target.value)}
             className={classes.field}
@@ -137,32 +138,26 @@ const CreateNewOpportunity = ({ opportunities, setOpportunities, onSave, locatio
             required
             helperText="Provide a short description of your need."
             error={descriptionError}
+            value={description}
           />
           </Grid>
-            <TextField
+          <TextField
               select
               required
               onChange={(e) => setCategory(e.target.value)}
               className={classes.dropdown}
               label="Category"
               name="Category"
+              value={category}
               error={categoryError}
             >
-              <MenuItem value="Physical">Physical</MenuItem>
-              <MenuItem value="Home Repair">Home Repair</MenuItem>
+              {categories && categories.map((category) => {
+                return <MenuItem key={category.id} value={category.id}>{category.name}</MenuItem>
+              })}
+
             </TextField>
-    
-          <TextField
-            select
-            className={classes.dropdown}
-            label="Sub-Category"
-            name="Sub-Category"
-          >
-            <MenuItem value="10">Ten</MenuItem>
-            <MenuItem value="20">Twenty</MenuItem>
-          </TextField>
           
-          <TextField
+            <TextField
             select
             required
             className={classes.dropdown}
@@ -170,12 +165,13 @@ const CreateNewOpportunity = ({ opportunities, setOpportunities, onSave, locatio
             label="Time Commitment"
             name="Time-commitment"
             error={timeCommitmentError}
+            value={timeCommitment}
           >
-            <MenuItem value="1">Quick (minutes)</MenuItem>
-            <MenuItem value="2">Short (3 hours or less)</MenuItem>
-            <MenuItem value="3">Medium (8 hours or less)</MenuItem>
-            <MenuItem value="4">Long (Full day)</MenuItem>
-            <MenuItem value="5">Extra Long (Muliple days)</MenuItem>
+            <MenuItem value="Quick (minutes)">Quick (minutes)</MenuItem>
+            <MenuItem value="Short (3 hours or less)">Short (3 hours or less)</MenuItem>
+            <MenuItem value="Medium (8 hours or less)">Medium (8 hours or less)</MenuItem>
+            <MenuItem value="Long (Full day)">Long (Full day)</MenuItem>
+            <MenuItem value="Extra Long (Muliple days)">Extra Long (Muliple days)</MenuItem>
 
           </TextField>
 
@@ -187,6 +183,7 @@ const CreateNewOpportunity = ({ opportunities, setOpportunities, onSave, locatio
             label="# of Volunteers Required"
             name="# of Volunteers Required"
             error={volunteersNeededError}
+            value={volunteersNeeded}
           >
           </TextField>
           <TextField
@@ -200,8 +197,9 @@ const CreateNewOpportunity = ({ opportunities, setOpportunities, onSave, locatio
               shrink: true,
             }}
             error={needDateError}
+            value={needDate}
           />
-          <Grid item xs='3'>
+          <Grid >
           <Button
             className={classes.button}
             type="submit"

@@ -30,6 +30,76 @@ export const columnSort = (opps, column) => {
     return 0;
   });
   return sortedOpps;
-}
+};
 
+export const updateRows = (opps, userOpps) => {
+  const rows = opps;
+  rows.forEach((opp) => {
+    return (opp.selected = false);
+  });
 
+  for (let i = 0; i < rows.length; i++) {
+    for (let j = 0; j < userOpps.length; j++) {
+      if (rows[i].id === userOpps[j].opportunity_id) {
+        rows[i].selected = true;
+      }
+    }
+  }
+  return rows;
+};
+
+export const addOpportunity = (opps, id) => {
+  const rows = opps;
+  rows.forEach((opp) => {
+    if (Number(id) === Number(opp.id)) {
+      opp.selected = true;
+      opp.number_of_volunteers_added += 1;
+      console.log("volunteers_added:", opp.number_of_volunteers_added);
+    }
+  });
+  // const rows = opps.map((opp) => {
+  //   if (opp.id === id) {
+  //     opp.selected = true;
+  //     opp.number_of_volunteers_added += 1;
+  //     return opp;
+  //   }
+  //   return opp;
+  // });
+  // const rows = opps.filter((opp) => opp.id !== id);
+  // console.log(rows, id);
+  // const row = opps.filter((opp) => {
+  //   return opp.id === id;
+  // });
+  // console.log("AddedOpportunity:", row);
+  // row.selected = true;
+  // row.number_of_volunteers_added += 1;
+  // console.log("AddedOpportunity:", row.number_of_volunteers_added);
+  // rows.push(row);
+  return rows;
+};
+
+export const removeOpportunity = (opps, id) => {
+  const rows = opps;
+  rows.forEach((opp) => {
+    if (Number(id) === Number(opp.id)) {
+      opp.selected = false;
+      opp.number_of_volunteers_added -= 1;
+      console.log("volunteers_added:", opp.number_of_volunteers_added);
+    }
+  });
+  return rows;
+};
+
+export const countVolunteersAdded = (opps, allUserOpps) => {
+  const rows = opps;
+  rows.forEach((opp) => {
+    let count = 0;
+    for (let userOpp of allUserOpps) {
+      if (Number(userOpp.id) === Number(opp.id)) {
+        count += 1;
+      }
+    }
+    opp.volunteer_count = count;
+  });
+  return rows;
+};

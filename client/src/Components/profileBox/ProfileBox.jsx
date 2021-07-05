@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
-import LoginForm from "./LoginForm";
+import LoginForm from "./ProfileForm";
 import { motion } from "framer-motion";
-import SignupForm from "./SignupForm";
+import SignupForm from "./EditForm";
 import { AccountContext } from "./accountContext";
+import AlignItemsList from "./AlignedItemList";
+import axios from "axios";
 
 const BoxContainer = styled.div`
-  width: 280px;
+  width: 500px;
   height: 800px;
   display: flex;
   flex-direction: column;
@@ -28,16 +30,16 @@ const TopContainer = styled.div`
 `;
 
 const BackDrop = styled(motion.div)`
-  width: 300%;
-  height: 800px;
+  width: 160%;
+  height: 550px;
   position: absolute;
   display: flex;
   flex-direction: column;
   border-radius: 50%;
   transform: rotate(60deg);
-  top: -350px;
-  left: -150px;
-  transform: rotate(-20deg);
+  top: -400px;
+  left: -350px;
+  transform: rotate(60deg);
   background: rgb(26, 188, 156);
   background: linear-gradient(
     90deg,
@@ -51,7 +53,7 @@ const HeaderContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  margin-bottom: 75px;
+  margin-bottom: 25px;
 `;
 
 const HeaderText = styled.h2`
@@ -61,6 +63,27 @@ const HeaderText = styled.h2`
   color: #fff;
   z-index: 10;
   margin: 0;
+`;
+
+const HeaderPicture = styled.img`
+  display: inline;
+  /* margin: 0 auto; */
+  border-radius: 50%;
+  width: 175px;
+  height: 175px;
+  margin-left: 20px;
+  margin-top: 10px;
+  margin-bottom: 40px;
+`;
+
+const HeaderEditPicture = styled.img`
+  display: inline;
+  /* margin: 0 auto; */
+  border-radius: 50%;
+  width: 175px;
+  height: 175px;
+  margin-left: 20px;
+  margin-bottom: 40px;
 `;
 
 const SmallText = styled.h5`
@@ -77,18 +100,20 @@ const InnerContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 1.8em;
+  margin-top: 5px;
 `;
 
 const backdropVariants = {
   expanded: {
-    width: "300%",
-    height: "1500px",
+    width: "270%",
+    height: "1350px",
     borderRadius: "20%",
     tranform: "rotate(60deg)",
+    zIndex: 10,
   },
   collapsed: {
     width: "160%",
-    height: "590px",
+    height: "520px",
     borderRadius: "50%",
     tranform: "rotate(60deg)",
   },
@@ -100,9 +125,21 @@ const expandingTransition = {
   stiffness: 30,
 };
 
-const AccountBox = ({ token, setToken }) => {
+const ProfileBox = ({ token }) => {
   const [isExpanded, setExpanded] = useState(false);
   const [active, setActive] = useState("signin");
+  const [userPicture, setUserPicture] = useState({});
+
+  useEffect(() => {
+    axios
+      .get(`/api/user/${token}`) //REMEBER TO CHANGE TO :id
+      .then((data) => {
+        setUserPicture(data.data.users[0].picture_url);
+      })
+      .catch((e) => {
+        console.log("axiosError:", e);
+      });
+  }, []);
 
   const playExpandedAnimation = () => {
     setExpanded(true);
@@ -138,26 +175,26 @@ const AccountBox = ({ token, setToken }) => {
           />
           {active === "signin" && (
             <HeaderContainer>
-              <HeaderText>Welcome</HeaderText>
-              <HeaderText>Back</HeaderText>
-              <SmallText>Please sign-in to continue!</SmallText>
+              <HeaderText>
+                <HeaderPicture src={userPicture} height={250} />
+              </HeaderText>
             </HeaderContainer>
           )}
           {active === "signup" && (
             <HeaderContainer>
-              <HeaderText>Create</HeaderText>
-              <HeaderText>Account</HeaderText>
-              <SmallText>Please sign-up to continue!</SmallText>
+              <HeaderText>
+                <HeaderEditPicture src={userPicture} height={250} />
+              </HeaderText>
             </HeaderContainer>
           )}
         </TopContainer>
         <InnerContainer>
-          {active === "signin" && <LoginForm setToken={setToken} token={token} />}
-          {active === "signup" && <SignupForm />}
+          {active === "signin" && <LoginForm token={token} />}
+          {active === "signup" && <SignupForm token={token} />}
         </InnerContainer>
       </BoxContainer>
     </AccountContext.Provider>
   );
 };
 
-export default AccountBox;
+export default ProfileBox;
