@@ -14,7 +14,7 @@ import { useContext, useEffect, useState } from "react";
 import AlignItemsList from "./AlignedItemList";
 import axios from "axios";
 
-const ProfileForm = (props) => {
+const ProfileForm = ({token}) => {
   const { switchToSignup } = useContext(AccountContext);
   const [user, setUser] = useState({});
   const [opportunities, setOpportunities] = useState([]);
@@ -22,7 +22,7 @@ const ProfileForm = (props) => {
   // Used to get specific user from id
   useEffect(() => {
     axios
-      .get(`/api/user/1`) // REMEMBER TO CHANGE TO :id
+      .get(`/api/user/${token}`) // REMEMBER TO CHANGE TO :id
       .then((data) => {
         setUser(data.data.users[0]);
       })
@@ -30,6 +30,7 @@ const ProfileForm = (props) => {
         console.log("axiosError:", e);
       });
   }, []);
+
 
   return (
     <>
@@ -54,7 +55,7 @@ const ProfileForm = (props) => {
         Edit Profile
         <Marginer direction="vertical" margin={10} />
       </EditLink>
-      <AlignItemsList />
+      <AlignItemsList token={token}/>
     </>
   );
 };

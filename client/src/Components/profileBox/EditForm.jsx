@@ -12,7 +12,7 @@ import { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import UploadButtons from "../accountBox/UploadButtons";
 
-const EditForm = (props) => {
+const EditForm = ({token}) => {
   const { switchToSignin } = useContext(AccountContext);
   const [user, setUser] = useState({});
   const [email, setEmail] = useState(user.email);
@@ -25,7 +25,7 @@ const EditForm = (props) => {
 
   useEffect(() => {
     axios
-      .get(`/api/user/1`) // REMEMBER TO CHANGE TO :id
+      .get(`/api/user/${token}`) // REMEMBER TO CHANGE TO :id
       .then((data) => {
         const userInfo = data.data.users[0];
         setEmail(userInfo.email);
@@ -44,7 +44,7 @@ const EditForm = (props) => {
   const handleSubmit = (e) => {
     const userSave = (data) => {
       axios
-        .put("/api/user/1", data) // REMEMBER TO CHANGE TO :id
+        .put(`/api/user/${token}`, data) // REMEMBER TO CHANGE TO :id
         .then((data) => {
           console.log(data);
         })
@@ -106,7 +106,7 @@ const EditForm = (props) => {
           onChange={(e) => setBio(e.target.value)}
         />
         <UploadButtons onChange={(e) => setProfilePic(e.target.value)} />
-        <SubmitButton type="submit">Confirm</SubmitButton>
+        <SubmitButton onClick={switchToSignin} type="submit">Confirm</SubmitButton>
       </FormContainer>
       <Marginer direction="vertical" margin={10} />
       <Marginer direction="vertical" margin="1.6em" />

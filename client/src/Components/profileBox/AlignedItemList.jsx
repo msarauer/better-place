@@ -24,20 +24,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AlignItemsList() {
+export default function AlignItemsList({token}) {
   const classes = useStyles();
   const [opportunities, setOpportunities] = useState([]);
 
   useEffect(() => {
     axios
-      .get("/api/users_opportunities/1") // REMEMEBR TO CHANGE TO :id
+      .get(`/api/users_opportunities/${token}`)
       .then((data) => {
         setOpportunities(data.data.opportunities);
       })
       .catch((e) => {
         console.log("axiosError:", e);
       });
-  }, []);
+  }, [token]);
+
 
   return (
     <>

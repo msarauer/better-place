@@ -84,7 +84,7 @@ function App() {
       <Search />
       {/* Conditional for SearchList */}
       <CreateNewOpportunityWithModal opportunities={opportunities} setOpportunities={setOpportunities} onSave={save} location={city} categories={categories} setCategories={setCategories} host_id={token}/>
-      <OpportunityList opportunities={opportunities} setOpportunities={setOpportunities} location={city} category={category} />
+      <OpportunityList token={token} opportunities={opportunities} setOpportunities={setOpportunities} location={city} category={category} />
       <br />
        <BackTop />
     Scroll down to see the bottom-right

@@ -32,6 +32,12 @@ const useStyles = makeStyles({
     borderRadius: 25,
     // textTransform: "capitalize",
   },
+    drawerProfile: {
+    // width: 600,
+    height: 750,
+    borderRadius: 25,
+    // textTransform: "capitalize",
+  },
   flex: {
     display: "flex",
   },
@@ -92,6 +98,23 @@ const NavBar = ({ handleLocation, city, country, token, setToken }) => {
               <MenuIcon className={classes.text} />
             </IconButton>
             {/* ACCOUNT BOX ATTEMPT */}
+            {token && (
+              ["right"].map((anchor) => (
+                <React.Fragment key={anchor}>
+                  <Button onClick={toggleProfile(anchor, true)}>Profile</Button>
+                  <Drawer
+                    classes={{ paper: classes.drawerProfile }}
+                    anchor={anchor}
+                    open={profilePage[anchor]}
+                    onClose={toggleProfile(anchor, false)}
+                  >
+                    <ProfileBox token={token} />
+                  </Drawer>
+                </React.Fragment>
+              ))
+            )}
+            
+          
             {["right"].map((anchor) => (
               <React.Fragment key={anchor}>
                 {!token && (
@@ -109,7 +132,7 @@ const NavBar = ({ handleLocation, city, country, token, setToken }) => {
                   </div>
                 )}
                 <Drawer
-                  classes={{ paper: classes.drawerInside }}
+                  classes={{ paper: classes.drawerProfile }}
                   anchor={anchor}
                   open={loginPage[anchor]}
                   onClose={toggleLogin(anchor, false)}
@@ -119,19 +142,25 @@ const NavBar = ({ handleLocation, city, country, token, setToken }) => {
                 </Drawer>
               </React.Fragment>
             ))}
-            {["right"].map((anchor) => (
-              <React.Fragment key={anchor}>
-                <Button onClick={toggleProfile(anchor, true)}>Profile</Button>
-                <Drawer
-                  classes={{ paper: classes.drawerProfile }}
-                  anchor={anchor}
-                  open={profilePage[anchor]}
-                  onClose={toggleProfile(anchor, false)}
-                >
-                  <ProfileBox />
-                </Drawer>
-              </React.Fragment>
-            ))}
+            
+            {/* {token && (
+              ["right"].map((anchor) => (
+                <React.Fragment key={anchor}>
+                  <Button onClick={toggleProfile(anchor, true)}>Profile</Button>
+                  <Drawer
+                    classes={{ paper: classes.drawerProfile }}
+                    anchor={anchor}
+                    open={profilePage[anchor]}
+                    onClose={toggleProfile(anchor, false)}
+                  >
+                    <ProfileBox token={token} />
+                  </Drawer>
+                </React.Fragment>
+              ))
+            )} */}
+            
+
+
           </Grid>
         </ToolBar>
       </AppBar>

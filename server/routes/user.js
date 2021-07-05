@@ -4,8 +4,8 @@ const router = express.Router();
 module.exports = (db) => {
   // READ user
 
-  router.get("/:id", (req, res) => {
-    db.query(`SELECT * from users WHERE id = $1;`, [req.params.id])
+  router.get("/:email", (req, res) => {
+    db.query(`SELECT * from users WHERE email = $1;`, [req.params.email])
       .then((data) => {
         const users = data.rows;
         res.json({ users });
@@ -17,17 +17,18 @@ module.exports = (db) => {
   });
 
   // EDIT user
-  router.put("/:id", (req, res) => {
+  router.put("/:email", (req, res) => {
     const data = req.body;
     db.query(
-      `UPDATE users SET (name, email, password, phone_number, address) = ($1, $2, $3, $4, $5) WHERE id = $6 RETURNING *;`,
+      `UPDATE users SET (name , email, password, phone_number, address, bio) = ($1, $2, $3, $4, $5, $6) WHERE email = $7 RETURNING *;`,
       [
         data.name,
         data.email,
         data.password,
         data.phone_number,
         data.address,
-        req.params.id,
+        data.bio,
+        req.params.email,
       ]
     )
       .then((data) => {

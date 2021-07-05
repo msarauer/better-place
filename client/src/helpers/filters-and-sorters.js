@@ -30,6 +30,28 @@ export const columnSort = (opps, column) => {
     return 0;
   });
   return sortedOpps;
-}
+};
 
+export const updateRows = (opps, userOpps) => {
+  const rows = opps
+  rows.forEach((opp) => {
+    return opp.selected = false;
+  })
 
+  for (let i = 0; i < rows.length; i++) {
+    for (let j = 0; j < userOpps.length; j++) {
+      if (rows[i].id === userOpps[j].opportunity_id) {
+        rows[i].selected = true
+      }
+    }
+  }
+  return rows;
+};
+
+export const addOpportunity = (opps, id) => {
+  const rows = opps.filter((opp) => opp.id !== id);
+  const row = opps.filter((opp) => opp.id === id);
+  row.selected = true;
+  rows.push(row);
+  return rows;
+};

@@ -26,17 +26,18 @@ const useStyles = makeStyles({
 
 const CreateNewOpportunity = ({ opportunities, setOpportunities, onSave, location, handleClose, setCategories, categories, host_id }) => {
   const classes = useStyles();
+  const [users, setUsers] = useState({});
   const [title, setTitle] = useState('')
   const [titleError, setTitleError] = useState(false)
   const [description, setDescription] = useState('')
   const [descriptionError, setDescriptionError] = useState(false)
   const [category, setCategory] = useState('');
   const [categoryError, setCategoryError] = useState(false)
-  const [needDate, setNeedDate ] = useState(null);
+  const [needDate, setNeedDate ] = useState("2021-07-17");
   const [needDateError, setNeedDateError] = useState(false)
   const [timeCommitment, setTimeCommitment ] = useState('');
   const [timeCommitmentError, setTimeCommitmentError] = useState(false)
-  const [volunteersNeeded, setVolunteersNeeded ] = useState(0);
+  const [volunteersNeeded, setVolunteersNeeded ] = useState(1);
   const [volunteersNeededError, setVolunteersNeededError] = useState(false)
 
   useEffect(() => {
@@ -46,8 +47,16 @@ const CreateNewOpportunity = ({ opportunities, setOpportunities, onSave, locatio
       setCategories(data.data.categories)
     })
     .catch((e) => {console.log(e.message)})
-  }, [])
+  }, [setCategories])
 
+  useEffect(() => {
+    axios.get('/api/users')
+    .then((data) => {
+      setUsers(data.data.users);
+      console.log("users:", users)
+    })
+    .catch((e) => {console.log(e.message)})
+  }, [])
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -77,16 +86,20 @@ const CreateNewOpportunity = ({ opportunities, setOpportunities, onSave, locatio
     if (!(title && description && category && needDate && timeCommitment && volunteersNeeded)) {
       return;
     }
-    console.log(category)
     const saveData = {
-      host_id: host_id,
+      host_id: users.find((user) => {
+        if(user.email.toUpperCase() === host_id.toUpperCase()) {
+          console.log("user_id", user.id)
+          return user;
+        }
+      }).id,
       name: title,
       number_of_volunteers_needed: volunteersNeeded,
       number_of_volunteers_added: 0,
       location: location,
       date: needDate,
       time_commitment: timeCommitment,
-      category_id: 1,
+      category_id: category,
       description: description
     }
 
@@ -110,9 +123,10 @@ const CreateNewOpportunity = ({ opportunities, setOpportunities, onSave, locatio
               required
               helperText="Give your need a short title."
               error={titleError}
+              value={title}
             />
           </Grid>
-          <Grid item xs={12} >
+          <Grid  >
           <TextField 
             onChange={(e) => setDescription(e.target.value)}
             className={classes.field}
@@ -124,28 +138,26 @@ const CreateNewOpportunity = ({ opportunities, setOpportunities, onSave, locatio
             required
             helperText="Provide a short description of your need."
             error={descriptionError}
+            value={description}
           />
           </Grid>
-            <TextField
+          <TextField
               select
               required
               onChange={(e) => setCategory(e.target.value)}
               className={classes.dropdown}
               label="Category"
               name="Category"
+              value={category}
               error={categoryError}
-              SelectProps={{
-                multiple:true,
-                value: []
-              }}
             >
-              {categories &&categories.map((category) => {
-                return <MenuItem key={category.id}>{category.name}</MenuItem>
+              {categories && categories.map((category) => {
+                return <MenuItem key={category.id} value={category.id}>{category.name}</MenuItem>
               })}
 
             </TextField>
           
-          <TextField
+            <TextField
             select
             required
             className={classes.dropdown}
@@ -153,16 +165,13 @@ const CreateNewOpportunity = ({ opportunities, setOpportunities, onSave, locatio
             label="Time Commitment"
             name="Time-commitment"
             error={timeCommitmentError}
-            SelectProps={{
-              multiple:true,
-              value: []
-            }}
+            value={timeCommitment}
           >
-            <MenuItem >Quick (minutes)</MenuItem>
-            <MenuItem >Short (3 hours or less)</MenuItem>
-            <MenuItem >Medium (8 hours or less)</MenuItem>
-            <MenuItem >Long (Full day)</MenuItem>
-            <MenuItem >Extra Long (Muliple days)</MenuItem>
+            <MenuItem value="Quick (minutes)">Quick (minutes)</MenuItem>
+            <MenuItem value="Short (3 hours or less)">Short (3 hours or less)</MenuItem>
+            <MenuItem value="Medium (8 hours or less)">Medium (8 hours or less)</MenuItem>
+            <MenuItem value="Long (Full day)">Long (Full day)</MenuItem>
+            <MenuItem value="Extra Long (Muliple days)">Extra Long (Muliple days)</MenuItem>
 
           </TextField>
 
@@ -174,6 +183,7 @@ const CreateNewOpportunity = ({ opportunities, setOpportunities, onSave, locatio
             label="# of Volunteers Required"
             name="# of Volunteers Required"
             error={volunteersNeededError}
+            value={volunteersNeeded}
           >
           </TextField>
           <TextField
@@ -187,8 +197,9 @@ const CreateNewOpportunity = ({ opportunities, setOpportunities, onSave, locatio
               shrink: true,
             }}
             error={needDateError}
+            value={needDate}
           />
-          <Grid item xs={3}>
+          <Grid >
           <Button
             className={classes.button}
             type="submit"

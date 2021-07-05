@@ -125,14 +125,14 @@ const expandingTransition = {
   stiffness: 30,
 };
 
-const AccountBox = () => {
+const ProfileBox = ({ token }) => {
   const [isExpanded, setExpanded] = useState(false);
   const [active, setActive] = useState("signin");
   const [userPicture, setUserPicture] = useState({});
 
   useEffect(() => {
     axios
-      .get(`/api/user/1`) //REMEBER TO CHANGE TO :id
+      .get(`/api/user/${token}`) //REMEBER TO CHANGE TO :id
       .then((data) => {
         setUserPicture(data.data.users[0].picture_url);
       })
@@ -189,12 +189,12 @@ const AccountBox = () => {
           )}
         </TopContainer>
         <InnerContainer>
-          {active === "signin" && <LoginForm />}
-          {active === "signup" && <SignupForm />}
+          {active === "signin" && <LoginForm token={token} />}
+          {active === "signup" && <SignupForm token={token} />}
         </InnerContainer>
       </BoxContainer>
     </AccountContext.Provider>
   );
 };
 
-export default AccountBox;
+export default ProfileBox;
