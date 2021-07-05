@@ -110,7 +110,6 @@ const CreateNewOpportunity = ({ opportunities, setOpportunities, onSave, locatio
               required
               helperText="Give your need a short title."
               error={titleError}
-              defaultValue=""
             />
           </Grid>
           <Grid item xs={12} >
@@ -125,7 +124,6 @@ const CreateNewOpportunity = ({ opportunities, setOpportunities, onSave, locatio
             required
             helperText="Provide a short description of your need."
             error={descriptionError}
-            defaultValue=""
           />
           </Grid>
             <TextField
@@ -136,7 +134,6 @@ const CreateNewOpportunity = ({ opportunities, setOpportunities, onSave, locatio
               label="Category"
               name="Category"
               error={categoryError}
-              defaultValue=""
               SelectProps={{
                 multiple:true,
                 value: []
@@ -156,7 +153,6 @@ const CreateNewOpportunity = ({ opportunities, setOpportunities, onSave, locatio
             label="Time Commitment"
             name="Time-commitment"
             error={timeCommitmentError}
-            defaultValue=""
             SelectProps={{
               multiple:true,
               value: []
@@ -178,7 +174,6 @@ const CreateNewOpportunity = ({ opportunities, setOpportunities, onSave, locatio
             label="# of Volunteers Required"
             name="# of Volunteers Required"
             error={volunteersNeededError}
-            defaultValue=""
           >
           </TextField>
           <TextField
@@ -192,7 +187,6 @@ const CreateNewOpportunity = ({ opportunities, setOpportunities, onSave, locatio
               shrink: true,
             }}
             error={needDateError}
-            defaultValue=""
           />
           <Grid item xs={3}>
           <Button

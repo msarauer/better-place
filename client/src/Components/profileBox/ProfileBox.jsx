@@ -132,9 +132,8 @@ const AccountBox = () => {
 
   useEffect(() => {
     axios
-      .get(`/api/user/1`)
+      .get(`/api/user/1`) //REMEBER TO CHANGE TO :id
       .then((data) => {
-        // console.log("THIS IS SOME DATA", data.data.users[0]);
         setUserPicture(data.data.users[0].picture_url);
       })
       .catch((e) => {

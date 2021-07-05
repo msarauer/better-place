@@ -80,7 +80,6 @@ const NavBar = ({ handleLocation, city, country, token, setToken }) => {
           <Typography variant="h6">
             <img src={betterplace} alt="betterplace" />
           </Typography>
-
           {/* GEO LOCATION */}
           <GeoLocation
             handleLocation={handleLocation}
