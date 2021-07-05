@@ -20,7 +20,7 @@ import { useState } from "react";
 import Drawer from "@material-ui/core/Drawer";
 import AccountBox from "./accountBox/AccountBox";
 import GeoLocation from "./GeoLocation";
-import 
+
 
 const useStyles = makeStyles({
   root: {
