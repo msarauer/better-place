@@ -103,9 +103,18 @@ const NavBar = ({ handleLocation, city, country, token, setToken, setLng, setLat
   };
 
   const handleSubmit = () => {
-
+    
   }
 
+  const checksIfToken = (key) => {
+    console.log('tokenForCheck:', token)
+    if (key) {
+      return true
+    }
+    if (!key) {
+      return false
+    }
+  }
   
 
   const toggleProfile = (anchor, open) => (event) => {
@@ -187,9 +196,9 @@ const NavBar = ({ handleLocation, city, country, token, setToken, setLng, setLat
                   // onSubmit={() => handleLogin()}
                   onSubmit={toggleLogin(anchor, !token)}
                   
-                  // onClick={() => token && toggleLogin(anchor, false)}
+                  // onClick={() => handleSubmit(anchor, token)}
                 >
-                  <AccountBox setToken={setToken} token={token} />
+                  <AccountBox setToken={setToken} token={token} setLoginPage={setLoginPage}  toggleLogin={() => toggleLogin(anchor, false) }/>
 
                 </Drawer>
               </React.Fragment>

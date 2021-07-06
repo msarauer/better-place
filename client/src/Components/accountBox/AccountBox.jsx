@@ -100,7 +100,7 @@ const expandingTransition = {
   stiffness: 30,
 };
 
-const AccountBox = ({ token, setToken }) => {
+const AccountBox = ({ token, setToken, toggleLogin, setLoginPage }) => {
   const [isExpanded, setExpanded] = useState(false);
   const [active, setActive] = useState("signin");
 
@@ -152,7 +152,7 @@ const AccountBox = ({ token, setToken }) => {
           )}
         </TopContainer>
         <InnerContainer>
-          {active === "signin" && <LoginForm setToken={setToken} token={token} />}
+          {active === "signin" && <LoginForm setToken={setToken} setLoginPage={setLoginPage} token={token} toggleLogin={toggleLogin} />}
           {active === "signup" && <SignupForm />}
         </InnerContainer>
       </BoxContainer>

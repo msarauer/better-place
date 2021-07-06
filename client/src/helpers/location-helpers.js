@@ -1,6 +1,5 @@
 import { getDistance } from "geolib";
 import Geocode from "react-geocode";
-require("dotenv").config();
 
 export const getDistances = (lat, lng, opps) => {
   const rows = [...opps];
@@ -15,8 +14,8 @@ export const getDistances = (lat, lng, opps) => {
 };
 
 export const getCoords = (address) => {
-  console.log(process.env.GOOGLE_API_KEY);
-  Geocode.setApiKey(process.env.GOOGLE_API_KEY);
+  console.log(process.env.REACT_APP_GOOGLE_API_KEY);
+  Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API_KEY);
   Geocode.setLanguage("en");
 
   Geocode.setLocationType("ROOFTOP");

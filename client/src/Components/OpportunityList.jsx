@@ -109,7 +109,7 @@ const OpportunityList = ({
         .then((data) => {
           // setTokenOpportunities((prev) => [...data.data.opportunities]);
           console.log("lat:", lat, "lng:", lng);
-          getCoords("4996 Earles, Vancouver");
+          // getCoords("4996 Earles, Vancouver");
           setRows(updateRows(rows, data.data.opportunities));
           setLoading(false);
         })
