@@ -50,7 +50,6 @@ const LoginForm = ({ setToken, token, toggleLogin, setLoginPage}) => {
         console.log('loginToken:',data.data.token)
         setToken((prev) => ({prev, ...data.data.token}))
         setLoginPage({right: false})
-        console.log(token)
       })
       .catch(e => console.log(e))
   }

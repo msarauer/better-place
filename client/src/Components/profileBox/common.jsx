@@ -10,8 +10,19 @@ export const BoxContainer = styled.div`
 
 export const FormContainer = styled.form`
   width: 100%;
-  margin-right: 25px;
-  margin-top: 5px;
+  /* margin-right: 25px; */
+  /* margin-top: 5px; */
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  /* box-shadow: 0px 0px 2.5px rgba(15, 15, 15, 0.19); */
+`;
+
+export const ProfileInfoContainer = styled.form`
+  width: 100%;
+  /* margin-right: 25px;
+  margin-top: 5px; */
+  margin: auto;
   display: flex;
   flex-direction: column;
   box-shadow: 0px 0px 2.5px rgba(15, 15, 15, 0.19);
@@ -36,7 +47,7 @@ export const EditLink = styled.a`
   color: rgb(26, 188, 156);
   font-weight: 500;
   text-decoration: none;
-  margin-left: 400px;
+  margin-left: 380px;
   margin-bottom: 20px;
   margin-top: -70px;
   position: relative;

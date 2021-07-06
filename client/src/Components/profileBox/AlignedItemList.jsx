@@ -11,9 +11,11 @@ import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: "100%",
+    width: "86.5%",
     maxWidth: "60ch",
-    maxHeight: "21.5%",
+    // minHeight: "29%",
+    // maxHeight: "29%",
+    maxHeight: "250px",
     overflow: "auto",
     marginTop: "-8px",
 
@@ -39,6 +41,8 @@ export default function AlignItemsList({ token }) {
       });
   }, [token]);
 
+  console.log("This should be full ofneat stuff-----", opportunities)
+  
   return (
     <>
       <List className={classes.root}>

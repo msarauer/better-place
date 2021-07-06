@@ -177,6 +177,17 @@ const EditForm = ({ token, setToken }) => {
               inputProps={{maxLength: 225}}
               value={bio}
             />
+             <TextField 
+              onChange={(e) => setProfilePic(e.target.value)}
+              className={classes.field}
+              label="Inser new Picture URL"
+              variant="outlined"
+              fullWidth
+              // required
+              // error={titleError}
+              inputProps={{maxLength: 225}}
+              // value={profilePic}
+            />
         
         
    
@@ -186,9 +197,7 @@ const EditForm = ({ token, setToken }) => {
           Confirm
         </SubmitButton>
       </FormContainer>
-      <Marginer direction="vertical" margin={10} />
-      <Marginer direction="vertical" margin="1.6em" />
-      <Marginer direction="vertical" margin="1.6em" />
+      <Marginer direction="vertical" margin={5} />
       <MutedLink href="#">
         Changed your mind?{" "}
         <BoldLink href="#" onClick={switchToSignin}>

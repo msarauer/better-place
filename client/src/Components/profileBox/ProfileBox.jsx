@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import LoginForm from "./ProfileForm";
+import ProfileForm from "./ProfileForm";
+import EditForm from "./EditForm";
 import { motion } from "framer-motion";
-import SignupForm from "./EditForm";
 import { AccountContext } from "./accountContext";
 import AlignItemsList from "./AlignedItemList";
 import axios from "axios";
 
 const BoxContainer = styled.div`
   width: 500px;
-  height: 800px;
+  height: 850px;
   display: flex;
   flex-direction: column;
   border-radius: 19px;
@@ -83,7 +83,7 @@ const HeaderEditPicture = styled.img`
   width: 175px;
   height: 175px;
   margin-left: 20px;
-  margin-bottom: 40px;
+  margin-bottom: 38px;
 `;
 
 const SmallText = styled.h5`
@@ -100,7 +100,7 @@ const InnerContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 1.8em;
-  margin-top: 5px;
+  margin-top: -12px;
 `;
 
 const backdropVariants = {
@@ -125,14 +125,14 @@ const expandingTransition = {
   stiffness: 30,
 };
 
-const ProfileBox = ({ token }) => {
+const ProfileBox = ({ token, setToken }) => {
   const [isExpanded, setExpanded] = useState(false);
   const [active, setActive] = useState("signin");
   const [userPicture, setUserPicture] = useState({});
 
   useEffect(() => {
     axios
-      .get(`/api/user/${token}`) //REMEBER TO CHANGE TO :id
+      .get(`/api/user/${token.email}`) //REMEBER TO CHANGE TO :id
       .then((data) => {
         setUserPicture(data.data.users[0].picture_url);
       })
@@ -176,21 +176,21 @@ const ProfileBox = ({ token }) => {
           {active === "signin" && (
             <HeaderContainer>
               <HeaderText>
-                <HeaderPicture src={userPicture} height={250} />
+                <HeaderPicture src={userPicture} height={250} onError={(e)=>{e.target.onerror = null; e.target.src='http://s3.amazonaws.com/37assets/svn/765-default-avatar.png'}}/>
               </HeaderText>
             </HeaderContainer>
           )}
           {active === "signup" && (
             <HeaderContainer>
               <HeaderText>
-                <HeaderEditPicture src={userPicture} height={250} />
+                <HeaderEditPicture src={userPicture} height={250} onError={(e)=>{e.target.onerror = null; e.target.src='http://s3.amazonaws.com/37assets/svn/765-default-avatar.png'}} />
               </HeaderText>
             </HeaderContainer>
           )}
         </TopContainer>
         <InnerContainer>
-          {active === "signin" && <LoginForm token={token} />}
-          {active === "signup" && <SignupForm token={token} />}
+          {active === "signin" && <ProfileForm token={token} />}
+          {active === "signup" && <EditForm token={token} setToken={setToken} />}
         </InnerContainer>
       </BoxContainer>
     </AccountContext.Provider>

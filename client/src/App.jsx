@@ -3,12 +3,14 @@ import "./App.css";
 import NavBar from "./Components/NavBar";
 import Header from "./Components/Header";
 import Search from "./Components/Search";
+import Footer from "./Components/Footer";
 import CategoryList from "./Components/CategoryList";
 import OpportunityList from "./Components/OpportunityList";
 import CreateNewOpportunityWithModal from "./Components/CreateNewOpportunityWithModal";
 import axios from 'axios'
 import { BackTop } from 'antd';
 import useToken from './hooks/useToken'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 
@@ -34,6 +36,7 @@ function App() {
   const [token, setToken] = useState('');
   const [lat, setLat] = useState('');
   const [lng, setLng] = useState('');
+  const [rows, setRows] = useState('');
 
   // const { token, setToken } = useToken();
   
@@ -86,14 +89,13 @@ function App() {
       <CategoryList handleClick={(data) => setCategory(data)} categories={categories} setCategories={setCategories}/>
  
       {/* Conditional for SearchList */}
-      <CreateNewOpportunityWithModal opportunities={opportunities} setOpportunities={setOpportunities} onSave={save} location={city} categories={categories} setCategories={setCategories} host_id={token}/>
-      <OpportunityList lat={lat} lng={lng} token={token} opportunities={opportunities} setOpportunities={setOpportunities} location={city} category={category} />
+      <CreateNewOpportunityWithModal rows={rows} setRows={setRows} opportunities={opportunities} setOpportunities={setOpportunities} onSave={save} location={city} categories={categories} setCategories={setCategories} host_id={token}/>
+      <OpportunityList rows={rows} setRows={setRows} lat={lat} lng={lng} token={token} opportunities={opportunities} setOpportunities={setOpportunities} location={city} category={category} />
       
       <br />
        <BackTop />
-    Scroll down to see the bottom-right
-    <strong className="site-back-top-basic"> gray </strong>
-    button.
+       <Footer />
+
     </div>
 
   );

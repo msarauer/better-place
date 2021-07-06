@@ -152,9 +152,15 @@ const NavBar = ({ handleLocation, city, country, token, setToken, setLng, setLat
             {token && (
               ["right"].map((anchor) => (
                 <React.Fragment key={anchor}>
-                  <Button onClick={toggleProfile(anchor, true)}><img className={classes.navBarProfile} src={token.picture_url} alt="ProfilePic"/></Button>
 
-                  {/* <Button onClick={toggleProfile(anchor, true)}>Profile</Button> */}
+                  <Button onClick={toggleProfile(anchor, true)}><img className={classes.navBarProfile} src={token.picture_url} alt="ProfilePic" onError={(e)=>{e.target.onerror = null; e.target.src='http://s3.amazonaws.com/37assets/svn/765-default-avatar.png'}} /></Button>
+
+
+
+
+
+                  {/* <Button onClick={toggleProfile(anchor, true)}><img className={classes.navBarProfile} src={token.picture_url} alt="ProfilePic" /></Button> */}
+
                   <Drawer
                     classes={{ paper: classes.drawerProfile }}
                     anchor={anchor}
@@ -198,7 +204,7 @@ const NavBar = ({ handleLocation, city, country, token, setToken, setLng, setLat
                   
                   // onClick={() => handleSubmit(anchor, token)}
                 >
-                  <AccountBox setToken={setToken} token={token} setLoginPage={setLoginPage}  toggleLogin={() => toggleLogin(anchor, false) }/>
+                  <AccountBox setToken={setToken} token={token} setLoginPage={setLoginPage} />
 
                 </Drawer>
               </React.Fragment>
