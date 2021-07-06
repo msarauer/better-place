@@ -102,14 +102,9 @@ const NavBar = ({ handleLocation, city, country, token, setToken, setLng, setLat
     setLoginPage({ ...loginPage, [anchor]: open });
   };
 
-  // const handleLogin = (anchor) => {
-  //   if (token) {
-  //     console.log("NO WAY HOMBRE")
-  //     toggleLogin(anchor, false)
-  //     toggleLogin(anchor, !token)
-  //   } else {
-  //   }
-  // }
+  const handleSubmit = () => {
+
+  }
 
   
 
