@@ -3,6 +3,7 @@ import "./App.css";
 import NavBar from "./Components/NavBar";
 import Header from "./Components/Header";
 import Search from "./Components/Search";
+import Sidebar from './Components/Sidebar'
 import CategoryList from "./Components/CategoryList";
 import OpportunityList from "./Components/OpportunityList";
 import CreateNewOpportunityWithModal from "./Components/CreateNewOpportunityWithModal";
@@ -87,8 +88,8 @@ function App() {
  
       {/* Conditional for SearchList */}
       <CreateNewOpportunityWithModal opportunities={opportunities} setOpportunities={setOpportunities} onSave={save} location={city} categories={categories} setCategories={setCategories} host_id={token}/>
-      <OpportunityList lat={lat} lng={lng} token={token} opportunities={opportunities} setOpportunities={setOpportunities} location={city} category={category} />
-      
+      <OpportunityList  />
+      <Sidebar lat={lat} lng={lng} token={token} opportunities={opportunities} setOpportunities={setOpportunities} location={city} category={category}/>
       <br />
        <BackTop />
     Scroll down to see the bottom-right
