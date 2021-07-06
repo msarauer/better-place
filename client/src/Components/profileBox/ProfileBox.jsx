@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import LoginForm from "./ProfileForm";
+import ProfileForm from "./ProfileForm";
 import { motion } from "framer-motion";
-import SignupForm from "./EditForm";
+import EditForm from "./EditForm";
 import { AccountContext } from "./accountContext";
 import AlignItemsList from "./AlignedItemList";
 import axios from "axios";
 
 const BoxContainer = styled.div`
   width: 500px;
-  height: 800px;
+  height: 850px;
   display: flex;
   flex-direction: column;
   border-radius: 19px;
@@ -96,7 +96,7 @@ const SmallText = styled.h5`
 `;
 
 const InnerContainer = styled.div`
-  width: 120%;
+  width: 128%;
   display: flex;
   flex-direction: column;
   padding: 0 1.8em;
@@ -125,16 +125,17 @@ const expandingTransition = {
   stiffness: 30,
 };
 
-const ProfileBox = ({ token }) => {
+const ProfileBox = ({ token, setToken }) => {
   const [isExpanded, setExpanded] = useState(false);
   const [active, setActive] = useState("signin");
   const [userPicture, setUserPicture] = useState({});
 
   useEffect(() => {
     axios
-      .get(`/api/user/${token}`) //REMEBER TO CHANGE TO :id
+      .get(`/api/user/${token.email}`) //REMEBER TO CHANGE TO :id
       .then((data) => {
         setUserPicture(data.data.users[0].picture_url);
+        setUserPicture(token.picture_url);
       })
       .catch((e) => {
         console.log("axiosError:", e);
@@ -189,8 +190,8 @@ const ProfileBox = ({ token }) => {
           )}
         </TopContainer>
         <InnerContainer>
-          {active === "signin" && <LoginForm token={token} />}
-          {active === "signup" && <SignupForm token={token} />}
+          {active === "signin" && <ProfileForm token={token} setToken={setToken} />}
+          {active === "signup" && <EditForm token={token} setToken={setToken} />}
         </InnerContainer>
       </BoxContainer>
     </AccountContext.Provider>

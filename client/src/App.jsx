@@ -9,8 +9,7 @@ import CreateNewOpportunityWithModal from "./Components/CreateNewOpportunityWith
 import axios from 'axios'
 import { BackTop } from 'antd';
 import useToken from './hooks/useToken'
-import Reviews from "./Components/Reviews";
-import ReactTooltip from 'react-tooltip';
+
 
 
   // const setToken = userToken => {
@@ -88,9 +87,7 @@ function App() {
       {/* Conditional for SearchList */}
       <CreateNewOpportunityWithModal opportunities={opportunities} setOpportunities={setOpportunities} onSave={save} location={city} categories={categories} setCategories={setCategories} host_id={token}/>
       <OpportunityList token={token} opportunities={opportunities} setOpportunities={setOpportunities} location={city} category={category} />
-      {/* <ReactTooltip id={19} place="top"> */}
-        <Reviews />
-        {/* </ReactTooltip> */}
+      
       <br />
        <BackTop />
     Scroll down to see the bottom-right

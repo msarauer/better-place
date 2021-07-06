@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
+import React  from 'react';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
-import Divider from '@material-ui/core/Divider';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
+import Rating from '@material-ui/lab/Rating';
+import Paper from '@material-ui/core/Paper';
+
+
 
 
 
@@ -22,17 +25,18 @@ const useStyles = makeStyles((theme) =>
   }),
 );
 
+
 export default function Review({ feedback, rating, user, avatar }) {
   const classes = useStyles();
 
   return (
-    <div>
+    <Paper elevation={3} >
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
           <Avatar alt={user} src={avatar} />
         </ListItemAvatar>
         <ListItemText
-          primary={`${rating}/5 STARS`}
+          primary={<Rating name="read-only" value={rating} readOnly  />}
           secondary={
             <React.Fragment>
               <Typography
@@ -40,15 +44,14 @@ export default function Review({ feedback, rating, user, avatar }) {
                 variant="body2"
                 className={classes.inline}
                 color="textPrimary"
-              >
+                >
                 {user}
               </Typography>
               {` - ${feedback}`}
             </React.Fragment>
           }
-        />
+          />
       </ListItem>
-      <Divider variant="inset" component="li" />
-    </div>
+    </Paper>
   );
 }

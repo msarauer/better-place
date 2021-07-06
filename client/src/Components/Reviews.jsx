@@ -1,9 +1,10 @@
 import React, { useState, useEffect} from 'react';
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
 import axios from 'axios';
 import Review from './Review';
+import Divider from '@material-ui/core/Divider';
+
 
 
 const useStyles = makeStyles((theme) =>
@@ -43,9 +44,11 @@ export default function Reviews() {
   return (
 
       <List className={classes.root}>
-      <Typography>Reviews for {userReviews.length > 0 && userReviews[0].host_name}</Typography>
-        {userReviews.map((review) => { 
-          return <Review key={ review.id } feedback={review.user_feedback} rating={review.rating} user={review.user_name} avatar={review.avatar}/>})}
+        <h4 color="black">Reviews for {userReviews.length > 0 && userReviews[0].host_name}</h4>
+        {/* <Divider variant="inset" component="li" /> */}
+
+          {userReviews.map((review, i) => { 
+            return <><Review key={ review.id } feedback={review.user_feedback} rating={review.rating} user={review.user_name} avatar={review.avatar}/>{userReviews[i + 1] && <br/>}</>})}
       </List>
 
   );

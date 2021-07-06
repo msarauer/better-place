@@ -45,6 +45,7 @@ export const updateRows = (opps, userOpps) => {
       }
     }
   }
+  console.log("rowsFromUpdateRows:", rows);
   return rows;
 };
 
@@ -53,28 +54,10 @@ export const addOpportunity = (opps, id) => {
   rows.forEach((opp) => {
     if (Number(id) === Number(opp.id)) {
       opp.selected = true;
-      opp.number_of_volunteers_added += 1;
+      opp.volunteer_count += 1;
       console.log("volunteers_added:", opp.number_of_volunteers_added);
     }
   });
-  // const rows = opps.map((opp) => {
-  //   if (opp.id === id) {
-  //     opp.selected = true;
-  //     opp.number_of_volunteers_added += 1;
-  //     return opp;
-  //   }
-  //   return opp;
-  // });
-  // const rows = opps.filter((opp) => opp.id !== id);
-  // console.log(rows, id);
-  // const row = opps.filter((opp) => {
-  //   return opp.id === id;
-  // });
-  // console.log("AddedOpportunity:", row);
-  // row.selected = true;
-  // row.number_of_volunteers_added += 1;
-  // console.log("AddedOpportunity:", row.number_of_volunteers_added);
-  // rows.push(row);
   return rows;
 };
 
@@ -83,7 +66,7 @@ export const removeOpportunity = (opps, id) => {
   rows.forEach((opp) => {
     if (Number(id) === Number(opp.id)) {
       opp.selected = false;
-      opp.number_of_volunteers_added -= 1;
+      opp.volunteer_count -= 1;
       console.log("volunteers_added:", opp.number_of_volunteers_added);
     }
   });
@@ -103,3 +86,5 @@ export const countVolunteersAdded = (opps, allUserOpps) => {
   });
   return rows;
 };
+
+// const findUsersOpportunity = ()

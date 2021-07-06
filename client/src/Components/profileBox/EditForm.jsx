@@ -12,39 +12,39 @@ import { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import UploadButtons from "../accountBox/UploadButtons";
 
-const EditForm = ({token}) => {
+const EditForm = ({ token, setToken }) => {
   const { switchToSignin } = useContext(AccountContext);
   const [user, setUser] = useState({});
-  const [email, setEmail] = useState(user.email);
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [address, setAddress] = useState("");
-  const [bio, setBio] = useState("");
-  const [profilePic, setProfilePic] = useState(""); // Some sort of defult image maybe?
+  const [email, setEmail] = useState(token.email);
+  const [password, setPassword] = useState(token.password);
+  const [name, setName] = useState(token.name);
+  const [phoneNumber, setPhoneNumber] = useState(token.phone_number);
+  const [address, setAddress] = useState(token.address);
+  const [bio, setBio] = useState(token.bio);
+  const [profilePic, setProfilePic] = useState(token.picture_url); // Some sort of defult image maybe?
 
-  useEffect(() => {
-    axios
-      .get(`/api/user/${token}`) // REMEMBER TO CHANGE TO :id
-      .then((data) => {
-        const userInfo = data.data.users[0];
-        setEmail(userInfo.email);
-        setPassword(userInfo.password);
-        setName(userInfo.name);
-        setPhoneNumber(userInfo.phone_number);
-        setAddress(userInfo.address);
-        setBio(userInfo.bio);
-        setProfilePic(userInfo.profile_pic);
-      })
-      .catch((e) => {
-        console.log("axiosError:", e);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get(`/api/user/${token}`) // REMEMBER TO CHANGE TO :id
+  //     .then((data) => {
+  //       const userInfo = data.data.users[0];
+  //       setEmail(userInfo.email);
+  //       setPassword(userInfo.password);
+  //       setName(userInfo.name);
+  //       setPhoneNumber(userInfo.phone_number);
+  //       setAddress(userInfo.address);
+  //       setBio(userInfo.bio);
+  //       setProfilePic(userInfo.profile_pic);
+  //     })
+  //     .catch((e) => {
+  //       console.log("axiosError:", e);
+  //     });
+  // }, []);
 
   const handleSubmit = (e) => {
     const userSave = (data) => {
       axios
-        .put(`/api/user/${token}`, data) // REMEMBER TO CHANGE TO :id
+        .put(`/api/user/${token.email}`, data) // REMEMBER TO CHANGE TO :id
         .then((data) => {
           console.log(data);
         })
@@ -62,8 +62,10 @@ const EditForm = ({token}) => {
       bio,
       picture_url: profilePic,
     };
-    userSave(saveData);
+    // console.log(token)
+    setToken({ ...saveData });
   };
+
 
   return (
     <BoxContainer>
@@ -71,7 +73,6 @@ const EditForm = ({token}) => {
         <Input
           type="email"
           value={email}
-          // placeholder={user.email}
           onChange={(e) => setEmail(e.target.value)}
         />
         <Input
@@ -105,8 +106,16 @@ const EditForm = ({token}) => {
           value={bio}
           onChange={(e) => setBio(e.target.value)}
         />
-        <UploadButtons onChange={(e) => setProfilePic(e.target.value)} />
-        <SubmitButton onClick={switchToSignin} type="submit">Confirm</SubmitButton>
+        <Input
+          type="textarea"
+          placeholder="Insert New Picture URL"
+          onChange={(e) => setProfilePic(e.target.value)}
+        />
+        <Marginer direction="vertical" margin={15} />
+
+        <SubmitButton onClick={switchToSignin} type="submit">
+          Confirm
+        </SubmitButton>
       </FormContainer>
       <Marginer direction="vertical" margin={10} />
       <Marginer direction="vertical" margin="1.6em" />

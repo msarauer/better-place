@@ -9,46 +9,57 @@ import {
   EditLink,
   TitleText,
   NameText,
-  BioText
+  BioText,
+  CenterIcon,
+  BorderSeperator,
 } from "./common";
 import { Marginer } from "./Marginer";
 import { AccountContext } from "./accountContext";
 import { useContext, useEffect, useState } from "react";
 import AlignItemsList from "./AlignedItemList";
-import MailIcon from '@material-ui/icons/Mail';
+import MailIcon from "@material-ui/icons/Mail";
+import CallIcon from "@material-ui/icons/Call";
+import HomeIcon from "@material-ui/icons/Home";
 import axios from "axios";
 
-const ProfileForm = ({token}) => {
+const ProfileForm = ({ token }) => {
   const { switchToSignup } = useContext(AccountContext);
   const [user, setUser] = useState({});
   const [opportunities, setOpportunities] = useState([]);
 
   // Used to get specific user from id
-  useEffect(() => {
-    axios
-      .get(`/api/user/${token}`)
-      .then((data) => {
-        setUser(data.data.users[0]);
-      })
-      .catch((e) => {
-        console.log("axiosError:", e);
-      });
-  }, []);
-
+  // useEffect(() => {
+  //   axios
+  //     .get(`/api/user/${token.email}`)
+  //     .then((data) => {
+  //       setUser(data.data.users[0]);
+  //     })
+  //     .catch((e) => {
+  //       console.log("axiosError:", e);
+  //     });
+  // }, []);
 
   return (
     <>
       <BoxContainer>
         <FormContainer>
-          <NameText>{user.name}</NameText>
-          <BioText>{user.bio}</BioText>
-          <TitleText>
-            Contact Info: 
-            </TitleText> 
-           <SmallText><MailIcon />{user.email}</SmallText>
-           <SmallText>Phone Number --  {user.phone_number}</SmallText>
-          
-          <SmallText>{user.address}</SmallText>
+          <NameText>{token.name}</NameText>
+          <BorderSeperator />
+
+          <BioText>{token.bio}</BioText>
+          <BorderSeperator />
+          <CenterIcon>
+            <MailIcon />
+          </CenterIcon>
+          <SmallText>{token.email}</SmallText>
+          <CenterIcon>
+            <CallIcon />
+          </CenterIcon>
+          <SmallText>{token.phone_number}</SmallText>
+          <CenterIcon>
+            <HomeIcon />
+          </CenterIcon>
+          <SmallText>{token.address}</SmallText>
         </FormContainer>
         <Marginer direction="vertical" margin={10} />
         <MutedLink href="#"></MutedLink>
@@ -56,15 +67,13 @@ const ProfileForm = ({token}) => {
         <Marginer direction="vertical" margin="1.6em" />
       </BoxContainer>
 
-      {/* <Marginer direction="vertical" margin={-10} /> */}
-
-      <SmallText>------Completed Committments------ </SmallText>
+      <TitleText>Completed Volunteer Opportunities</TitleText>
       <Marginer direction="vertical" margin={5} />
       <EditLink href="#" onClick={switchToSignup}>
         Edit Profile
         <Marginer direction="vertical" margin={10} />
       </EditLink>
-      <AlignItemsList token={token}/>
+      <AlignItemsList token={token} />
     </>
   );
 };

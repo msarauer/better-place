@@ -36,8 +36,9 @@ export const EditLink = styled.a`
   color: rgb(26, 188, 156);
   font-weight: 500;
   text-decoration: none;
-  margin-left: 390px;
+  margin-left: 400px;
   margin-bottom: 20px;
+  margin-top: -70px;
   position: relative;
 `;
 
@@ -68,7 +69,7 @@ export const Input = styled.input`
 export const SubmitButton = styled.button`
   width: 100%;
   padding: 11px 40%;
-  color: #fff;
+  /* color: #fff; */
 
   font-size: 15px;
   font-weight: 600;
@@ -88,35 +89,37 @@ export const SubmitButton = styled.button`
 `;
 
 export const SmallText = styled.h5`
-  color: #fff;
+  color: #534f4f;
   font-weight: 500;
   font-size: 11px;
   z-index: 5;
   margin: 0;
-  margin-top: 7px;
+  margin-bottom: 7px;
+  text-align: center;
 `;
 
 export const TitleText = styled.h4`
-  color: #fff;
+  color: #918787;
   font-weight: 500;
   font-size: 15px;
+  border-bottom: 2px solid rgba(26, 188, 156, 1);
   z-index: 5;
   margin: 0;
-  margin-top: 7px;
+  margin-top: -35px;
+  margin-bottom: 25px;
+  width: 238px;
 `;
 
 export const NameText = styled.h2`
-  color: #fff;
   font-weight: 500;
   font-size: 2em;
   z-index: 5;
   margin: 0;
   margin-top: 7px;
-  margin-left: 140px;
+  text-align: center;
 `;
 
 export const BioText = styled.h4`
-  color: #fff;
   font-weight: 500;
   font-size: 11px;
   z-index: 5;
@@ -124,4 +127,24 @@ export const BioText = styled.h4`
   margin-top: 7px;
   margin-bottom: 10px;
   text-align: center;
+`;
+
+export const CenterIcon = styled.h5`
+  color: #534f4f;
+  font-weight: 500;
+  font-size: 11px;
+  z-index: 5;
+  margin: 0;
+  text-align: center;
+`;
+
+export const BorderSeperator = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  margin-left: 85px;
+  
+  border-bottom: 1.5px solid rgba(26, 188, 156, 1);
+  
 `;

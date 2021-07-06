@@ -1,6 +1,12 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { getPercentage } from "../helpers/basic-helpers";
-import { addOpportunity, removeOpportunity, rowFilter, updateRows, countVolunteersAdded } from "../helpers/filters-and-sorters";
+import {
+  addOpportunity,
+  removeOpportunity,
+  rowFilter,
+  updateRows,
+  countVolunteersAdded,
+} from "../helpers/filters-and-sorters";
 import "antd/dist/antd.css";
 import { List, Avatar, Space } from "antd";
 import {
@@ -10,8 +16,10 @@ import {
 } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import { Progress, Switch } from "antd";
-const axios = require("axios");
+import ReactTooltip from "react-tooltip";
+import Reviews from "./Reviews";
 
+const axios = require("axios");
 
 const useStyles = makeStyles({
   root: {
@@ -43,43 +51,57 @@ const OpportunityList = ({
 
   const [rows, setRows] = useState([]);
   const [usersOpportunities, setUsersOpportunities] = useState([]);
-  const [column, setColumn] = useState(undefined);
+  const [tokenOpportunities, setTokenOpportunities] = useState([]);
 
   useEffect(() => {
     axios
       .get(`/api/opportunities`)
       .then((data) => {
         setOpportunities(data.data.opportunities);
-        if (token) {
-          axios
-          .get(`/api/users_opportunities/${token}`)
-          .then((data) => {
-            console.log('rowsFromUserOpps:',data.data.opportunities)
-            // setUsersOpportunities((prev) => [...data.data.opportunities])
-            setRows(updateRows(rows, data.data.opportunities))
+        console.log("token before axios", token);
+      })
+      .catch((e) => console.log(e));
+  }, [token, location]);
 
-            console.log('updatedRows:', usersOpportunities)
-          }).catch(e => console.log(e))
-        } 
-      })
-      .catch((e) => {
-        console.log("axiosError:", e);
-      });
-    axios
-      .put(`/api/users_opportunities/all`)
-      .then((data) => {
-        setUsersOpportunities((prev) => [...data.data.usersOpportunities])
-        console.log(usersOpportunities)
-        const rows = countVolunteersAdded(rows, usersOpportunities)
-        setRows((prev) => [...rows])
-      })
-      .catch((e) => console.log(e))
-  }, [location, token]);
+
+
+
+
+
+
+  
+    useEffect(() => {
+      const filteredRows = rowFilter(opportunities, location, category);
+      setRows((prev) => filteredRows)
+    }, [location])
+
+
 
   useEffect(() => {
-    const filteredRows = rowFilter(opportunities, location, category);
-    setRows(filteredRows);
-  }, [location, category, opportunities]);
+    console.log('rowsBeforeUpdate:', rows)
+    if (token.email) {
+      axios.put(`/api/users_opportunities/${token.email}`).then((data) => {
+        setTokenOpportunities((prev) => [...data.data.opportunities]);
+        setRows(updateRows(rows, data.data.opportunities));
+      })
+    }
+  }, [token, location]);
+
+  useEffect(() => {
+      axios.get(`/api/users_opportunities/`).then((data) => {
+      setUsersOpportunities((prev) => [...data.data.usersOpportunities]);
+      const newRows = countVolunteersAdded(rows, usersOpportunities);
+      console.log("rowsAfterCount:", rows);
+      setRows((prev) => [...newRows])
+      })
+  }, [token]);
+
+
+
+
+  useEffect(() => {
+    ReactTooltip.rebuild();
+  });
 
   // useEffect(() => {
   //   console.log("col", column)
@@ -87,37 +109,37 @@ const OpportunityList = ({
   //   setRows((prev)=>columnSort([ ...prev], column))
   // }, [column])
 
-
   // addVolunteer and removeVolunteer are strictly axios calls, the state update functions are in filters-and-sorters as helper functions
-  const addVolunteer = opportunityId => {
+  const addVolunteer = (opportunityId) => {
+    console.log("tokenIn addvolunteer:", token);
     axios.post(`/api/users_opportunities`, {
-      email: token,
-      opportunity_id: opportunityId
-    })
-  }
+      user_id: token.id,
+      opportunity_id: opportunityId,
+    });
+  };
 
   const removeVolunteer = (opportunityId) => {
-    axios.delete(`/api/users_opportunities/${opportunityId}`, { email: token });
+    axios.delete(`/api/users_opportunities/${opportunityId}`, {
+      data: { user_id: token.id },
+    });
   };
 
   const onChange = (checked, event) => {
     console.log(`switch to ${checked}`);
     const oppId = event.currentTarget.id;
-    
+
     if (checked) {
       const newRows = addOpportunity(rows, oppId);
       setRows((prev) => [...newRows]);
-      addVolunteer(oppId)
+      addVolunteer(oppId);
     }
 
     if (!checked) {
       const newRows = removeOpportunity(rows, oppId);
       setRows((prev) => [...newRows]);
-      removeVolunteer(oppId)
+      removeVolunteer(oppId);
     }
-
-  }
-  
+  };
 
   return (
     <div>
@@ -168,12 +190,11 @@ const OpportunityList = ({
                   type="circle"
                   percent={getPercentage(
                     item.number_of_volunteers_needed,
-                    item.number_of_volunteers_added
+                    item.volunteer_count
                   )}
                   format={(percent) =>
                     `${
-                      item.number_of_volunteers_needed -
-                      item.number_of_volunteers_added
+                      item.number_of_volunteers_needed - item.volunteer_count
                     } Needed`
                   }
                 />
@@ -181,7 +202,7 @@ const OpportunityList = ({
             }
           >
             <List.Item.Meta
-              avatar={<Avatar src={item.avatar} data-tip data-for={item.id}/>}
+              avatar={<Avatar src={item.avatar} data-tip data-for={item.id} />}
               title={
                 <a
                   href={
@@ -194,13 +215,40 @@ const OpportunityList = ({
               description={item.category_name}
             />
             {item.description}
-            <br/>
-            <br/>
-            {!item.selected &&
-            <Switch className={item.id} id={item.id} checkedChildren="Volunteering" unCheckedChildren="Volunteer" onChange={onChange} />
-            }
-            {item.selected &&
-            <Switch defaultChecked className={item.id} checkedChildren="Volunteering" unCheckedChildren="Volunteer" id={item.id} onChange={onChange} />}
+            <br />
+            <br />
+            {token && !item.selected && (
+              <Switch
+                className={item.id}
+                id={item.id}
+                checkedChildren="Volunteering"
+                unCheckedChildren="Volunteer"
+                onChange={onChange}
+              />
+            )}
+            {token && item.selected && (
+              <Switch
+                defaultChecked
+                className={item.id}
+                checkedChildren="Volunteering"
+                unCheckedChildren="Volunteer"
+                id={item.id}
+                onChange={onChange}
+              />
+            )}
+            <ReactTooltip
+              id="19"
+              type="light"
+              place="right"
+              effect="solid"
+              className="my-tooltip"
+              getContent={[
+                () => {
+                  return <Reviews host_id={item.id} />;
+                },
+                10050,
+              ]}
+            ></ReactTooltip>
           </List.Item>
         )}
       />

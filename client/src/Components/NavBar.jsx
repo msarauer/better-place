@@ -36,7 +36,7 @@ const useStyles = makeStyles({
   },
     drawerProfile: {
     // width: 600,
-    height: 750,
+    height: 850,
     borderRadius: 25,
     // textTransform: "capitalize",
   },
@@ -70,18 +70,20 @@ const NavBar = ({ handleLocation, city, country, token, setToken }) => {
 
 
 
-    useEffect(() => {
-      axios
-        .get(`/api/user/${token}`)
-        .then((data) => {
-          setUser(data.data.users[0]);
-        })
-        .catch((e) => {
-          console.log("axiosError:", e);
-        });
-    }, []);
+    // useEffect(() => {
+    //   axios
+    //     .get(`/api/user/${token}`)
+    //     .then((data) => {
+    //       setUser(data.data.users[0]);
+    //     })
+    //     .catch((e) => {
+    //       console.log("axiosError:", e);
+    //     });
+    // }, []);
 
-    // console.log("WHy isnt the pic working anymore----", user)
+
+
+    // console.log("WHy isnt the pic working anymore----", token)
 
   const toggleLogin = (anchor, open) => (event) => {
     if (
@@ -137,7 +139,7 @@ const NavBar = ({ handleLocation, city, country, token, setToken }) => {
             {token && (
               ["right"].map((anchor) => (
                 <React.Fragment key={anchor}>
-                  <Button onClick={toggleProfile(anchor, true)}><img className={classes.navBarProfile} src={user.picture_url} alt="ProfilePic"/></Button>
+                  <Button onClick={toggleProfile(anchor, true)}><img className={classes.navBarProfile} src={token.picture_url} alt="ProfilePic"/></Button>
 
                   {/* <Button onClick={toggleProfile(anchor, true)}>Profile</Button> */}
                   <Drawer
@@ -146,7 +148,7 @@ const NavBar = ({ handleLocation, city, country, token, setToken }) => {
                     open={profilePage[anchor]}
                     onClose={toggleProfile(anchor, false)}
                   >
-                    <ProfileBox token={token} />
+                    <ProfileBox token={token} setToken={setToken}/>
                   </Drawer>
                 </React.Fragment>
               ))
@@ -156,8 +158,10 @@ const NavBar = ({ handleLocation, city, country, token, setToken }) => {
             {["right"].map((anchor) => (
               <React.Fragment key={anchor}>
                 {!token && (
+                  <>
                   <Button onClick={toggleLogin(anchor, true)}>Login</Button>
-                 
+                  
+                 </>
 
                 )}
                 {token && (
@@ -179,10 +183,9 @@ const NavBar = ({ handleLocation, city, country, token, setToken }) => {
                   // onSubmit={() => handleLogin()}
                   onSubmit={toggleLogin(anchor, !token)}
                       // onSubmit={toggleLogin(anchor, false)}
-
-
                 >
                   <AccountBox setToken={setToken} token={token} />
+
                 </Drawer>
               </React.Fragment>
             ))}

@@ -13,9 +13,9 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
     maxWidth: "60ch",
-    maxHeight: 245,
+    maxHeight: 215,
     overflow: "auto",
-    marginTop: "-25px",
+    marginTop: "-8px",
 
     backgroundColor: theme.palette.background.paper,
   },
@@ -24,13 +24,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AlignItemsList({token}) {
+export default function AlignItemsList({ token }) {
   const classes = useStyles();
   const [opportunities, setOpportunities] = useState([]);
 
   useEffect(() => {
     axios
-      .get(`/api/users_opportunities/${token}`)
+      .put(`/api/users_opportunities/${token.email}`)
       .then((data) => {
         setOpportunities(data.data.opportunities);
       })
@@ -38,7 +38,6 @@ export default function AlignItemsList({token}) {
         console.log("axiosError:", e);
       });
   }, [token]);
-
 
   return (
     <>
