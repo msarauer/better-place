@@ -11,8 +11,28 @@ import { AccountContext } from "./accountContext";
 import { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import UploadButtons from "../accountBox/UploadButtons";
+import TextField from "@material-ui/core/TextField";
+import { makeStyles, Typography } from "@material-ui/core";
+
+
+
+
+const useStyles = makeStyles({
+  field: {
+    marginTop: 5,
+    marginBottom: 5,
+    // display: 'block'
+    maxLength:"225"
+  }
+})
+
+
+
+
 
 const EditForm = ({ token, setToken }) => {
+  const classes = useStyles();
+  
   const { switchToSignin } = useContext(AccountContext);
   const [user, setUser] = useState({});
   const [email, setEmail] = useState(token.email);
@@ -22,6 +42,9 @@ const EditForm = ({ token, setToken }) => {
   const [address, setAddress] = useState(token.address);
   const [bio, setBio] = useState(token.bio);
   const [profilePic, setProfilePic] = useState(token.picture_url); // Some sort of defult image maybe?
+
+
+
 
   // useEffect(() => {
   //   axios
@@ -63,6 +86,7 @@ const EditForm = ({ token, setToken }) => {
       picture_url: profilePic,
     };
     // console.log(token)
+    userSave(saveData)
     setToken({ ...saveData });
   };
 
@@ -70,47 +94,92 @@ const EditForm = ({ token, setToken }) => {
   return (
     <BoxContainer>
       <FormContainer onSubmit={handleSubmit}>
-        <Input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <Input
-          type="password"
-          placeholder="Change Password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <Input type="password" placeholder="Confirm New Password" />
-        {/*  I forget how to get the passwords to be same, something to do with password digest in database*/}
-        <Input
-          type="text"
-          placeholder="Full Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <Input
-          type="text"
-          placeholder="PhoneNumber"
-          value={phoneNumber}
-          onChange={(e) => setPhoneNumber(e.target.value)}
-        />
-        <Input
-          type="text"
-          placeholder="Address"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-        />
-        <Input
-          type="textarea"
-          placeholder="Bio"
-          value={bio}
-          onChange={(e) => setBio(e.target.value)}
-        />
-        <Input
-          type="textarea"
-          placeholder="Insert New Picture URL"
-          onChange={(e) => setProfilePic(e.target.value)}
-        />
+      <TextField 
+              onChange={(e) => setEmail(e.target.value)}
+              className={classes.field}
+              label="Title"
+              variant="outlined"
+              fullWidth
+              required
+              // error={titleError}
+              value={email}
+              inputProps={{maxLength: 55}}
+
+            />
+            <TextField 
+              onChange={(e) => setPassword(e.target.value)}
+              className={classes.field}
+              label="Password"
+              variant="outlined"
+              fullWidth
+              // required
+              // error={titleError}
+              // value={password}
+              inputProps={{maxLength: 55}}
+
+            />
+            <TextField 
+              // onChange={(e) => setPassword(e.target.value)}
+              className={classes.field}
+              label="Confirm Password"
+              variant="outlined"
+              fullWidth
+              // required
+              // error={titleError}
+              // value={password}
+              inputProps={{maxLength: 55}}
+
+            />
+             <TextField 
+              onChange={(e) => setName(e.target.value)}
+              className={classes.field}
+              label="Name"
+              variant="outlined"
+              fullWidth
+              required
+              // error={titleError}
+              value={name}
+              inputProps={{maxLength: 30}}
+
+            />
+             <TextField 
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              className={classes.field}
+              label="Phone Number"
+              variant="outlined"
+              fullWidth
+              required
+              // error={titleError}
+              value={phoneNumber}
+              inputProps={{maxLength: 55}}
+
+            />
+            <TextField 
+              onChange={(e) => setAddress(e.target.value)}
+              className={classes.field}
+              label="Address"
+              variant="outlined"
+              fullWidth
+              required
+              inputProps={{maxLength: 55}}
+
+              // error={titleError}
+              value={address}
+            />
+          <TextField 
+              onChange={(e) => setBio(e.target.value)}
+              className={classes.field}
+              label="About Me"
+              variant="outlined"
+              fullWidth
+              required
+              // error={titleError}
+              inputProps={{maxLength: 225}}
+              value={bio}
+            />
+        
+        
+   
         <Marginer direction="vertical" margin={15} />
 
         <SubmitButton onClick={switchToSignin} type="submit">
@@ -131,3 +200,48 @@ const EditForm = ({ token, setToken }) => {
 };
 
 export default EditForm;
+
+
+
+
+{/* <Input
+type="email"
+value={email}
+onChange={(e) => setEmail(e.target.value)}
+/>
+<Input
+type="password"
+placeholder="Change Password"
+onChange={(e) => setPassword(e.target.value)}
+/>
+<Input type="password" placeholder="Confirm New Password" />
+<Input
+type="text"
+placeholder="Full Name"
+value={name}
+onChange={(e) => setName(e.target.value)}
+/>
+<Input
+type="text"
+placeholder="PhoneNumber"
+value={phoneNumber}
+onChange={(e) => setPhoneNumber(e.target.value)}
+/>
+<Input
+type="text"
+placeholder="Address"
+value={address}
+onChange={(e) => setAddress(e.target.value)}
+/>
+<Input
+type="textarea"
+placeholder="Bio"
+value={bio}
+maxLength="225"
+onChange={(e) => setBio(e.target.value)}
+/>
+<Input
+type="textarea"
+placeholder="Insert New Picture URL"
+onChange={(e) => setProfilePic(e.target.value)}
+/> */}

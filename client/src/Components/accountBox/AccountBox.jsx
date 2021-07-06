@@ -82,7 +82,7 @@ const InnerContainer = styled.div`
 const backdropVariants = {
   expanded: {
     width: "300%",
-    height: "1500px",
+    height: "1550px",
     borderRadius: "20%",
     tranform: "rotate(60deg)",
   },

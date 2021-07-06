@@ -30,8 +30,10 @@ function App() {
   const [country, setCountry] = useState("");
   const [category, setCategory] = useState(undefined);
   const [opportunities, setOpportunities] = useState([]);
-  const [loggedIn, setLoggedIn] = useState('');
   const [categories, setCategories] = useState();
+  const [token, setToken] = useState('');
+  const [lat, setLat] = useState('');
+  const [lng, setLng] = useState('');
 
   // const { token, setToken } = useToken();
   
@@ -42,7 +44,6 @@ function App() {
   // }, [])
 
 
-  const [token, setToken] = useState('');
 
   // const saveToken = userToken => {
   //   sessionStorage.setItem('token', JSON.stringify(userToken));
@@ -53,8 +54,8 @@ function App() {
 
 
   const handleLocation = (city, country) => {
-    setCity(city)
-    setCountry(country)
+    setCity(prev => city)
+    setCountry(prev => country)
   }
   const save = (data) => {
     console.log(data)
@@ -80,13 +81,13 @@ function App() {
 
   return (
     <div className="App">
-      <NavBar handleLocation={handleLocation} city={city} country={country} token={token} setToken={setToken} />
+      <NavBar setLat={setLat} setLng={setLng} handleLocation={handleLocation} city={city} country={country} token={token} setToken={setToken} />
       <Header />
       <CategoryList handleClick={(data) => setCategory(data)} categories={categories} setCategories={setCategories}/>
       <Search />
       {/* Conditional for SearchList */}
       <CreateNewOpportunityWithModal opportunities={opportunities} setOpportunities={setOpportunities} onSave={save} location={city} categories={categories} setCategories={setCategories} host_id={token}/>
-      <OpportunityList token={token} opportunities={opportunities} setOpportunities={setOpportunities} location={city} category={category} />
+      <OpportunityList lat={lat} lng={lng} token={token} opportunities={opportunities} setOpportunities={setOpportunities} location={city} category={category} />
       
       <br />
        <BackTop />

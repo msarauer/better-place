@@ -43,7 +43,7 @@ export const EditLink = styled.a`
 `;
 
 export const Input = styled.input`
-  width: 100%;
+  /* width: 100%;
   height: 42px;
   outline: none;
   border: 1px solid rgba(200, 200, 200, 0.3);
@@ -53,8 +53,8 @@ export const Input = styled.input`
   font-size: 12px;
 
   &::placeholder {
-    color: rgba(200, 200, 200, 1);
-  }
+    color: rgba(200, 200, 200, 1); */
+  /* }
 
   &:not(:last-type-of) {
     border-bottom: 1.5px solid rgba(200, 200, 200, 0.4);
@@ -63,7 +63,7 @@ export const Input = styled.input`
   &:focus {
     outline: none;
     border-bottom: 2px solid rgb(26, 188, 156);
-  }
+  } */
 `;
 
 export const SubmitButton = styled.button`

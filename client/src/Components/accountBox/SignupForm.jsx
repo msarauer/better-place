@@ -10,8 +10,22 @@ import { Marginer } from "./Marginer";
 import { AccountContext } from "./accountContext";
 import { useContext, useState } from "react";
 import axios from "axios";
+import TextField from "@material-ui/core/TextField";
+import { makeStyles, Typography } from "@material-ui/core";
+
+const useStyles = makeStyles({
+  field: {
+    marginTop: 5,
+    marginBottom: 5,
+    // display: 'block'
+    maxLength:"225"
+  }
+})
+
 
 const SignupForm = ({ toggleLogin }) => {
+  const classes = useStyles();
+
   const { switchToSignin } = useContext(AccountContext);
 
   const [email, setEmail] = useState("");
@@ -49,43 +63,91 @@ const SignupForm = ({ toggleLogin }) => {
   return (
     <BoxContainer>
       <FormContainer onSubmit={handleSubmit}>
-        <Input
-          type="email"
-          placeholder="Email"
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <Input
-          type="password"
-          placeholder="Password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <Input type="password" placeholder="Confirm Password" />
-        {/*  I forget how to get the passwords to be same, something to do with password digest in database*/}
-        <Input
-          type="text"
-          placeholder="Full Name"
-          onChange={(e) => setName(e.target.value)}
-        />
-        <Input
-          type="text"
-          placeholder="PhoneNumber"
-          onChange={(e) => setPhoneNumber(e.target.value)}
-        />
-        <Input
-          type="text"
-          placeholder="Address"
-          onChange={(e) => setAddress(e.target.value)}
-        />
-        <Input
-          type="textarea"
-          placeholder="Bio"
-          onChange={(e) => setBio(e.target.value)}
-        />
-        <Input
-          type="textarea"
-          placeholder="Picture URL"
-          onChange={(e) => setProfilePic(e.target.value)}
-        />
+      <TextField 
+              onChange={(e) => setEmail(e.target.value)}
+              className={classes.field}
+              label="Email"
+              variant="outlined"
+              fullWidth
+              required
+              // error={titleError}
+              value={email}
+              inputProps={{maxLength: 55}}
+
+            />
+            <TextField 
+              onChange={(e) => setPassword(e.target.value)}
+              className={classes.field}
+              label="Password"
+              variant="outlined"
+              fullWidth
+              required
+              // error={titleError}
+              // value={password}
+              inputProps={{maxLength: 55}}
+
+            />
+            <TextField 
+              // onChange={(e) => setPassword(e.target.value)}
+              className={classes.field}
+              label="Confirm Password"
+              variant="outlined"
+              fullWidth
+              required
+              // error={titleError}
+              // value={password}
+              inputProps={{maxLength: 55}}
+
+            />
+             <TextField 
+              onChange={(e) => setName(e.target.value)}
+              className={classes.field}
+              label="Name"
+              variant="outlined"
+              fullWidth
+              required
+              // error={titleError}
+              value={name}
+              inputProps={{maxLength: 30}}
+
+            />
+             <TextField 
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              className={classes.field}
+              label="Phone Number"
+              variant="outlined"
+              fullWidth
+              required
+              // error={titleError}
+              value={phoneNumber}
+              inputProps={{maxLength: 55}}
+
+            />
+            <TextField 
+              onChange={(e) => setAddress(e.target.value)}
+              className={classes.field}
+              label="Address"
+              variant="outlined"
+              fullWidth
+              required
+              inputProps={{maxLength: 55}}
+
+              // error={titleError}
+              value={address}
+            />
+          <TextField 
+              onChange={(e) => setBio(e.target.value)}
+              className={classes.field}
+              label="About Me"
+              variant="outlined"
+              fullWidth
+              required
+              // error={titleError}
+              inputProps={{maxLength: 225}}
+              value={bio}
+            />
+      <Marginer direction="vertical" margin={10} />
+        
         <SubmitButton type="submit">SignUp</SubmitButton>
       </FormContainer>
       <Marginer direction="vertical" margin={10} />
@@ -103,10 +165,40 @@ const SignupForm = ({ toggleLogin }) => {
 
 export default SignupForm;
 
-// name VARCHAR(255) NOT NULL,
-//   email VARCHAR(255) NOT NULL,
-//   password VARCHAR(255) NOT NULL,
-//   phone_number VARCHAR(255),
-//   address VARCHAR(255),
-//   picture_url VARCHAR(255),
-//   bio VARCHAR(255)
+{/* <Input
+type="email"
+placeholder="Email"
+onChange={(e) => setEmail(e.target.value)}
+/>
+<Input
+type="password"
+placeholder="Password"
+onChange={(e) => setPassword(e.target.value)}
+/>
+<Input type="password" placeholder="Confirm Password" />
+  I forget how to get the passwords to be same, something to do with password digest in database
+<Input
+type="text"
+placeholder="Full Name"
+onChange={(e) => setName(e.target.value)}
+/>
+<Input
+type="text"
+placeholder="PhoneNumber"
+onChange={(e) => setPhoneNumber(e.target.value)}
+/>
+<Input
+type="text"
+placeholder="Address"
+onChange={(e) => setAddress(e.target.value)}
+/>
+<Input
+type="textarea"
+placeholder="Bio"
+onChange={(e) => setBio(e.target.value)}
+/>
+<Input
+type="textarea"
+placeholder="Picture URL"
+onChange={(e) => setProfilePic(e.target.value)}
+/> */}

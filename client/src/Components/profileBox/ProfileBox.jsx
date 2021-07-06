@@ -83,7 +83,7 @@ const HeaderEditPicture = styled.img`
   width: 175px;
   height: 175px;
   margin-left: 20px;
-  margin-bottom: 40px;
+  margin-bottom: 30.2px;
 `;
 
 const SmallText = styled.h5`

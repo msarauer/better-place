@@ -10,10 +10,11 @@ export const BoxContainer = styled.div`
 
 export const FormContainer = styled.form`
   width: 100%;
-  margin-right: 25px;
+  /* margin-right: 0px; */
   display: flex;
+  margin-bottom: -49px;
   flex-direction: column;
-  box-shadow: 0px 0px 2.5px rgba(15, 15, 15, 0.19);
+  /* box-shadow: 0px 0px 2.5px rgba(15, 15, 15, 0.19); */
 `;
 
 export const MutedLink = styled.a`

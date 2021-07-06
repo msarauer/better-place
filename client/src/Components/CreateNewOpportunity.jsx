@@ -110,7 +110,6 @@ const CreateNewOpportunity = ({ opportunities, setOpportunities, onSave, locatio
   // (host_id , name , number_of_volunteers_needed, location, date, time_commitment, category_id)
   return (
     <Paper style= {{width: '100%', margin: '0 auto', padding: '2%', paddingTop: '0%'}}>
-      <Typography style ={{"paddingTop": 20}} >Tell us about your needs.</Typography>
       <form noValidate autoComplete="off" onSubmit={handleSubmit}>
         <FormControl style = {{width: '100%', "paddingLeft": 10, "paddingRight": 10}}>
           <Grid item xs={6}>

@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
     maxWidth: "60ch",
-    maxHeight: 215,
+    maxHeight: "21.5%",
     overflow: "auto",
     marginTop: "-8px",
 

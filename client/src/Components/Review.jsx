@@ -30,8 +30,8 @@ export default function Review({ feedback, rating, user, avatar }) {
   const classes = useStyles();
 
   return (
-    <Paper elevation={3} >
-      <ListItem alignItems="flex-start">
+    // <Paper elevation={3} >
+      <ListItem alignItems="flex-end">
         <ListItemAvatar>
           <Avatar alt={user} src={avatar} />
         </ListItemAvatar>
@@ -52,6 +52,6 @@ export default function Review({ feedback, rating, user, avatar }) {
           }
           />
       </ListItem>
-    </Paper>
+    // </Paper>
   );
 }

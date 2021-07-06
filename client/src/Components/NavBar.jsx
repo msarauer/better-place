@@ -30,7 +30,7 @@ const useStyles = makeStyles({
   },
   drawerInside: {
     // width: 600,
-    height: 550,
+    height: 800,
     borderRadius: 25,
     // textTransform: "capitalize",
   },
@@ -52,10 +52,14 @@ const useStyles = makeStyles({
     width: 50,
     height: 50,
     borderRadius: 50
+  },
+  currentLocation: {
+    marginRight: 50,
+    height: 50
   }
 });
 
-const NavBar = ({ handleLocation, city, country, token, setToken }) => {
+const NavBar = ({ handleLocation, city, country, token, setToken, setLng, setLat }) => {
   const classes = useStyles();
 
   const [user, setUser] = useState({})
@@ -129,9 +133,12 @@ const NavBar = ({ handleLocation, city, country, token, setToken }) => {
           </Typography>
           {/* GEO LOCATION */}
           <GeoLocation
+            className={classes.currentLocation}
             handleLocation={handleLocation}
             city={city}
             country={country}
+            setLat={setLat}
+            setLng={setLng}
           />
           <Grid container justify="flex-end" justify-content="space-between">
  
@@ -176,7 +183,7 @@ const NavBar = ({ handleLocation, city, country, token, setToken }) => {
                   </div>
                 )}
                 <Drawer
-                  classes={{ paper: classes.drawerProfile }}
+                  classes={{ paper: classes.drawerInside }}
                   anchor={anchor}
                   open={loginPage[anchor]}
                   onClose={toggleLogin(anchor, false)}

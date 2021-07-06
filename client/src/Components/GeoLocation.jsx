@@ -1,6 +1,19 @@
 import React, { useEffect } from "react";
+import styled from "styled-components";
+import MyLocationIcon from '@material-ui/icons/MyLocation';
 
-const GeoLocation = ({handleLocation, city, country}) => {
+
+
+export const CurrentLocation = styled.span`
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+  color: rgba(108, 122, 137, 1);
+`;
+
+const GeoLocation = ({handleLocation, city, country, setLng, setLat}) => {
   // const [city, setCity] = useState("What is your Location?");
   // const [country, setCountry] = useState("");
 
@@ -15,6 +28,8 @@ const GeoLocation = ({handleLocation, city, country}) => {
       let crd = pos.coords;
       let lat = crd.latitude.toString();
       let lng = crd.longitude.toString();
+      setLat(lat);
+      setLng(lng);
       let coordinates = [lat, lng];
       // console.log(`Latitude: ${lat}, Longitude: ${lng}`);
       getCity(coordinates);
@@ -76,7 +91,12 @@ const GeoLocation = ({handleLocation, city, country}) => {
 
   return (
     <div style={{width: "300px"}}>
-      <span>{city}{country && ", "}{country}</span>
+      {/* <span>{city}{country && ", "}{country}</span> */}
+      <CurrentLocation>
+      <MyLocationIcon/>
+      {city}{country && ", "}{country}
+
+      </CurrentLocation>
     </div>
   );
 };

@@ -1,18 +1,19 @@
 export const rowFilter = (opps, location = false, category = false) => {
+  const rows = [...opps];
   if (!location && !category) {
-    return opps;
+    return rows;
   }
   if (!location) {
-    return opps.filter((opp) => {
+    return rows.filter((opp) => {
       return opp.category_id === category;
     });
   }
   if (!category) {
-    return opps.filter((opp) => {
+    return rows.filter((opp) => {
       return opp.location === location;
     });
   }
-  return opps.filter((opp) => {
+  return rows.filter((opp) => {
     return opp.location === location && opp.category_id === category;
   });
 };
@@ -33,7 +34,7 @@ export const columnSort = (opps, column) => {
 };
 
 export const updateRows = (opps, userOpps) => {
-  const rows = opps;
+  const rows = [...opps];
   rows.forEach((opp) => {
     return (opp.selected = false);
   });
@@ -45,7 +46,6 @@ export const updateRows = (opps, userOpps) => {
       }
     }
   }
-  console.log("rowsFromUpdateRows:", rows);
   return rows;
 };
 
@@ -55,7 +55,6 @@ export const addOpportunity = (opps, id) => {
     if (Number(id) === Number(opp.id)) {
       opp.selected = true;
       opp.volunteer_count += 1;
-      console.log("volunteers_added:", opp.number_of_volunteers_added);
     }
   });
   return rows;
@@ -67,18 +66,17 @@ export const removeOpportunity = (opps, id) => {
     if (Number(id) === Number(opp.id)) {
       opp.selected = false;
       opp.volunteer_count -= 1;
-      console.log("volunteers_added:", opp.number_of_volunteers_added);
     }
   });
   return rows;
 };
 
 export const countVolunteersAdded = (opps, allUserOpps) => {
-  const rows = opps;
+  const rows = [...opps];
   rows.forEach((opp) => {
     let count = 0;
     for (let userOpp of allUserOpps) {
-      if (Number(userOpp.id) === Number(opp.id)) {
+      if (Number(userOpp.opportunity_id) === Number(opp.id)) {
         count += 1;
       }
     }

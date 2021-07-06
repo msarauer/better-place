@@ -34,7 +34,7 @@ export default function CreateNewOpportunityWithModal ( { onSave, location, oppo
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle id="alert-dialog-slide-title">{""}</DialogTitle>
+        <DialogTitle id="alert-dialog-slide-title">{"Tell us about your need."}</DialogTitle>
           <CreateNewOpportunity handleClose={handleClose} setOpportunities={setOpportunities} opportunities={opportunities} location={location}  onSave={onSave} categories={categories} setCategories={setCategories} host_id={host_id}/>
       </Dialog>
     </div>
