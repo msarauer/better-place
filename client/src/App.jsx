@@ -84,7 +84,7 @@ function App() {
       <NavBar setLat={setLat} setLng={setLng} handleLocation={handleLocation} city={city} country={country} token={token} setToken={setToken} />
       <Header />
       <CategoryList handleClick={(data) => setCategory(data)} categories={categories} setCategories={setCategories}/>
-      <Search />
+ 
       {/* Conditional for SearchList */}
       <CreateNewOpportunityWithModal opportunities={opportunities} setOpportunities={setOpportunities} onSave={save} location={city} categories={categories} setCategories={setCategories} host_id={token}/>
       <OpportunityList lat={lat} lng={lng} token={token} opportunities={opportunities} setOpportunities={setOpportunities} location={city} category={category} />

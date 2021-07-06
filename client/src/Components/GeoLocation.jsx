@@ -7,10 +7,11 @@ import MyLocationIcon from '@material-ui/icons/MyLocation';
 export const CurrentLocation = styled.span`
   width: 80%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   margin-top: 10px;
-  color: rgba(108, 122, 137, 1);
+  color: rgba(46, 49, 49, 1);
+
 `;
 
 const GeoLocation = ({handleLocation, city, country, setLng, setLat}) => {
@@ -93,8 +94,8 @@ const GeoLocation = ({handleLocation, city, country, setLng, setLat}) => {
     <div style={{width: "300px"}}>
       {/* <span>{city}{country && ", "}{country}</span> */}
       <CurrentLocation>
-      <MyLocationIcon/>
       {city}{country && ", "}{country}
+      <MyLocationIcon/>
 
       </CurrentLocation>
     </div>

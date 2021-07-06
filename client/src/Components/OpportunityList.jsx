@@ -7,6 +7,7 @@ import {
   updateRows,
   countVolunteersAdded,
 } from "../helpers/filters-and-sorters";
+import { getDistances, getCoords } from "../helpers/location-helpers";
 import "antd/dist/antd.css";
 import { List, Avatar, Space } from "antd";
 import {
@@ -18,8 +19,9 @@ import React, { useEffect, useState } from "react";
 import { Progress, Switch } from "antd";
 import ReactTooltip from "react-tooltip";
 import Reviews from "./Reviews";
-import Link from '@material-ui/core/Link'
-import './OpportunityList.scss'
+import Link from "@material-ui/core/Link";
+import Paper from "@material-ui/core/Paper";
+import "./OpportunityList.scss";
 
 const axios = require("axios");
 
@@ -33,9 +35,6 @@ const useStyles = makeStyles({
   },
 });
 
-
-
-
 const OpportunityList = ({
   lat,
   lng,
@@ -47,20 +46,20 @@ const OpportunityList = ({
   setOpportunities,
 }) => {
   const classes = useStyles();
-  
+
   const [rows, setRows] = useState([]);
   const [usersOpportunities, setUsersOpportunities] = useState([]);
   const [tokenOpportunities, setTokenOpportunities] = useState([]);
   const [open, setOpen] = useState(false);
-  const [clickedId, setClickedId ] = useState(0);
-  const [loading, setLoading ] = useState(false)
-  
+  const [clickedId, setClickedId] = useState(0);
+  const [loading, setLoading] = useState(false);
+
   const handleClickOpen = (id) => {
     setOpen(true);
     setClickedId(id);
-    console.log("clickedid: ", clickedId)
+    console.log("clickedid: ", clickedId);
   };
-  
+
   const IconText = ({ icon, text }) => (
     <Space>
       {React.createElement(icon)}
@@ -68,7 +67,11 @@ const OpportunityList = ({
     </Space>
   );
   const IconTextReview = ({ icon, text, id }) => (
-    <Space onClick={()=>{handleClickOpen(id)}}>
+    <Space
+      onClick={() => {
+        handleClickOpen(id);
+      }}
+    >
       <Link underline="none" color="inherit">
         {React.createElement(icon)}
         &nbsp;
@@ -76,11 +79,11 @@ const OpportunityList = ({
       </Link>
     </Space>
   );
-  
+
   const handleClose = () => {
     setOpen(false);
   };
-  
+
   // Get initial Load information and then manipulate as I need
   useEffect(() => {
     setLoading(true);
@@ -88,96 +91,90 @@ const OpportunityList = ({
       axios.get("/api/opportunities"),
       axios.get("api/users_opportunities"),
     ])
-    .then((all) => {
-      setOpportunities((prev) => all[0].data.opportunities)
-      setUsersOpportunities((prev) => all[1].data.usersOpportunities)
-      setLoading(false);
-    })
-    .catch((e) => console.log(e))
-  }, [location, category])
-  
-      
+      .then((all) => {
+        setOpportunities((prev) => all[0].data.opportunities);
+        setUsersOpportunities((prev) => all[1].data.usersOpportunities);
+        setLoading(false);
+      })
+      .catch((e) => console.log(e));
+  }, [location, category]);
 
-    // Get users_opportunities specific to user to make switches 'switched' already
-      useEffect(() => {
-        setLoading(true);
-        console.log('rowsBeforeUpdate:', rows)
-        if (token.email) {
-          axios.put(`/api/users_opportunities/${token.email}`).then((data) => {
-            // setTokenOpportunities((prev) => [...data.data.opportunities]);
-            console.log('lat:', lat, 'lng:', lng)
-            setRows(updateRows(rows, data.data.opportunities));
-            setLoading(false);
-          })
-          .then(() => {
-            
-          })
-        }
-      }, [token]);
-      
+  // Get users_opportunities specific to user to make switches 'switched' already
+  useEffect(() => {
+    setLoading(true);
+    console.log("rowsBeforeUpdate:", rows);
+    if (token.email) {
+      axios
+        .put(`/api/users_opportunities/${token.email}`)
+        .then((data) => {
+          // setTokenOpportunities((prev) => [...data.data.opportunities]);
+          console.log("lat:", lat, "lng:", lng);
+          getCoords("4996 Earles, Vancouver");
+          setRows(updateRows(rows, data.data.opportunities));
+          setLoading(false);
+        })
+        .then(() => {});
+    }
+  }, [token]);
 
-      // Count how many people have signed up for each opportunity so that it can be rendered dynamically and in real time
-      useEffect(() => {
-          const newRows = countVolunteersAdded(opportunities, usersOpportunities);
-          // setRows((prev) => newRows)
-          setRows((prev) => rowFilter(newRows, location, category))
-          //   setRows((prev) => [...newRows])
-          // setUsersOpportunities((prev) => [...data.data.usersOpportunities]);
-          // })
-        }, [location, category]);
-        
-        
-        
-        // DO NOT delete, will need for sorting later
+  // Count how many people have signed up for each opportunity so that it can be rendered dynamically and in real time
+  useEffect(() => {
+    const newRows = countVolunteersAdded(opportunities, usersOpportunities);
+    // setRows((prev) => newRows)
+    setRows((prev) => rowFilter(newRows, location, category));
+    //   setRows((prev) => [...newRows])
+    // setUsersOpportunities((prev) => [...data.data.usersOpportunities]);
+    // })
+  }, [location, category]);
 
-        // useEffect(() => {
-          //   console.log("col", column)
-          //   console.log("rows", rows)
-          //   setRows((prev)=>columnSort([ ...prev], column))
-          // }, [column])
-        
-        
-        useEffect(() => {
-          ReactTooltip.rebuild();
-        });
-          
-          // addVolunteer and removeVolunteer are strictly axios calls, the state update functions are in filters-and-sorters as helper functions
-          const addVolunteer = (opportunityId) => {
-            console.log("tokenIn addvolunteer:", token);
-            axios.post(`/api/users_opportunities`, {
-              user_id: token.id,
-              opportunity_id: opportunityId,
-            });
-          };
-          
-          const removeVolunteer = (opportunityId) => {
-            axios.delete(`/api/users_opportunities/${opportunityId}`, {
-              data: { user_id: token.id },
-            });
-          };
-          
-          // When volunteer switch is flipped state is updated optimistically and axios call runs in the background adding/deleting user_opportunities
-          const onChange = (checked, event) => {
-            console.log(`switch to ${checked}`);
-            const oppId = event.currentTarget.id;
-            
-            if (checked) {
-              const newRows = addOpportunity(rows, oppId);
-              setRows((prev) => [...newRows]);
-              addVolunteer(oppId);
-            }
-            
-            if (!checked) {
-              const newRows = removeOpportunity(rows, oppId);
-              setRows((prev) => [...newRows]);
-              removeVolunteer(oppId);
-            }
-          };
-          
-          return (
-            <div>
+  // DO NOT delete, will need for sorting later
+
+  // useEffect(() => {
+  //   console.log("col", column)
+  //   console.log("rows", rows)
+  //   setRows((prev)=>columnSort([ ...prev], column))
+  // }, [column])
+
+  useEffect(() => {
+    ReactTooltip.rebuild();
+  });
+
+  // addVolunteer and removeVolunteer are strictly axios calls, the state update functions are in filters-and-sorters as helper functions
+  const addVolunteer = (opportunityId) => {
+    console.log("tokenIn addvolunteer:", token);
+    axios.post(`/api/users_opportunities`, {
+      user_id: token.id,
+      opportunity_id: opportunityId,
+    });
+  };
+
+  const removeVolunteer = (opportunityId) => {
+    axios.delete(`/api/users_opportunities/${opportunityId}`, {
+      data: { user_id: token.id },
+    });
+  };
+
+  // When volunteer switch is flipped state is updated optimistically and axios call runs in the background adding/deleting user_opportunities
+  const onChange = (checked, event) => {
+    console.log(`switch to ${checked}`);
+    const oppId = event.currentTarget.id;
+
+    if (checked) {
+      const newRows = addOpportunity(rows, oppId);
+      setRows((prev) => [...newRows]);
+      addVolunteer(oppId);
+    }
+
+    if (!checked) {
+      const newRows = removeOpportunity(rows, oppId);
+      setRows((prev) => [...newRows]);
+      removeVolunteer(oppId);
+    }
+  };
+
+  return (
+    <div>
       <List
-        
         itemLayout="vertical"
         size="large"
         pagination={{
@@ -187,7 +184,7 @@ const OpportunityList = ({
           pageSize: 10,
         }}
         dataSource={rows}
-        loading={loading}
+        loading={false}
         renderItem={(item) => (
           <List.Item
             key={item.name}
@@ -232,7 +229,7 @@ const OpportunityList = ({
             }
           >
             <List.Item.Meta
-              avatar={<Avatar size={64} src={item.avatar}/>}
+              avatar={<Avatar size={64} src={item.avatar} />}
               title={
                 <a
                   href={
@@ -269,7 +266,7 @@ const OpportunityList = ({
           </List.Item>
         )}
       />
-        <Reviews host_id={clickedId} handleClose={handleClose} open={open}/>
+      <Reviews host_id={clickedId} handleClose={handleClose} open={open} />
     </div>
   );
 };

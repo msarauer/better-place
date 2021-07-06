@@ -12,7 +12,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: rgb(225, 233, 234) !important;
+  background: #f0f0f0
+    url("https://rawgithub.com/subtlepatterns/SubtlePatterns/gh-pages/paper_fibers.png") !important;
 }
 
 code {

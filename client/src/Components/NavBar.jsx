@@ -17,6 +17,8 @@ import GeoLocation from "./GeoLocation";
 import axios from "axios";
 
 
+
+
 const useStyles = makeStyles({
   root: {
     background:
@@ -102,10 +104,10 @@ const NavBar = ({ handleLocation, city, country, token, setToken, setLng, setLat
 
   // const handleLogin = (anchor) => {
   //   if (token) {
-  //     toggleLogin(anchor, false)
-  //   } else {
   //     console.log("NO WAY HOMBRE")
+  //     toggleLogin(anchor, false)
   //     toggleLogin(anchor, !token)
+  //   } else {
   //   }
   // }
 
@@ -189,7 +191,8 @@ const NavBar = ({ handleLocation, city, country, token, setToken, setLng, setLat
                   onClose={toggleLogin(anchor, false)}
                   // onSubmit={() => handleLogin()}
                   onSubmit={toggleLogin(anchor, !token)}
-                      // onSubmit={toggleLogin(anchor, false)}
+                  
+                  // onClick={() => token && toggleLogin(anchor, false)}
                 >
                   <AccountBox setToken={setToken} token={token} />
 

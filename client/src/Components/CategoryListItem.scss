@@ -45,7 +45,6 @@ body {
   }
 }
 
-
 .card {
   position: relative;
   display: flex;
@@ -185,7 +184,6 @@ body {
 
   .card:hover,
   .card:focus-within {
-    
     align-items: center;
 
     &:before {

@@ -11,7 +11,7 @@ const CategoryList = (props) => {
   return (
     <div className="card" onClick={() => {props.click(props.id)}}>
         <div className="content">
-          <h2 className="title">{props.name}</h2>
+          <span className="title">{props.name}</span>
           <p className="copy">
             From electrical to plumbing - find neighbors who need your skills
           </p>

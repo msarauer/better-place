@@ -87,17 +87,6 @@ const LoginForm = ({ setToken, token}) => {
               inputProps={{maxLength: 55}}
 
             />
-          {/* <Input
-            type="email"
-            placeholder="Email"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <Input
-            type="password"
-            placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
-          /> */}
-        {/* </FormContainer> */}
       <Marginer direction="vertical" margin={60} />
       <SubmitButton type="submit">SignIn</SubmitButton>
       </form>
