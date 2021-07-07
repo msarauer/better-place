@@ -19,10 +19,9 @@ import CallIcon from "@material-ui/icons/Call";
 import HomeIcon from "@material-ui/icons/Home";
 import AddReview from "./AddReview"
 
-const ProfileForm = ({ token, setToken, opportunities }) => {
+const ProfileForm = ({ token, setToken, opportunities, city }) => {
   const { switchToSignup } = useContext(AccountContext);
 
- 
 
   return (
     <>
@@ -58,7 +57,7 @@ const ProfileForm = ({ token, setToken, opportunities }) => {
         Edit Profile
         <Marginer direction="vertical" margin={10} />
       </EditLink>
-      <AlignItemsList token={token} setToken={setToken} opportunities={opportunities} />
+      <AlignItemsList city={city} token={token} setToken={setToken} opportunities={opportunities} />
     </>
   );
 };

@@ -1,11 +1,12 @@
 @import url("https://fonts.googleapis.com/css?family=Cardo:400i|Rubik:400,700&display=swap");
 
 $imageIds: "1518709414768-a88981a4515d", "1586781383963-8e66f88077ec",
-  "1498159437376-9098d049dd5d", "1581622558663-b2e33377dfb2", "1604866830506-4ffc2d57fea3", "1415369629372-26f2fe60c467", "1527525443983-6e60c75fff46", "1541976844346-f18aeac57b06";
+  "1498159437376-9098d049dd5d", "1581622558663-b2e33377dfb2",
+  "1604866830506-4ffc2d57fea3", "1415369629372-26f2fe60c467",
+  "1527525443983-6e60c75fff46", "1541976844346-f18aeac57b06";
 
-  // https://images.unsplash.com/photo-1415369629372-26f2fe60c467?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80
-  // https://images.unsplash.com/photo-1527525443983-6e60c75fff46?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=932&q=80
-
+// https://images.unsplash.com/photo-1415369629372-26f2fe60c467?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80
+// https://images.unsplash.com/photo-1527525443983-6e60c75fff46?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=932&q=80
 
 $bp-md: 600px;
 $bp-lg: 800px;
@@ -56,6 +57,7 @@ body {
 
 .card {
   position: relative;
+  flex-direction: row !important;
   display: flex;
   align-items: flex-end;
   overflow: hidden;

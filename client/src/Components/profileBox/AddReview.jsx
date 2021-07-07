@@ -1,17 +1,38 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import axios from "axios"
 
-const AddReview = ({token, setToken, opportunities}) => {
+const AddReview = ({token, setToken, opportunities, opportunity, city, completedOpportunities}) => {
 
 const [userFeedback, setUserFeedback] = useState("")
 const [rating, setRating] = useState("Rating")
+const [reviews, setReviews] = useState([]);
+
+console.log("OPP ID ID I D----", opportunity.opportunity_id)
+
+// useEffect(() => {
+//   axios
+//   .get(`/api/reviews`)
+//   .then((data) => {
+//     const newReviews = data.data.reviews;
+//     console.log("DATA NEW REVIEWS----", newReviews)
+//     setReviews('test')
+//     console.log('SHABLAGOOO----', reviews)
+//   })
+//   .then(() => {
+
+//     })
+//     .catch((e) => {
+//       console.log("axiosError:", e);
+//     });
+// }, [token]);
+
 
 
 const handleSubmitReview = (e) => {
   e.preventDefault();
   const userSave = (data) => {
     axios
-      .post(`/api/reviews/${opportunities.id}`)
+      .post(`/api/reviews`, data)
       .then((data) => {
         console.log("SHABLAGOOOO TOKEN-----", data);
       })
@@ -22,18 +43,18 @@ const handleSubmitReview = (e) => {
 
   const saveData = {
     user_id: token.id,
-    opportunity_id: opportunities.id ,
+    opportunity_id: opportunity.opportunity_id,
     user_feedback: userFeedback,
     rating
     
   };
   console.log("SAVED DATA-----", saveData)
   userSave(saveData);
-  setToken({ ...saveData });
+  
 
 };
 
-console.log("OPPS INSIDE OF ADD REVIEW----", opportunities)
+// console.log("REIVIEWS INSIDE OF ADD REVIEW----", reviews)
 
 return (
   <div className="mb-2">

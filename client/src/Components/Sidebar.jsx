@@ -10,11 +10,15 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import StarBorder from '@material-ui/icons/StarBorder';
 import Divider from '@material-ui/core/Divider'
+import Button from '@material-ui/core/Button'
+
 import Slider from '@material-ui/core/Slider';
 import CategoryIcon from '@material-ui/icons/Category';
 import TimerIcon from '@material-ui/icons/Timer';
 import TextField from '@material-ui/core/TextField';
 import StarIcon from '@material-ui/icons/Star';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import Checkbox from '@material-ui/core/Checkbox';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,6 +40,7 @@ export default function Sidebar({ distance, setDistance, timeCommitment, categor
   const classes = useStyles();
   const [openCat, setOpenCat] = useState(true);
   const [openTime, setOpenTime] = useState(true);
+  const [checked, setChecked] = useState(false);
 
   const onChangeHandler = (e) => {
     e.preventDefault()
@@ -54,6 +59,17 @@ export default function Sidebar({ distance, setDistance, timeCommitment, categor
     return `${value}`;
   }
 
+  const handleClearClick = () => {
+    setCategory('');
+    setTimeCommitment('');
+    setSearch('');
+  }
+
+  const handleCheck = (event) => {
+    setChecked(event.target.checked);
+    setDistance(80000)
+  }
+
 
   const timeArray = ["Quick (Minutes)", "Short (3 hours or less)", "Medium (8 hours or less)", "Long (Full day)", "Extra Long (Multiple days)"];
 
@@ -69,11 +85,20 @@ export default function Sidebar({ distance, setDistance, timeCommitment, categor
       }
       className={classes.root}
     >
+      <ListItem>
+        <Button size="small" endIcon={<HighlightOffIcon/>} onClick={handleClearClick}>
+          Clear Filters
+        </Button>
+      </ListItem>
+      <Divider/>
       <ListSubheader id="discrete-slider" gutterBottom>
-        Distance ({distance / 1000} km)
+        Distance {checked && '(' + (distance / 1000) + ' km)'}
+        <Checkbox checked={checked} onChange={handleCheck} color="primary" inputProps={{ 'aria-label': 'secondary checkbox' }}>
+        </Checkbox>
       </ListSubheader>
       <ListItem className="sliderDiv">
         <Slider
+          disabled={!checked}
           defaultValue={70}
           getAriaValueText={valuetext}
           aria-labelledby="discrete-slider"

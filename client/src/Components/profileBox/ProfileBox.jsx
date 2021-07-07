@@ -118,11 +118,12 @@ const expandingTransition = {
   stiffness: 30,
 };
 
-const ProfileBox = ({ token, setToken, opportunities }) => {
+const ProfileBox = ({ token, setToken, opportunities, city }) => {
   const [isExpanded, setExpanded] = useState(false);
   const [active, setActive] = useState("signin");
   const [userPicture, setUserPicture] = useState({});
 
+  console.log('test3')
   useEffect(() => {
     axios
       .get(`/api/user/${token.email}`) //REMEBER TO CHANGE TO :id
@@ -182,7 +183,7 @@ const ProfileBox = ({ token, setToken, opportunities }) => {
           )}
         </TopContainer>
         <InnerContainer>
-          {active === "signin" && <ProfileForm token={token} setToken={setToken} opportunities={opportunities} />}
+          {active === "signin" && <ProfileForm  city={city} token={token} setToken={setToken} opportunities={opportunities} />}
           {active === "signup" && <EditForm token={token} setToken={setToken} />}
         </InnerContainer>
       </BoxContainer>

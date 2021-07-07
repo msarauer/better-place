@@ -41,7 +41,9 @@ function App() {
   const [column, setColumn] = useState('')
   const [timeCommitment, setTimeCommitment] = useState('');
   const [search, setSearch ] = useState('');
-  const [distance, setDistance] = useState(20000);
+  const [distance, setDistance] = useState(10000000);
+  const [open, setOpen] = useState(false);
+  const [location, setLocation] = useState('');
 
   const sideBarSection = useRef(null);
 
@@ -83,6 +85,10 @@ function App() {
     })
   }
 
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
   // useEffect(() => {
   //   console.log('tokenUseEffect:', token)
   //   // setLoggedIn(token)
@@ -99,12 +105,14 @@ function App() {
 
   return (
     <div className="App">
+
       <NavBar setLat={setLat} setLng={setLng} handleLocation={handleLocation} city={city} country={country} token={token} setToken={setToken} opportunities={opportunities} />
+      
       <Header />
+
       <CategoryList click={goToSideBarSection} handleClick={(data) => setCategory(data)} categories={categories} setCategories={setCategories}/>
  
-      {/* Conditional for SearchList */}
-      <CreateNewOpportunityWithModal rows={rows} setRows={setRows} opportunities={opportunities} setOpportunities={setOpportunities} onSave={save} location={city} categories={categories} setCategories={setCategories} host_id={token}/>
+      <CreateNewOpportunityWithModal open={open} setOpen={setOpen} rows={rows} setRows={setRows} opportunities={opportunities} setOpportunities={setOpportunities} onSave={save} location={city} categories={categories} setCategories={setCategories} host_id={token}/>
       <div className="container">
         <div className= "row">
           <div className="col-3" ref={sideBarSection}>
@@ -112,7 +120,7 @@ function App() {
           </div>
           <div className="col-9">
             <div className= "row text-right no-gutters">
-              <Filterbar/>
+              <Filterbar handleClickOpen={handleClickOpen} host_id={token}/>
             </div>
             <div className= "row no-gutters">
               <OpportunityList search={search} timeCommitment={timeCommitment} column={column} rows={rows} setRows={setRows} lat={lat} lng={lng} token={token} opportunities={opportunities} setOpportunities={setOpportunities} location={city} category={category} distance={distance} />
@@ -121,7 +129,6 @@ function App() {
         </div>
       </div>
       <br />
-      <AddReview token={token} setToken={setToken} opportunities={opportunities}/>
        <BackTop />
        <Footer />
 

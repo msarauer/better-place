@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 
 module.exports = (db) => {
-
   // BROWSE all volunteer_reviews
   router.get("/", (req, res) => {
     let query = `SELECT * FROM volunteer_reviews;`;
@@ -17,12 +16,11 @@ module.exports = (db) => {
       });
   });
 
-
   // ADD volunteer_review
   router.post("/", (req, res) => {
     const data = req.body;
     db.query(
-      `INSERT INTO users (user_id, opportunity_id, user_feeback, rating) VALUES($1, $2, $3, $4)`,
+      `INSERT INTO volunteer_reviews (user_id, opportunity_id, user_feedback, rating) VALUES($1, $2, $3, $4)`,
       [data.user_id, data.opportunity_id, data.user_feedback, data.rating]
     )
       .then((data) => {

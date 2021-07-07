@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState}from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -8,11 +8,12 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import AddReview from './AddReview';
 
-const ReviewMod = ({token, setToken, opportunities})  => {
-  const [open, setOpen] = React.useState(false);
+const ReviewMod = ({token, setToken, opportunities, opportunity, city, completedOpportunities})  => {
+  const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
     console.log("OPPS INSIDE OF REVIEW MOD",opportunities)
+    console.log('test6')
     setOpen(true);
   };
 
@@ -20,6 +21,7 @@ const ReviewMod = ({token, setToken, opportunities})  => {
     setOpen(false);
   };
 
+  // console.log("OppsID in REVIEWMOD", opportunityId)
   return (
     <div>
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
@@ -32,7 +34,7 @@ const ReviewMod = ({token, setToken, opportunities})  => {
             To subscribe to this website, please enter your email address here. We will send updates
             occasionally.
           </DialogContentText>
-          <AddReview token={token} setToken={setToken} opportunities={opportunities} />
+          <AddReview  city={city} token={token} setToken={setToken} opportunity={opportunity} opportunities={opportunities} completedOpportunities={completedOpportunities} />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">

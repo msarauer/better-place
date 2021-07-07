@@ -28,15 +28,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AlignItemsList({ token, setToken, opportunities }) {
+export default function AlignItemsList({ token, setToken, opportunities, city, opportunityId }) {
   const classes = useStyles();
   const [completedOpportunities, setCompletedOpportunities] = useState([]);
-
   useEffect(() => {
     axios
       .put(`/api/users_opportunities/${token.email}`)
       .then((data) => {
         setCompletedOpportunities(getCompletedOpportunities(data.data.opportunities));
+        console.log('completedOpps:', completedOpportunities)
       })
       .catch((e) => {
         console.log("axiosError:", e);
@@ -65,7 +65,7 @@ export default function AlignItemsList({ token, setToken, opportunities }) {
                     {opportunity.username}
                   </Typography>
                   {` — ${opportunity.description}`}
-                  <ReviewMod token={token} setToken={setToken} opportunites={opportunities}/>
+                  <ReviewMod city={city} token={token} setToken={setToken} opportunity={opportunity} completedOpportunities={completedOpportunities} opportunities={opportunities}/>
                 </React.Fragment>
               }
             />

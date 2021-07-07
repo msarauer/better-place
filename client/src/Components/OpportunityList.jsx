@@ -78,13 +78,16 @@ const OpportunityList = ({
   };
 
   const IconText = ({ icon, text }) => (
-    <Space>
+
+    <Space >
       {React.createElement(icon)}
       {text}
     </Space>
+
   );
   const IconTextReview = ({ icon, text, id }) => (
     <Space
+    
       onClick={() => {
         handleClickOpen(id);
       }}
@@ -121,7 +124,7 @@ const OpportunityList = ({
         // {latitude: "51° 31' N", longitude: "7° 28' E"}))
       })
       .catch((e) => console.log(e));
-  }, [location, category]);
+  }, [location, category, setOpportunities]);
 
   // Get users_opportunities specific to user to make switches 'switched' already
   useEffect(() => {
@@ -131,12 +134,12 @@ const OpportunityList = ({
         .put(`/api/users_opportunities/${token.email}`)
         .then((data) => {
           // setTokenOpportunities((prev) => [...data.data.opportunities]);
-          setRows(updateRows(rows, data.data.opportunities));
+          setRows((prev) => updateRows(prev, data.data.opportunities));
           setLoading(false);
         })
         .then(() => {});
     }
-  }, [token]);
+  }, [token, setRows]);
 
   // Calculate distance between opportunities and user
   // useEffect(() => {
@@ -161,7 +164,7 @@ const OpportunityList = ({
     //   setRows((prev) => [...newRows])
     // setUsersOpportunities((prev) => [...data.data.usersOpportunities]);
     // })
-  }, [location, category, opportunities, timeCommitment, search, distance]);
+  }, [location, category, opportunities, timeCommitment, search, distance, setRows, usersOpportunities, lat, lng]);
 
   // DO NOT delete, will need for sorting later
 
@@ -207,7 +210,6 @@ const OpportunityList = ({
       removeVolunteer(oppId);
     }
   };
-
 
 
 
