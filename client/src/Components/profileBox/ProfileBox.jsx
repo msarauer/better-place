@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import ProfileForm from "./ProfileForm";
-import { motion } from "framer-motion";
 import EditForm from "./EditForm";
+import { motion } from "framer-motion";
 import { AccountContext } from "./accountContext";
 import AlignItemsList from "./AlignedItemList";
 import axios from "axios";
@@ -83,7 +83,7 @@ const HeaderEditPicture = styled.img`
   width: 175px;
   height: 175px;
   margin-left: 20px;
-  margin-bottom: 30.2px;
+  margin-bottom: 38px;
 `;
 
 const SmallText = styled.h5`
@@ -96,11 +96,11 @@ const SmallText = styled.h5`
 `;
 
 const InnerContainer = styled.div`
-  width: 128%;
+  width: 120%;
   display: flex;
   flex-direction: column;
   padding: 0 1.8em;
-  margin-top: 5px;
+  margin-top: -12px;
 `;
 
 const backdropVariants = {
@@ -135,7 +135,6 @@ const ProfileBox = ({ token, setToken }) => {
       .get(`/api/user/${token.email}`) //REMEBER TO CHANGE TO :id
       .then((data) => {
         setUserPicture(data.data.users[0].picture_url);
-        setUserPicture(token.picture_url);
       })
       .catch((e) => {
         console.log("axiosError:", e);
@@ -177,20 +176,20 @@ const ProfileBox = ({ token, setToken }) => {
           {active === "signin" && (
             <HeaderContainer>
               <HeaderText>
-                <HeaderPicture src={userPicture} height={250} />
+                <HeaderPicture src={userPicture} height={250} onError={(e)=>{e.target.onerror = null; e.target.src='http://s3.amazonaws.com/37assets/svn/765-default-avatar.png'}}/>
               </HeaderText>
             </HeaderContainer>
           )}
           {active === "signup" && (
             <HeaderContainer>
               <HeaderText>
-                <HeaderEditPicture src={userPicture} height={250} />
+                <HeaderEditPicture src={userPicture} height={250} onError={(e)=>{e.target.onerror = null; e.target.src='http://s3.amazonaws.com/37assets/svn/765-default-avatar.png'}} />
               </HeaderText>
             </HeaderContainer>
           )}
         </TopContainer>
         <InnerContainer>
-          {active === "signin" && <ProfileForm token={token} setToken={setToken} />}
+          {active === "signin" && <ProfileForm token={token} />}
           {active === "signup" && <EditForm token={token} setToken={setToken} />}
         </InnerContainer>
       </BoxContainer>

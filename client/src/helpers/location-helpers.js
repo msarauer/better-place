@@ -1,35 +1,35 @@
 import { getDistance } from "geolib";
 import Geocode from "react-geocode";
-require("dotenv").config();
 
 export const getDistances = (lat, lng, opps) => {
   const rows = [...opps];
 
   rows.forEach((opp) => {
     opp.distance = getDistance(
-      { latitude: opp.lat, longitude: opp.lat },
-      { latitude: lat, longitide: lng }
+      { latitude: Number(opp.lat), longitude: Number(opp.lng) },
+      { latitude: lat, longitude: lng }
     );
   });
   return rows;
 };
 
 export const getCoords = (address) => {
-  console.log(process.env.GOOGLE_API_KEY);
-  Geocode.setApiKey(process.env.GOOGLE_API_KEY);
+  Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API_KEY);
   Geocode.setLanguage("en");
 
   Geocode.setLocationType("ROOFTOP");
 
   Geocode.enableDebug();
-
-  Geocode.fromAddress(address).then(
+  let coords = '';
+  return Geocode.fromAddress(address).then(
     (response) => {
-      const { lat, lng } = response.results.geometry.location;
-      console.log("coordinatesFromGeoCode:", lat, lng);
+      coords = response.results[0].geometry.location;
+      // console.log("coordinatesFromGeoCode:", coords);
+      return coords 
     },
     (error) => {
       console.error(error);
     }
-  );
+    );
+    // return coords
 };

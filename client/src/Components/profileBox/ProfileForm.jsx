@@ -12,6 +12,7 @@ import {
   BioText,
   CenterIcon,
   BorderSeperator,
+  ProfileInfoContainer
 } from "./common";
 import { Marginer } from "./Marginer";
 import { AccountContext } from "./accountContext";
@@ -42,7 +43,7 @@ const ProfileForm = ({ token }) => {
   return (
     <>
       <BoxContainer>
-        <FormContainer>
+        <ProfileInfoContainer>
           <NameText>{token.name}</NameText>
           <BorderSeperator />
 
@@ -60,7 +61,7 @@ const ProfileForm = ({ token }) => {
             <HomeIcon />
           </CenterIcon>
           <SmallText>{token.address}</SmallText>
-        </FormContainer>
+        </ProfileInfoContainer>
         <Marginer direction="vertical" margin={10} />
         <MutedLink href="#"></MutedLink>
         <Marginer direction="vertical" margin="1.6em" />

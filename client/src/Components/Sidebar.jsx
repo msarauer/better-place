@@ -41,26 +41,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PermanentDrawerLeft({ lat,
+export default function PermanentDrawerLeft({
+  lat,
   lng,
   city,
   token,
   category,
   location,
   opportunities,
-  setOpportunities, }) {
+  setOpportunities,
+  setRows,
+  rows 
+}) {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
-          <Typography variant="h6" noWrap>
-            Permanent drawer
-          </Typography>
-        </Toolbar>
-      </AppBar>
+
+
       <Drawer
         className={classes.drawer}
         variant="permanent"
@@ -90,7 +88,7 @@ export default function PermanentDrawerLeft({ lat,
         </List>
       </Drawer>
       <main className={classes.content}>
-            <OpportunityList lat={lat} lng={lng} token={token} opportunities={opportunities} setOpportunities={setOpportunities} location={city} category={category} />
+            <OpportunityList rows={rows} setRows={setRows} lat={lat} lng={lng} token={token} opportunities={opportunities} setOpportunities={setOpportunities} location={city} category={category} />
 
       </main>
     </div>

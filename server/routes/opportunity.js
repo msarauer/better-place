@@ -40,11 +40,24 @@ module.exports = (db) => {
       });
   });
 
+  // Add Opp from user
+  // router.post("/:id", (req, res) => {
+  //   db.query(`DELETE FROM opportunities WHERE id = $1`, [req.params.id])
+  //     .then((data) => {
+  //       res.json({
+  //         status: "Success",
+  //       });
+  //     })
+  //     .catch((e) => {
+  //       console.log(e.message);
+  //       res.status(500).json({ error: e.message });
+  //     });
+  // });
+
   // DELETE OPPORTUNITY
   router.delete("/:id", (req, res) => {
     db.query(`DELETE FROM opportunities WHERE id = $1`, [req.params.id])
       .then((data) => {
-        console.log(data);
         res.json({
           status: "Success",
         });

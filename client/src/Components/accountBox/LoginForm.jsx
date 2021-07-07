@@ -16,7 +16,7 @@ const useStyles = makeStyles({
 })
 
 
-const LoginForm = ({ setToken, token}) => {
+const LoginForm = ({ setToken, token, toggleLogin, setLoginPage}) => {
 
   const classes = useStyles();
   const {switchToSignup} = useContext(AccountContext)
@@ -48,8 +48,8 @@ const LoginForm = ({ setToken, token}) => {
       .post('/login', {email, password})
       .then((data) => {
         console.log('loginToken:',data.data.token)
-        setToken((prev) => data.data.token)
-        console.log(token)
+        setToken((prev) => ({prev, ...data.data.token}))
+        setLoginPage({right: false})
       })
       .catch(e => console.log(e))
   }

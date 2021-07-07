@@ -16,14 +16,13 @@ import { makeStyles, Typography } from "@material-ui/core";
 const useStyles = makeStyles({
   field: {
     marginTop: 5,
-    marginBottom: 5,
     // display: 'block'
     maxLength:"225"
   }
 })
 
 
-const SignupForm = ({ toggleLogin }) => {
+const SignupForm = ({ setToken, setLoginPage }) => {
   const classes = useStyles();
 
   const { switchToSignin } = useContext(AccountContext);
@@ -42,11 +41,26 @@ const SignupForm = ({ toggleLogin }) => {
         .post("/api/users", data)
         .then((data) => {
           console.log(data);
+          handleCreateUser()
         })
         .catch((e) => {
           console.log("post error:", e.message);
         });
     };
+
+
+    const handleCreateUser = () => {
+      // e.preventDefault();
+      axios
+        .post('/login', {email, password})
+        .then((data) => {
+          // console.log('loginToken:',data.data.token)
+          setToken((prev) => ({prev, ...data.data.token}))
+          setLoginPage({right: false})
+        })
+        .catch(e => console.log(e))
+    }
+
 
     const saveData = {
       email,
@@ -58,7 +72,22 @@ const SignupForm = ({ toggleLogin }) => {
       picture_url: profilePic,
     };
     userSave(saveData);
+    setToken({ ...saveData });
+
   };
+
+
+  // const handleCreateUser = (e) => {
+  //   e.preventDefault();
+  //   axios
+  //     .post('/login', {email, password})
+  //     .then((data) => {
+  //       // console.log('loginToken:',data.data.token)
+  //       setToken((prev) => ({prev, ...data.data.token}))
+  //       setLoginPage({right: false})
+  //     })
+  //     .catch(e => console.log(e))
+  // }
 
   return (
     <BoxContainer>
@@ -146,13 +175,13 @@ const SignupForm = ({ toggleLogin }) => {
               inputProps={{maxLength: 225}}
               value={bio}
             />
-      <Marginer direction="vertical" margin={10} />
+      <Marginer direction="vertical" margin={20} />
         
         <SubmitButton type="submit">SignUp</SubmitButton>
       </FormContainer>
-      <Marginer direction="vertical" margin={10} />
-      <Marginer direction="vertical" margin="1.6em" />
-      <Marginer direction="vertical" margin="1.6em" />
+      <Marginer direction="vertical" margin={65} />
+      {/* <Marginer direction="vertical" margin="1.6em" />
+      <Marginer direction="vertical" margin="1.6em" /> */}
       <MutedLink href="#">
         Already have an account?{" "}
         <BoldLink href="#" onClick={switchToSignin}>

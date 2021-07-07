@@ -3,13 +3,15 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
-import CreateNewOpportunity from './CreateNewOpportunity'
+import CreateNewOpportunity from './CreateNewOpportunity';
+import Icon from '@material-ui/core/Icon';
+import "./CreateNew.scss"
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function CreateNewOpportunityWithModal ( { onSave, location, opportunities, setOpportunities, categories, setCategories, host_id }) {
+export default function CreateNewOpportunityWithModal ( { onSave, location, opportunities, setOpportunities, categories, setCategories, host_id, rows, setRows }) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -21,10 +23,17 @@ export default function CreateNewOpportunityWithModal ( { onSave, location, oppo
   };
 
   return (
-    <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Add your need
-      </Button>
+    <div className="addNewButton">
+      {host_id && 
+      <div><Button
+      variant="contained"
+      onClick={handleClickOpen}
+      color="primary"
+      endIcon={<Icon >add_circle</Icon>}
+    >
+      Add new
+    </Button></div>
+      }
       <Dialog
         fullWidth
         open={open}
@@ -35,7 +44,7 @@ export default function CreateNewOpportunityWithModal ( { onSave, location, oppo
         aria-describedby="alert-dialog-slide-description"
       >
         <DialogTitle id="alert-dialog-slide-title">{"Tell us about your need."}</DialogTitle>
-          <CreateNewOpportunity handleClose={handleClose} setOpportunities={setOpportunities} opportunities={opportunities} location={location}  onSave={onSave} categories={categories} setCategories={setCategories} host_id={host_id}/>
+          <CreateNewOpportunity rows={rows} set={setRows} handleClose={handleClose} setOpportunities={setOpportunities} opportunities={opportunities} location={location}  onSave={onSave} categories={categories} setCategories={setCategories} host_id={host_id}/>
       </Dialog>
     </div>
   );
