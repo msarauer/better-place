@@ -41,7 +41,7 @@ function App() {
   const [column, setColumn] = useState('')
   const [timeCommitment, setTimeCommitment] = useState('');
   const [search, setSearch ] = useState('');
-  const [distance, setDistance] = useState(10000000);
+  const [distance, setDistance] = useState('');
   const [open, setOpen] = useState(false);
   const [location, setLocation] = useState('');
 

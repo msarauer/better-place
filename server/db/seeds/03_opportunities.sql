@@ -39,7 +39,7 @@ INSERT INTO opportunities (host_id, category_id, name, description, location, da
   8, 5, 'Math tutoring', 'My son is falling behind in Math class and I do not know what to do, if you are decent at Math and are willing we would appreciate it, he is in grade 9 and the Math is beyond me.', 'Vancouver', '2021-08-02', 'Extra Long (Multiple days)', 1, 49.221528, -122.945362
 ), 
 (
-  9, 6, 'Feed Rex', 'My husband and I are going away for a couple days and need someone to quickly run in and feed/water our dog, Rex. He is such a good calm dog, you may even end up spending a few extra minutes making friends with our dear boy :)', 'Vancouver', '2021-07-18', 'Extra Long (Multiple days)', 1, 49.283888, -123.130314
+  9, 6, 'Feed Rex', 'My husband and I are going away for a couple days and need someone to quickly run in and feed/water our dog, Rex. He is such a good calm dog, you may even end up spending a few extra minutes making friends with our dear boy :)', 'Vancouver', '2019-07-18', 'Extra Long (Multiple days)', 1, 49.283888, -123.130314
 ), 
 -- 10
 (

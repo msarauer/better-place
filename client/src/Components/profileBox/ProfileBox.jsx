@@ -123,7 +123,6 @@ const ProfileBox = ({ token, setToken, opportunities, city }) => {
   const [active, setActive] = useState("signin");
   const [userPicture, setUserPicture] = useState({});
 
-  console.log('test3')
   useEffect(() => {
     axios
       .get(`/api/user/${token.email}`) //REMEBER TO CHANGE TO :id

@@ -63,11 +63,13 @@ export default function Sidebar({ distance, setDistance, timeCommitment, categor
     setCategory('');
     setTimeCommitment('');
     setSearch('');
+    setDistance('');
+    setChecked(false)
   }
 
   const handleCheck = (event) => {
     setChecked(event.target.checked);
-    setDistance(80000)
+    setDistance(80000);
   }
 
 
