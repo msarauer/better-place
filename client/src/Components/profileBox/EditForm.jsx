@@ -2,17 +2,15 @@ import {
   BoldLink,
   BoxContainer,
   FormContainer,
-  Input,
   MutedLink,
   SubmitButton,
 } from "./common";
 import { Marginer } from "./Marginer";
 import { AccountContext } from "./accountContext";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
-import UploadButtons from "../accountBox/UploadButtons";
 import TextField from "@material-ui/core/TextField";
-import { makeStyles, Typography } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
 
 
@@ -34,7 +32,6 @@ const EditForm = ({ token, setToken }) => {
   const classes = useStyles();
   
   const { switchToSignin } = useContext(AccountContext);
-  const [user, setUser] = useState({});
   const [email, setEmail] = useState(token.email);
   const [password, setPassword] = useState(token.password);
   const [name, setName] = useState(token.name);
@@ -44,30 +41,10 @@ const EditForm = ({ token, setToken }) => {
   const [profilePic, setProfilePic] = useState(token.picture_url); // Some sort of defult image maybe?
 
 
-
-
-  // useEffect(() => {
-  //   axios
-  //     .get(`/api/user/${token}`) // REMEMBER TO CHANGE TO :id
-  //     .then((data) => {
-  //       const userInfo = data.data.users[0];
-  //       setEmail(userInfo.email);
-  //       setPassword(userInfo.password);
-  //       setName(userInfo.name);
-  //       setPhoneNumber(userInfo.phone_number);
-  //       setAddress(userInfo.address);
-  //       setBio(userInfo.bio);
-  //       setProfilePic(userInfo.profile_pic);
-  //     })
-  //     .catch((e) => {
-  //       console.log("axiosError:", e);
-  //     });
-  // }, []);
-
   const handleSubmit = (e) => {
     const userSave = (data) => {
       axios
-        .put(`/api/user/${token.email}`, data) // REMEMBER TO CHANGE TO :id
+        .put(`/api/user/${token.email}`, data) 
         .then((data) => {
           console.log(data);
         })
@@ -189,16 +166,15 @@ const EditForm = ({ token, setToken }) => {
               // value={profilePic}
             />
         
-        
-   
-        <Marginer direction="vertical" margin={15} />
+
+        <Marginer direction="vertical" margin={10} />
 
         <SubmitButton onClick={switchToSignin} type="submit">
           Confirm
         </SubmitButton>
       </FormContainer>
-      <Marginer direction="vertical" margin={5} />
-      <MutedLink href="#">
+      <Marginer direction="vertical" margin={7} />
+      <MutedLink >
         Changed your mind?{" "}
         <BoldLink href="#" onClick={switchToSignin}>
           Cancel
@@ -209,48 +185,3 @@ const EditForm = ({ token, setToken }) => {
 };
 
 export default EditForm;
-
-
-
-
-{/* <Input
-type="email"
-value={email}
-onChange={(e) => setEmail(e.target.value)}
-/>
-<Input
-type="password"
-placeholder="Change Password"
-onChange={(e) => setPassword(e.target.value)}
-/>
-<Input type="password" placeholder="Confirm New Password" />
-<Input
-type="text"
-placeholder="Full Name"
-value={name}
-onChange={(e) => setName(e.target.value)}
-/>
-<Input
-type="text"
-placeholder="PhoneNumber"
-value={phoneNumber}
-onChange={(e) => setPhoneNumber(e.target.value)}
-/>
-<Input
-type="text"
-placeholder="Address"
-value={address}
-onChange={(e) => setAddress(e.target.value)}
-/>
-<Input
-type="textarea"
-placeholder="Bio"
-value={bio}
-maxLength="225"
-onChange={(e) => setBio(e.target.value)}
-/>
-<Input
-type="textarea"
-placeholder="Insert New Picture URL"
-onChange={(e) => setProfilePic(e.target.value)}
-/> */}

@@ -64,7 +64,7 @@ const GeoLocation = ({handleLocation, city, country, setLng, setLat}) => {
     xhr.addEventListener("readystatechange", processRequest, false);
 
     function processRequest(e) {
-      if (xhr.readyState == 4 && xhr.status == 200) {
+      if (xhr.readyState === 4 && xhr.status === 200) {
         let response = JSON.parse(xhr.responseText);
         // console.log("WHAT WE GONNA GET------", response.address);
         let country = response.address.country;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from 'react';
-import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import axios from 'axios';
 import Review from './Review';
@@ -34,7 +34,6 @@ export default function Reviews( {host_id, handleClose, open} ) {
 
 
   useEffect(() => {
-    console.log('get request executed')
     axios.get(`/api/review/${host_id}`)
     .then((data) => {
       const reviewArr = data.data.reviews

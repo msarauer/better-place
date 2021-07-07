@@ -4,7 +4,6 @@ import ProfileForm from "./ProfileForm";
 import EditForm from "./EditForm";
 import { motion } from "framer-motion";
 import { AccountContext } from "./accountContext";
-import AlignItemsList from "./AlignedItemList";
 import axios from "axios";
 
 const BoxContainer = styled.div`
@@ -83,17 +82,11 @@ const HeaderEditPicture = styled.img`
   width: 175px;
   height: 175px;
   margin-left: 20px;
-  margin-bottom: 38px;
+  margin-top: 10px;
+  margin-bottom: 35px;
 `;
 
-const SmallText = styled.h5`
-  color: #fff;
-  font-weight: 500;
-  font-size: 11px;
-  z-index: 10;
-  margin: 0;
-  margin-top: 7px;
-`;
+
 
 const InnerContainer = styled.div`
   width: 120%;
@@ -139,7 +132,7 @@ const ProfileBox = ({ token, setToken }) => {
       .catch((e) => {
         console.log("axiosError:", e);
       });
-  }, []);
+  }, [token.email]);
 
   const playExpandedAnimation = () => {
     setExpanded(true);

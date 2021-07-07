@@ -15,7 +15,7 @@ const CategoryList = ({ handleClick, categories, setCategories, click }) => {
       setCategories(data.data.categories)
     })
     .catch((e) => {console.log(e.message)})
-  }, [])
+  }, [setCategories])
 
 
 

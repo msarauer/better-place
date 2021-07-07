@@ -8,32 +8,24 @@ import {
   countVolunteersAdded,
   getUncompletedOpportunities,
   getUsersForOpportunity,
-  columnSort
 } from "../helpers/filters-and-sorters";
-import { getDistances, getCoords } from "../helpers/location-helpers";
+import { getDistances } from "../helpers/location-helpers";
 import "antd/dist/antd.css";
-import { List, Avatar, Space, Modal, Button } from "antd";
+import { List, Avatar, Space } from "antd";
 import {
   StarOutlined,
   ClockCircleOutlined,
   PushpinOutlined,
   CalendarOutlined,
-  Html5TwoTone,
 } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import { Progress, Switch } from "antd";
 import ReactTooltip from "react-tooltip";
 import Reviews from "./Reviews";
 import Link from "@material-ui/core/Link";
-import Paper from "@material-ui/core/Paper";
 import "./OpportunityList.scss";
-import { getDistance } from "geolib";
-import ConfirmVolunteer from "./ConfirmVolunteer";
 import AvatarGroup from '@material-ui/lab/AvatarGroup';
 import {Avatar as Avatar2 } from '@material-ui/core';
-import DoneIcon from '@material-ui/icons/Done';
-// const {  ExclamationCircleOutlined  } = icons;
-const { confirm } = Modal;
 
 const axios = require("axios");
 
@@ -74,7 +66,6 @@ const OpportunityList = ({
 
   // const [rows, setRows] = useState([]);
   const [usersOpportunities, setUsersOpportunities] = useState([]);
-  const [tokenOpportunities, setTokenOpportunities] = useState([]);
   const [open, setOpen] = useState(false);
   const [clickedId, setClickedId] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -130,7 +121,7 @@ const OpportunityList = ({
         // {latitude: "51° 31' N", longitude: "7° 28' E"}))
       })
       .catch((e) => console.log(e));
-  }, [location, category]);
+  }, [location, category, setOpportunities]);
 
   // Get users_opportunities specific to user to make switches 'switched' already
   useEffect(() => {
@@ -145,7 +136,7 @@ const OpportunityList = ({
         })
         .then(() => {});
     }
-  }, [token]);
+  }, [token, rows, setRows]);
 
   // Calculate distance between opportunities and user
   // useEffect(() => {
@@ -166,12 +157,11 @@ const OpportunityList = ({
     setRows((prev) => updateRows(rowFilter(newRows, location, category, timeCommitment, search, distance), usersOpportunities));
     
     // setRows((prev) => updateRows(rowFilter(newRows, false, false, false, false, false), usersOpportunities));
-    console.log('filteredRows:', rows)
     // setOpportunities((prev) => getDistances(lat, lng, opportunities))
     //   setRows((prev) => [...newRows])
     // setUsersOpportunities((prev) => [...data.data.usersOpportunities]);
     // })
-  }, [location, category, opportunities, timeCommitment, search, distance]);
+  }, [location, category, opportunities, timeCommitment, search, distance, lat, lng, setRows, usersOpportunities]);
 
   // DO NOT delete, will need for sorting later
 

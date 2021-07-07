@@ -6,16 +6,15 @@ import Carousel from 'react-bootstrap/Carousel'
 
 const Header = (props) => {
 
-  const images = {
-    imagesArray: [
-    "https://images.unsplash.com/photo-1524813686514-a57563d77965?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1778&q=80",
-    "https://images.unsplash.com/photo-1474649107449-ea4f014b7e9f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"
-    ],
-    imageIndex: 0
-  }
+  // const images = {
+  //   imagesArray: [
+  //   "https://images.unsplash.com/photo-1524813686514-a57563d77965?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1778&q=80",
+  //   "https://images.unsplash.com/photo-1474649107449-ea4f014b7e9f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"
+  //   ],
+  //   imageIndex: 0
+  // }
 
   const [displayVid, setDisplayVid] = useState("myVideo")
-  const [image, setImage] = useState(images);
 
 
   return (

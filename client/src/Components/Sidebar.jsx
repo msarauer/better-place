@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import List from '@material-ui/core/List';
@@ -6,20 +6,14 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import DraftsIcon from '@material-ui/icons/Drafts';
-import SendIcon from '@material-ui/icons/Send';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import StarBorder from '@material-ui/icons/StarBorder';
 import Divider from '@material-ui/core/Divider'
-import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
 import CategoryIcon from '@material-ui/icons/Category';
 import TimerIcon from '@material-ui/icons/Timer';
 import TextField from '@material-ui/core/TextField';
-import axios from 'axios'
-import { rowFilter } from '../helpers/filters-and-sorters';
 import StarIcon from '@material-ui/icons/Star';
 
 const useStyles = makeStyles((theme) => ({
@@ -61,7 +55,7 @@ export default function Sidebar({ distance, setDistance, timeCommitment, categor
   }
 
 
-  const timeArray = ["Quick (Minutes)", "Short (3 hours or less)", "Medium (8 hours or less)", "Long (Full day)", "Extra Long (Muliple days)"];
+  const timeArray = ["Quick (Minutes)", "Short (3 hours or less)", "Medium (8 hours or less)", "Long (Full day)", "Extra Long (Multiple days)"];
 
   return (
     <List
@@ -80,14 +74,14 @@ export default function Sidebar({ distance, setDistance, timeCommitment, categor
       </ListSubheader>
       <ListItem className="sliderDiv">
         <Slider
-          defaultValue={20}
+          defaultValue={70}
           getAriaValueText={valuetext}
           aria-labelledby="discrete-slider"
           valueLabelDisplay="auto"
-          step={20}
+          step={2}
           marks
-          min={0}
-          max={20}
+          min={2}
+          max={80}
           className={classes.sliderDiv}
           onChange={(e, v) => setDistance(v * 1000)}
           value={distance / 1000}

@@ -1,7 +1,7 @@
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
-import { makeStyles, Typography } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 import { useState, useEffect } from "react";
 import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
 import { MenuItem } from "@material-ui/core";
@@ -68,7 +68,6 @@ const CreateNewOpportunity = ({
       .get("/api/users")
       .then((data) => {
         setUsers(data.data.users);
-        console.log("users:", users);
       })
       .catch((e) => {
         console.log(e.message);

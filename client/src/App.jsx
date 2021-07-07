@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import "./App.css";
 import NavBar from "./Components/NavBar";
 import Header from "./Components/Header";
-import Search from "./Components/Search";
 import Footer from "./Components/Footer";
 import Sidebar from "./Components/Sidebar";
 import CategoryList from "./Components/CategoryList";
@@ -10,7 +9,6 @@ import OpportunityList from "./Components/OpportunityList";
 import CreateNewOpportunityWithModal from "./Components/CreateNewOpportunityWithModal";
 import axios from 'axios'
 import { BackTop } from 'antd';
-import useToken from './hooks/useToken'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 

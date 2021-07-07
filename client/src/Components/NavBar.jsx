@@ -1,9 +1,7 @@
-import React, {useEffect, useState}from "react";
+import React from "react";
 import Button from "@material-ui/core/Button";
 import AppBar from "@material-ui/core/AppBar";
 import ToolBar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import betterplace from "../resources/better-place.png";
@@ -14,7 +12,6 @@ import Drawer from "@material-ui/core/Drawer";
 import AccountBox from "./accountBox/AccountBox";
 import ProfileBox from "./profileBox/ProfileBox";
 import GeoLocation from "./GeoLocation";
-import axios from "axios";
 
 
 
@@ -64,7 +61,6 @@ const useStyles = makeStyles({
 const NavBar = ({ handleLocation, city, country, token, setToken, setLng, setLat }) => {
   const classes = useStyles();
 
-  const [user, setUser] = useState({})
 
   const [loginPage, setLoginPage] = React.useState({
     right: false,
@@ -73,23 +69,6 @@ const NavBar = ({ handleLocation, city, country, token, setToken, setLng, setLat
     right: false,
   });
 
-
-
-
-    // useEffect(() => {
-    //   axios
-    //     .get(`/api/user/${token}`)
-    //     .then((data) => {
-    //       setUser(data.data.users[0]);
-    //     })
-    //     .catch((e) => {
-    //       console.log("axiosError:", e);
-    //     });
-    // }, []);
-
-
-
-    // console.log("WHy isnt the pic working anymore----", token)
 
   const toggleLogin = (anchor, open) => (event) => {
     if (
@@ -102,19 +81,17 @@ const NavBar = ({ handleLocation, city, country, token, setToken, setLng, setLat
     setLoginPage({ ...loginPage, [anchor]: open });
   };
 
-  const handleSubmit = () => {
-    
-  }
+  
 
-  const checksIfToken = (key) => {
-    console.log('tokenForCheck:', token)
-    if (key) {
-      return true
-    }
-    if (!key) {
-      return false
-    }
-  }
+  // const checksIfToken = (key) => {
+  //   console.log('tokenForCheck:', token)
+  //   if (key) {
+  //     return true
+  //   }
+  //   if (!key) {
+  //     return false
+  //   }
+  // }
   
 
   const toggleProfile = (anchor, open) => (event) => {
