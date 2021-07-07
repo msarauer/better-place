@@ -22,29 +22,34 @@ SIDEBAR SORT
 
 - just need to fix the styling (styles overwritten by ant)
 
-## List TODAY
-
 - Need to add sorting functionality for distance, time_commitment
 
 ## Get distance from for each opportunity TUESDAY
 
-## Click to volunteer
+## Click to volunteer DONE
 
 - confirmation popup
 - send a message (stretch)
 
-## Add a review
+## Add a review CECIL \* rating
 
-- Stretch
+## List Polish
 
-## Reviews
+- add rating,
+- name to search results
+
+## Sorting bar MITCH
+
+- old/vs new,
+- time commitment,
+- distance,
+- rating
+- date
 
 ---- STRETCH ----
 
-MAP -leaflet
-
-- distance to opportunity DONE
-
 CHAT
 
-Search bar
+MAP -leaflet
+
+Location picker

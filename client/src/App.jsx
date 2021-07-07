@@ -5,11 +5,13 @@ import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 import Sidebar from "./Components/Sidebar";
 import CategoryList from "./Components/CategoryList";
+import AddReview from "./Components/profileBox/AddReview";
 import OpportunityList from "./Components/OpportunityList";
 import CreateNewOpportunityWithModal from "./Components/CreateNewOpportunityWithModal";
 import axios from 'axios'
 import { BackTop } from 'antd';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Filterbar from "./Components/Filterbar";
 
 
 
@@ -97,7 +99,7 @@ function App() {
 
   return (
     <div className="App">
-      <NavBar setLat={setLat} setLng={setLng} handleLocation={handleLocation} city={city} country={country} token={token} setToken={setToken} />
+      <NavBar setLat={setLat} setLng={setLng} handleLocation={handleLocation} city={city} country={country} token={token} setToken={setToken} opportunities={opportunities} />
       <Header />
       <CategoryList click={goToSideBarSection} handleClick={(data) => setCategory(data)} categories={categories} setCategories={setCategories}/>
  
@@ -109,11 +111,17 @@ function App() {
             <Sidebar distance={distance} setDistance={setDistance} timeCommitment={timeCommitment} categoryFromApp={category} search={search} setSearch={setSearch} setRows={setRows} setTimeCommitment={(data) => setTimeCommitment(data)} handleClick={(data) => setCategory(data)} setCategory={setCategory} rows={rows} setColumn={setColumn} categories={categories} />
           </div>
           <div className="col-9">
-            <OpportunityList search={search} timeCommitment={timeCommitment} column={column} rows={rows} setRows={setRows} lat={lat} lng={lng} token={token} opportunities={opportunities} setOpportunities={setOpportunities} location={city} category={category} distance={distance} />
+            <div className= "row text-right no-gutters">
+              <Filterbar/>
+            </div>
+            <div className= "row no-gutters">
+              <OpportunityList search={search} timeCommitment={timeCommitment} column={column} rows={rows} setRows={setRows} lat={lat} lng={lng} token={token} opportunities={opportunities} setOpportunities={setOpportunities} location={city} category={category} distance={distance} />
+            </div>
           </div>
         </div>
       </div>
       <br />
+      <AddReview token={token} setToken={setToken} opportunities={opportunities}/>
        <BackTop />
        <Footer />
 

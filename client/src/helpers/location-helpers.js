@@ -20,17 +20,15 @@ export const getCoords = (address) => {
   Geocode.setLocationType("ROOFTOP");
 
   Geocode.enableDebug();
-  let coords = '';
+  let coords = "";
   return Geocode.fromAddress(address).then(
     (response) => {
       coords = response.results[0].geometry.location;
-      // console.log("coordinatesFromGeoCode:", coords);
-      return coords 
+      return coords;
     },
     (error) => {
       console.error(error);
     }
-    );
+  );
 };
-
-
+//

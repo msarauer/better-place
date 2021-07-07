@@ -8,6 +8,8 @@ import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import axios from "axios";
 import { getCompletedOpportunities } from "../../helpers/filters-and-sorters";
+import AddReview from "./AddReview"
+import ReviewMod from "./ReviewMod"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,15 +28,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AlignItemsList({ token }) {
+export default function AlignItemsList({ token, setToken, opportunities }) {
   const classes = useStyles();
-  const [opportunities, setOpportunities] = useState([]);
+  const [completedOpportunities, setCompletedOpportunities] = useState([]);
 
   useEffect(() => {
     axios
       .put(`/api/users_opportunities/${token.email}`)
       .then((data) => {
-        setOpportunities(getCompletedOpportunities(data.data.opportunities));
+        setCompletedOpportunities(getCompletedOpportunities(data.data.opportunities));
       })
       .catch((e) => {
         console.log("axiosError:", e);
@@ -45,8 +47,8 @@ export default function AlignItemsList({ token }) {
   return (
     <>
       <List className={classes.root}>
-        {opportunities.map((opportunity) => (
-          <ListItem alignItems="flex-start">
+        {completedOpportunities.map((opportunity) => (
+          <ListItem key={token.id}alignItems="flex-start">
             <ListItemAvatar>
               <Avatar alt="Remy Sharp" src={opportunity.avatar} />
             </ListItemAvatar>
@@ -63,6 +65,7 @@ export default function AlignItemsList({ token }) {
                     {opportunity.username}
                   </Typography>
                   {` — ${opportunity.description}`}
+                  <ReviewMod token={token} setToken={setToken} opportunites={opportunities}/>
                 </React.Fragment>
               }
             />

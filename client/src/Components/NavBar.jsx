@@ -58,7 +58,7 @@ const useStyles = makeStyles({
   }
 });
 
-const NavBar = ({ handleLocation, city, country, token, setToken, setLng, setLat }) => {
+const NavBar = ({ handleLocation, city, country, token, setToken, setLng, setLat, opportunities }) => {
   const classes = useStyles();
 
 
@@ -144,7 +144,7 @@ const NavBar = ({ handleLocation, city, country, token, setToken, setLng, setLat
                     open={profilePage[anchor]}
                     onClose={toggleProfile(anchor, false)}
                   >
-                    <ProfileBox token={token} setToken={setToken}/>
+                    <ProfileBox token={token} setToken={setToken} opportunities={opportunities}/>
                   </Drawer>
                 </React.Fragment>
               ))
