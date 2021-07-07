@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import List from '@material-ui/core/List';
@@ -18,6 +18,9 @@ import Slider from '@material-ui/core/Slider';
 import CategoryIcon from '@material-ui/icons/Category';
 import TimerIcon from '@material-ui/icons/Timer';
 import TextField from '@material-ui/core/TextField';
+import axios from 'axios'
+import { rowFilter } from '../helpers/filters-and-sorters';
+import StarIcon from '@material-ui/icons/Star';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,12 +38,16 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function NestedList() {
+export default function Sidebar({ distance, setDistance, timeCommitment, categoryFromApp, search, setSearch, categories, rows, setCategory, handleClick, setTimeCommitment }) {
   const classes = useStyles();
-  const [openCat, setOpenCat] = React.useState(true);
-  const [openTime, setOpenTime] = React.useState(true);
-  const [distance, setDistance] = React.useState(30);
+  const [openCat, setOpenCat] = useState(true);
+  const [openTime, setOpenTime] = useState(true);
 
+  const onChangeHandler = (e) => {
+    e.preventDefault()
+    setSearch(e.target.value);
+    console.log(search)
+  }
 
   const handleClickCat = () => {
     setOpenCat(!openCat);
@@ -52,7 +59,9 @@ export default function NestedList() {
   function valuetext(value) {
     return `${value}`;
   }
-  
+
+
+  const timeArray = ["Quick (Minutes)", "Short (3 hours or less)", "Medium (8 hours or less)", "Long (Full day)", "Extra Long (Muliple days)"];
 
   return (
     <List
@@ -60,28 +69,28 @@ export default function NestedList() {
       aria-labelledby="nested-list-subheader"
       subheader={
         <ListSubheader component="div" id="nested-list-subheader">
-          Current Items: <strong>345</strong> <Divider />
+          Current Items: <strong>{rows.length}</strong> <Divider />
         </ListSubheader>
         
       }
       className={classes.root}
     >
       <ListSubheader id="discrete-slider" gutterBottom>
-        Distance ({distance} km)
+        Distance ({distance / 1000} km)
       </ListSubheader>
       <ListItem className="sliderDiv">
         <Slider
-          defaultValue={30}
+          defaultValue={20}
           getAriaValueText={valuetext}
           aria-labelledby="discrete-slider"
           valueLabelDisplay="auto"
-          step={5}
+          step={20}
           marks
-          min={5}
-          max={55}
+          min={0}
+          max={20}
           className={classes.sliderDiv}
-          onChange={(e, v) => setDistance(v)}
-          value={distance}
+          onChange={(e, v) => setDistance(v * 1000)}
+          value={distance / 1000}
         />
         
         </ListItem>
@@ -95,24 +104,17 @@ export default function NestedList() {
       </ListItem>
       <Collapse in={openCat} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItem button className={classes.nested}>
-            <ListItemIcon>
-              <StarBorder />
-            </ListItemIcon>
-            <ListItemText primary="Category 1" />
-          </ListItem>
-          <ListItem button className={classes.nested}>
-            <ListItemIcon>
-              <StarBorder />
-            </ListItemIcon>
-            <ListItemText primary="Category 2" />
-          </ListItem>
-          <ListItem button className={classes.nested}>
-            <ListItemIcon>
-              <StarBorder />
-            </ListItemIcon>
-            <ListItemText primary="Category 3" />
-          </ListItem>
+        {categories && categories.map((category)=> {
+    return (
+      <ListItem button onClick={() => {
+        handleClick(category.id)}} className={classes.nested}>
+      <ListItemIcon>
+        {category.id === categoryFromApp ? <StarIcon/> : <StarBorder />}
+      </ListItemIcon>
+      <ListItemText primary={category.name} />
+    </ListItem>
+    )
+  })}
         </List>
       </Collapse>
       <Divider />
@@ -125,24 +127,17 @@ export default function NestedList() {
       </ListItem>
       <Collapse in={openTime} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItem button className={classes.nested}>
+          {timeArray.map((time) => {
+            return (
+              <ListItem button onClick={() => setTimeCommitment((prev) => time)} className={classes.nested}>
             <ListItemIcon>
-              <StarBorder />
+              {time === timeCommitment ? <StarIcon/> : <StarBorder />}
             </ListItemIcon>
-            <ListItemText primary="Short" />
+            <ListItemText primary={time} />
           </ListItem>
-          <ListItem button className={classes.nested}>
-            <ListItemIcon>
-              <StarBorder />
-            </ListItemIcon>
-            <ListItemText primary="Medium" />
-          </ListItem>
-          <ListItem button className={classes.nested}>
-            <ListItemIcon>
-              <StarBorder />
-            </ListItemIcon>
-            <ListItemText primary="Long" />
-          </ListItem>
+            )
+          })}
+          
         </List>
       </Collapse>
 
@@ -151,8 +146,8 @@ export default function NestedList() {
           Search by description:
         </ListSubheader>
       <ListItem>   
-        <form className={classes.root} noValidate autoComplete="off">
-          <TextField id="outlined-basic" label="Keyword" variant="outlined" helperText="Enter keyword"/>
+        <form onSubmit={e => e.preventDefault()} className={classes.root} noValidate autoComplete="off">
+          <TextField id="outlined-basic"  onChange={e => onChangeHandler(e)} label="Keyword" variant="outlined" helperText="Enter keyword"/>
         </form>
         </ListItem>
     </List>
@@ -160,3 +155,5 @@ export default function NestedList() {
 }
 
 //SortBY: Distance, Category, Time_commitment(dropdown), date, search(keywords)
+
+

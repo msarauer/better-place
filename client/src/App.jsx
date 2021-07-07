@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./App.css";
 import NavBar from "./Components/NavBar";
 import Header from "./Components/Header";
@@ -31,13 +31,24 @@ function App() {
 
   const [city, setCity] = useState("What is your Location?");
   const [country, setCountry] = useState("");
-  const [category, setCategory] = useState(undefined);
+  const [category, setCategory] = useState('');
   const [opportunities, setOpportunities] = useState([]);
-  const [categories, setCategories] = useState();
+  const [categories, setCategories] = useState('');
   const [token, setToken] = useState('');
   const [lat, setLat] = useState('');
   const [lng, setLng] = useState('');
   const [rows, setRows] = useState('');
+  const [column, setColumn] = useState('')
+  const [timeCommitment, setTimeCommitment] = useState('');
+  const [search, setSearch ] = useState('');
+  const [distance, setDistance] = useState(20000);
+
+  const sideBarSection = useRef(null);
+
+  const goToSideBarSection = () => {
+    window.scrollTo({ top: (sideBarSection.current.offsetTop - 70), behavior: "smooth"})
+    console.log("ref:", sideBarSection)
+  }
 
   // const { token, setToken } = useToken();
   
@@ -83,21 +94,24 @@ function App() {
 
 
 
+
+
+
   return (
     <div className="App">
       <NavBar setLat={setLat} setLng={setLng} handleLocation={handleLocation} city={city} country={country} token={token} setToken={setToken} />
       <Header />
-      <CategoryList handleClick={(data) => setCategory(data)} categories={categories} setCategories={setCategories}/>
+      <CategoryList click={goToSideBarSection} handleClick={(data) => setCategory(data)} categories={categories} setCategories={setCategories}/>
  
       {/* Conditional for SearchList */}
       <CreateNewOpportunityWithModal rows={rows} setRows={setRows} opportunities={opportunities} setOpportunities={setOpportunities} onSave={save} location={city} categories={categories} setCategories={setCategories} host_id={token}/>
       <div className="container">
         <div className= "row">
-          <div className="col-3">
-            <Sidebar/>
+          <div className="col-3" ref={sideBarSection}>
+            <Sidebar distance={distance} setDistance={setDistance} timeCommitment={timeCommitment} categoryFromApp={category} search={search} setSearch={setSearch} setRows={setRows} setTimeCommitment={(data) => setTimeCommitment(data)} handleClick={(data) => setCategory(data)} setCategory={setCategory} rows={rows} setColumn={setColumn} categories={categories} />
           </div>
           <div className="col-9">
-            <OpportunityList rows={rows} setRows={setRows} lat={lat} lng={lng} token={token} opportunities={opportunities} setOpportunities={setOpportunities} location={city} category={category} />
+            <OpportunityList search={search} timeCommitment={timeCommitment} column={column} rows={rows} setRows={setRows} lat={lat} lng={lng} token={token} opportunities={opportunities} setOpportunities={setOpportunities} location={city} category={category} distance={distance} />
           </div>
         </div>
       </div>

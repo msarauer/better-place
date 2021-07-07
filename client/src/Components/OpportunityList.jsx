@@ -7,7 +7,8 @@ import {
   updateRows,
   countVolunteersAdded,
   getUncompletedOpportunities,
-  getUsersForOpportunity
+  getUsersForOpportunity,
+  columnSort
 } from "../helpers/filters-and-sorters";
 import { getDistances, getCoords } from "../helpers/location-helpers";
 import "antd/dist/antd.css";
@@ -64,6 +65,10 @@ const OpportunityList = ({
   setOpportunities,
   setRows,
   rows,
+  column,
+  timeCommitment,
+  search,
+  distance
 }) => {
   const classes = useStyles();
 
@@ -114,7 +119,6 @@ const OpportunityList = ({
       axios.get("/api/users"),
     ])
       .then((all) => {
-        console.log("lat", lat, "lng", lng);
         setOpportunities((prev) => getUncompletedOpportunities(all[0].data.opportunities)
         );
         setUsersOpportunities((prev) => all[1].data.usersOpportunities);
@@ -124,7 +128,6 @@ const OpportunityList = ({
       .then(() => {
         //      console.log(getDistance({latitude: 51.5103, longitude: 7.49347},
         // {latitude: "51° 31' N", longitude: "7° 28' E"}))
-        console.log("oppsWithDistance:", opportunities);
       })
       .catch((e) => console.log(e));
   }, [location, category]);
@@ -137,8 +140,6 @@ const OpportunityList = ({
         .put(`/api/users_opportunities/${token.email}`)
         .then((data) => {
           // setTokenOpportunities((prev) => [...data.data.opportunities]);
-          console.log("lat:", lat, "lng:", lng);
-          getCoords("4996 Earles, Vancouver");
           setRows(updateRows(rows, data.data.opportunities));
           setLoading(false);
         })
@@ -161,39 +162,28 @@ const OpportunityList = ({
       countVolunteersAdded(opportunities, usersOpportunities)
     );
     // setRows((prev) => newRows)
-    setRows((prev) => rowFilter(newRows, location, category));
+    // setRows((prev) => rowFilter(newRows, false, false, false));
+    setRows((prev) => updateRows(rowFilter(newRows, location, category, timeCommitment, search, distance), usersOpportunities));
+    
+    // setRows((prev) => updateRows(rowFilter(newRows, false, false, false, false, false), usersOpportunities));
+    console.log('filteredRows:', rows)
     // setOpportunities((prev) => getDistances(lat, lng, opportunities))
     //   setRows((prev) => [...newRows])
     // setUsersOpportunities((prev) => [...data.data.usersOpportunities]);
     // })
-  }, [location, category, opportunities]);
+  }, [location, category, opportunities, timeCommitment, search, distance]);
 
   // DO NOT delete, will need for sorting later
 
   // useEffect(() => {
-  //   console.log("col", column)
-  //   console.log("rows", rows)
-  //   setRows((prev)=>columnSort([ ...prev], column))
+  //   setRows((prev)=>columnSort([...prev], column))
   // }, [column])
 
   useEffect(() => {
     ReactTooltip.rebuild();
   });
 
-  function showConfirm() {
-    confirm({
-      title: 'Are you sure you would like to volunteer?',
-      // icon: <ExclamationCircleOutlined />,
-      content: 'Some descriptions',
-      onOk() {
-        console.log('OK');
-      },
-      onCancel() {
-        console.log('Cancel');
-      },
-    });
-  }
-
+  
   // addVolunteer and removeVolunteer are strictly axios calls, the state update functions are in filters-and-sorters as helper functions
   const addVolunteer = (opportunityId) => {
     axios.post(`/api/users_opportunities`, {
@@ -229,35 +219,10 @@ const OpportunityList = ({
   };
 
 
-  // const onChange = (checked, event) => {
-  //   console.log(`switch to ${checked}`);
-  //   const oppId = event.currentTarget.id;
 
-  //   if (checked) {
-  //     const newRows = addOpportunity(rows, oppId);
-  //     setRows((prev) => [...newRows]);
-  //     function showConfirm() {
-  //       confirm({
-  //         title: 'Are you sure you would like to volunteer?',
-  //         // icon: <ExclamationCircleOutlined />,
-  //         content: 'Some descriptions',
-  //         onOk() {
-  //           addVolunteer(oppId);
-  //           console.log('OK');
-  //         },
-  //         onCancel() {
-  //           console.log('Cancel');
-  //         },
-  //       });
-  //     }
-  //   }
 
-  //   if (!checked) {
-  //     const newRows = removeOpportunity(rows, oppId);
-  //     setRows((prev) => [...newRows]);
-  //     removeVolunteer(oppId);
-  //   }
-  // };
+
+  
 
   
   return (
@@ -323,7 +288,6 @@ const OpportunityList = ({
             
                       {
                       getUsersForOpportunity(item.id, users, usersOpportunities).map((user) => {
-                        console.log('userFromMap', user)
                         return <Avatar2 alt={user.name} src={user.picture_url} className={classes.small}/>
                       })
                       
@@ -364,16 +328,11 @@ const OpportunityList = ({
                 id={item.id}
                 checkedChildren="Volunteering"
                 unCheckedChildren="Volunteer"
-                // onChange={onChange}
                 onChange={onChange}
-                // onClick={showConfirm}
-
-                // onClick={(e) => { if (window.confirm('Are you sure you wish to delete this item?')) removeVolunteer() } }
               />
             )}
             {token && item.selected && (
               <>
-                {/* <ConfirmVolunteer /> */}
                 <Switch
                   defaultChecked
                   className={item.id}
@@ -382,6 +341,8 @@ const OpportunityList = ({
                   id={item.id}
                   onChange={onChange}
                 />
+
+             
               </>
             )}
           </List.Item>
