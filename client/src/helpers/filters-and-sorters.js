@@ -1,3 +1,7 @@
+
+// This file is for various sorter and filter functions for opportunities
+
+
 export const rowFilter = (opps, location = false, category = false) => {
   const rows = [...opps];
   if (!location && !category) {
@@ -85,4 +89,69 @@ export const countVolunteersAdded = (opps, allUserOpps) => {
   return rows;
 };
 
-// const findUsersOpportunity = ()
+const opportunities = [
+  {date: '2001-02-16'},
+  {date: '2022-02-17'},
+  {date: '2022-01-23'},
+  {date: '2010-03-03'}
+]
+
+export const getCompletedOpportunities = (opps) => {
+  
+  // filter through opportunities for already completed ones
+  const rows = opps.filter((opp) => {
+
+    // Get the date off of the current opportunity
+    const date = new Date(opp.date)
+    date.toString().valueOf();
+
+    // Get the current date
+    const currentDate = new Date()
+    currentDate.toString().valueOf();
+
+    // compare and return true if the opp was completed
+    return date < currentDate ? true : false
+
+  })
+  return rows;
+}
+
+
+export const getUncompletedOpportunities = (opps) => {
+  
+  // filter through opportunities for already completed ones
+  const rows = opps.filter((opp) => {
+
+    // Get the date off of the current opportunity
+    const date = new Date(opp.date)
+    date.toString().valueOf();
+
+    // Get the current date
+    const currentDate = new Date()
+    currentDate.toString().valueOf();
+
+    // compare and return true if the opp was not completed
+    return date < currentDate ? true : false
+
+  })
+  return rows;
+}
+
+
+
+export const getUsersForOpportunity = (oppId, users, usersOpps) => {
+  const selectUserOpps = usersOpps.filter((userOpp => {
+    return oppId === userOpp.opportunity_id;
+  }))
+
+  const usersList = users.filter((user) => {
+    for (let userOpp of selectUserOpps) {
+      if (userOpp.user_id === user.id) {
+        return true
+      }
+    }
+    return false
+  })
+
+  return usersList;
+}

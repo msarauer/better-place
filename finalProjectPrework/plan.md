@@ -1,16 +1,21 @@
-## List
+## List //pretty much wrapped up
 
 - Create (modal) button for new opportunities
 
-## Create Opportunity Form
+## Create Opportunity Form ALMOST DONE (fix picture bug)
+- date/host_name added to items, checkmark when done, 
+
+SIDEBAR SORT
+
+- SortBY: Distance, Category, Time_commitment(dropdown), date, search(keywords), 
 
 - Functionality completed
 
-## Profile/Edit Profile Form (functionality SUNDAY)
+## Profile/Edit Profile Form JUST POLISHING LEFT
 
 - Cecil
 
-## Category Functionality
+## Category Functionality 
 
 - Main category, smaller cats below, then you get a list of opps in subcategory, tool bar somewhere with dropdown to choose categories there after.
 
@@ -21,6 +26,10 @@
 ## Cookies (SUNDAY)
 
 ## Click to volunteer
+ - confirmation popup
+ - send a message (stretch)
+
+## Add a review
 
 
 
@@ -28,7 +37,7 @@
 
 MAP -leaflet
 
-- distance to opportunity
+- distance to opportunity DONE
 
 CHAT
 

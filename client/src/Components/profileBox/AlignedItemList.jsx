@@ -8,6 +8,7 @@ import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import axios from "axios";
+import { getCompletedOpportunities } from "../../helpers/filters-and-sorters";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,7 +35,7 @@ export default function AlignItemsList({ token }) {
     axios
       .put(`/api/users_opportunities/${token.email}`)
       .then((data) => {
-        setOpportunities(data.data.opportunities);
+        setOpportunities(getCompletedOpportunities(data.data.opportunities));
       })
       .catch((e) => {
         console.log("axiosError:", e);

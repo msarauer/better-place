@@ -13,7 +13,7 @@
 
 
 INSERT INTO opportunities (host_id ,name , number_of_volunteers_needed, number_of_volunteers_added, description, location, date, time_commitment, category_id, lat, lng) VALUES (
-  1, 'Clown Around', 8, 4, 'Just want a couple friends to clown around with really.', 'Canada', '2001-02-16', 'Five Hours', 1, 49.2396913, -123.0466543
+  1, 'Clown Around', 8, 4, 'Just want a couple friends to clown around with really.', 'Canada', '2016-02-16', 'Five Hours', 1, 49.2396913, -123.0466543
 ), 
 (
   3, 'Moving', 3, 1, 'Got to move at the end of the month and I need some help because my foot is broken', 'Calgary', '2021-02-16', 'Long time', 2, 49.228365, -123.131529
@@ -55,7 +55,7 @@ INSERT INTO opportunities (host_id ,name , number_of_volunteers_needed, number_o
   3, 'Koving', 3, 1, 'Got to move at the end of the month and I need some help because my foot is broken', 'Calgary', '2021-02-16', 'Long time', 6, 49.223892, -122.966906
 ), 
 (
-  2, 'Llectrical Work', 3, 2, 'loing some electrical work for a friend.. and I do not know what I am doing!', 'Vancouver', '2021-03-05', 'Short', 7, 49.270801, -123.204492
+  2, 'Llectrical Work', 3, 2, 'loing some electrical work for a friend.. and I do not know what I am doing!', 'Vancouver', '2021-08-05', 'Short', 7, 49.270801, -123.204492
 ), 
 (
   1, 'Micking garbage', 8, 4, 'lust want a couple friends to clown around with really.', 'Canada', '2001-02-16', 'Five Hours', 8, 49.309910, -122.954443
