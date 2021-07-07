@@ -1,32 +1,35 @@
 import { makeStyles } from "@material-ui/core/styles";
-import { getPercentage } from "../helpers/basic-helpers";
+import { getPercentage, dateFormatter } from "../helpers/basic-helpers";
 import {
   addOpportunity,
   removeOpportunity,
   rowFilter,
   updateRows,
   countVolunteersAdded,
+  getUncompletedOpportunities,
+  getUsersForOpportunity,
 } from "../helpers/filters-and-sorters";
-import { getDistances, getCoords } from "../helpers/location-helpers";
+import { getDistances } from "../helpers/location-helpers";
 import "antd/dist/antd.css";
 import { List, Avatar, Space } from "antd";
 import {
   StarOutlined,
   ClockCircleOutlined,
   PushpinOutlined,
+  CalendarOutlined,
 } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import { Progress, Switch } from "antd";
 import ReactTooltip from "react-tooltip";
 import Reviews from "./Reviews";
 import Link from "@material-ui/core/Link";
-import Paper from "@material-ui/core/Paper";
 import "./OpportunityList.scss";
-import { getDistance } from 'geolib';  
+import AvatarGroup from '@material-ui/lab/AvatarGroup';
+import {Avatar as Avatar2 } from '@material-ui/core';
 
 const axios = require("axios");
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     background:
       "linear-gradient(90deg, rgba(0,153,255,1) 20%, rgba(26,188,156,1)98%)",
@@ -34,7 +37,14 @@ const useStyles = makeStyles({
   selected: {
     color: "red",
   },
-});
+  small: {
+    width: theme.spacing(4),
+    height: theme.spacing(4),
+  },
+  avatarGroup: {
+    paddingLeft: "18px",
+  }
+}));
 
 const OpportunityList = ({
   lat,
@@ -46,16 +56,20 @@ const OpportunityList = ({
   opportunities,
   setOpportunities,
   setRows,
-  rows
+  rows,
+  column,
+  timeCommitment,
+  search,
+  distance
 }) => {
   const classes = useStyles();
 
   // const [rows, setRows] = useState([]);
   const [usersOpportunities, setUsersOpportunities] = useState([]);
-  const [tokenOpportunities, setTokenOpportunities] = useState([]);
   const [open, setOpen] = useState(false);
   const [clickedId, setClickedId] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [users, setUsers] = useState([]);
 
   const handleClickOpen = (id) => {
     setOpen(true);
@@ -93,69 +107,73 @@ const OpportunityList = ({
     Promise.all([
       axios.get("/api/opportunities"),
       axios.get("/api/users_opportunities"),
+      axios.get("/api/users"),
     ])
       .then((all) => {
-        console.log('lat', lat, 'lng', lng)
-        setOpportunities((prev) => all[0].data.opportunities);
+        setOpportunities((prev) => getUncompletedOpportunities(all[0].data.opportunities)
+        );
         setUsersOpportunities((prev) => all[1].data.usersOpportunities);
         setLoading(false);
+        setUsers((prev) => all[2].data.users);
       })
       .then(() => {
         //      console.log(getDistance({latitude: 51.5103, longitude: 7.49347},
-        // {latitude: "51° 31' N", longitude: "7° 28' E"})) 
-        console.log('oppsWithDistance:', opportunities)
+        // {latitude: "51° 31' N", longitude: "7° 28' E"}))
       })
       .catch((e) => console.log(e));
-    }, [location, category]);
-    
-    // Get users_opportunities specific to user to make switches 'switched' already
-    useEffect(() => {
-      setLoading(true);
-      if (token.email) {
-        axios
+  }, [location, category, setOpportunities]);
+
+  // Get users_opportunities specific to user to make switches 'switched' already
+  useEffect(() => {
+    setLoading(true);
+    if (token.email) {
+      axios
         .put(`/api/users_opportunities/${token.email}`)
         .then((data) => {
           // setTokenOpportunities((prev) => [...data.data.opportunities]);
-          console.log("lat:", lat, "lng:", lng);
-          getCoords('4996 Earles, Vancouver')
           setRows(updateRows(rows, data.data.opportunities));
           setLoading(false);
         })
         .then(() => {});
-      }
-    }, [token]);
+    }
+  }, [token, rows, setRows]);
+
+  // Calculate distance between opportunities and user
+  // useEffect(() => {
+
+  //   getDistances(lat, lng, opportunities)
+
+  // })
+
+  // Count how many people have signed up for each opportunity so that it can be rendered dynamically and in real time
+  useEffect(() => {
+    const newRows = getDistances(
+      lat,
+      lng,
+      countVolunteersAdded(opportunities, usersOpportunities)
+    );
+    // setRows((prev) => newRows)
+    // setRows((prev) => rowFilter(newRows, false, false, false));
+    setRows((prev) => updateRows(rowFilter(newRows, location, category, timeCommitment, search, distance), usersOpportunities));
     
-    
-    // Calculate distance between opportunities and user
-    // useEffect(() => {
-      
-      //   getDistances(lat, lng, opportunities)
-      
-      // })
-      
-      // Count how many people have signed up for each opportunity so that it can be rendered dynamically and in real time
-      useEffect(() => {
-        const newRows = getDistances(lat, lng, countVolunteersAdded(opportunities, usersOpportunities));
-        // setRows((prev) => newRows)
-        setRows((prev) => rowFilter(newRows, location, category));
-        // setOpportunities((prev) => getDistances(lat, lng, opportunities))
-        //   setRows((prev) => [...newRows])
-        // setUsersOpportunities((prev) => [...data.data.usersOpportunities]);
-        // })
-      }, [location, category, opportunities]);
-      
+    // setRows((prev) => updateRows(rowFilter(newRows, false, false, false, false, false), usersOpportunities));
+    // setOpportunities((prev) => getDistances(lat, lng, opportunities))
+    //   setRows((prev) => [...newRows])
+    // setUsersOpportunities((prev) => [...data.data.usersOpportunities]);
+    // })
+  }, [location, category, opportunities, timeCommitment, search, distance, lat, lng, setRows, usersOpportunities]);
+
   // DO NOT delete, will need for sorting later
 
   // useEffect(() => {
-  //   console.log("col", column)
-  //   console.log("rows", rows)
-  //   setRows((prev)=>columnSort([ ...prev], column))
+  //   setRows((prev)=>columnSort([...prev], column))
   // }, [column])
 
   useEffect(() => {
     ReactTooltip.rebuild();
   });
 
+  
   // addVolunteer and removeVolunteer are strictly axios calls, the state update functions are in filters-and-sorters as helper functions
   const addVolunteer = (opportunityId) => {
     axios.post(`/api/users_opportunities`, {
@@ -163,6 +181,8 @@ const OpportunityList = ({
       opportunity_id: opportunityId,
     });
   };
+
+  
 
   const removeVolunteer = (opportunityId) => {
     axios.delete(`/api/users_opportunities/${opportunityId}`, {
@@ -188,6 +208,13 @@ const OpportunityList = ({
     }
   };
 
+
+
+
+
+  
+
+  
   return (
     <div>
       <List
@@ -212,8 +239,17 @@ const OpportunityList = ({
               />,
               <IconText
                 icon={PushpinOutlined}
-                text={`${item.location}(${Math.round(item.distance / 1000)} km)`}
+                text={`${item.location}(${Math.round(
+                  item.distance / 1000
+                )} km)`}
                 key="list-vertical-star-o"
+              />,
+              <IconText
+                className={classes.selected}
+                icon={CalendarOutlined}
+                text={dateFormatter(item.date)}
+                key="list-vertical-star-o"
+                id={item.host_id}
               />,
               <IconTextReview
                 className={classes.selected}
@@ -222,32 +258,41 @@ const OpportunityList = ({
                 key="list-vertical-star-o"
                 id={item.host_id}
               />,
-              // <IconTextReview
-              //   className={classes.selected}
-              //   icon={StarOutlined}
-              //   text="Reviews"
-              //   key="list-vertical-star-o"
-              //   id={item.host_id}
-              // />,
             ]}
             extra={
               <div>
-                <Progress
-                  strokeColor={{
-                    "0%": "#108ee9",
-                    "100%": "#87d068",
-                  }}
-                  type="circle"
-                  percent={getPercentage(
-                    item.number_of_volunteers_needed,
-                    item.volunteer_count
-                  )}
-                  format={(percent) =>
-                    `${
-                      item.number_of_volunteers_needed - item.volunteer_count
-                    } Needed`
-                  }
-                />
+                  <Progress
+                    strokeColor={{
+                      "0%": "#108ee9",
+                      "100%": "#87d068",
+                    }}
+                    type="circle"
+                    // percent={100}
+                    percent={getPercentage(
+                      item.number_of_volunteers_needed,
+                      item.volunteer_count
+                    )}
+                    format={(percent) =>
+                      <AvatarGroup max={3} className={classes.avatarGroup}>
+                        
+            
+                      {
+                      getUsersForOpportunity(item.id, users, usersOpportunities).map((user) => {
+                        return <Avatar2 alt={user.name} src={user.picture_url} className={classes.small}/>
+                      })
+                      
+                      //   <AvatarGroup max={3} className={classes.avatarGroup}>
+                      //   <Avatar2 alt="Remy Sharp" src="https://i.pravatar.cc/301" className={classes.small}/>
+                      //   <Avatar2 alt="Travis Howard" src="https://i.pravatar.cc/303" className={classes.small}/>
+                      //   <Avatar2 alt="Cindy Baker" src="https://i.pravatar.cc/302" className={classes.small}/>
+                      //   <Avatar2 alt="Agnes Walker" src="https://i.pravatar.cc/301" className={classes.small}/>
+                      //   <Avatar2 alt="Trevor Henderson" src={"https://i.pravatar.cc/303"} className={classes.small}/>
+                      
+                      
+                      }
+                      </AvatarGroup>
+                    }
+                  />
               </div>
             }
           >
@@ -277,14 +322,18 @@ const OpportunityList = ({
               />
             )}
             {token && item.selected && (
-              <Switch
-                defaultChecked
-                className={item.id}
-                checkedChildren="Volunteering"
-                unCheckedChildren="Volunteer"
-                id={item.id}
-                onChange={onChange}
-              />
+              <>
+                <Switch
+                  defaultChecked
+                  className={item.id}
+                  checkedChildren="Volunteering"
+                  unCheckedChildren="Volunteer"
+                  id={item.id}
+                  onChange={onChange}
+                />
+
+             
+              </>
             )}
           </List.Item>
         )}

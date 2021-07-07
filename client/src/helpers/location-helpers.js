@@ -31,5 +31,6 @@ export const getCoords = (address) => {
       console.error(error);
     }
     );
-    // return coords
 };
+
+

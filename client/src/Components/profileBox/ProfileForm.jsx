@@ -1,10 +1,6 @@
 import {
-  BoldLink,
   BoxContainer,
-  FormContainer,
-  Input,
   MutedLink,
-  SubmitButton,
   SmallText,
   EditLink,
   TitleText,
@@ -16,29 +12,16 @@ import {
 } from "./common";
 import { Marginer } from "./Marginer";
 import { AccountContext } from "./accountContext";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import AlignItemsList from "./AlignedItemList";
 import MailIcon from "@material-ui/icons/Mail";
 import CallIcon from "@material-ui/icons/Call";
 import HomeIcon from "@material-ui/icons/Home";
-import axios from "axios";
 
 const ProfileForm = ({ token }) => {
   const { switchToSignup } = useContext(AccountContext);
-  const [user, setUser] = useState({});
-  const [opportunities, setOpportunities] = useState([]);
 
-  // Used to get specific user from id
-  // useEffect(() => {
-  //   axios
-  //     .get(`/api/user/${token.email}`)
-  //     .then((data) => {
-  //       setUser(data.data.users[0]);
-  //     })
-  //     .catch((e) => {
-  //       console.log("axiosError:", e);
-  //     });
-  // }, []);
+ 
 
   return (
     <>

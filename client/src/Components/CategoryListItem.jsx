@@ -3,17 +3,20 @@ import "./CategoryList.scss";
 
 
 
-const CategoryList = (props) => {
+const CategoryList = ({ click, click2, id, name, description }) => {
 
   
 
   
   return (
-    <div className="card" onClick={() => {props.click(props.id)}}>
+    <div className="card" onClick={() => {
+      click(id)
+      click2()
+      }}>
         <div className="content">
-          <span className="title">{props.name}</span>
+          <span className="title">{name}</span>
           <p className="copy">
-            From electrical to plumbing - find neighbors who need your skills
+            {description}
           </p>
         </div>
       </div>

@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import Divider from "@material-ui/core/Divider";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import axios from "axios";
+import { getCompletedOpportunities } from "../../helpers/filters-and-sorters";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "60ch",
     // minHeight: "29%",
     // maxHeight: "29%",
-    maxHeight: "250px",
+    maxHeight: "260px",
     overflow: "auto",
     marginTop: "-8px",
 
@@ -34,14 +34,13 @@ export default function AlignItemsList({ token }) {
     axios
       .put(`/api/users_opportunities/${token.email}`)
       .then((data) => {
-        setOpportunities(data.data.opportunities);
+        setOpportunities(getCompletedOpportunities(data.data.opportunities));
       })
       .catch((e) => {
         console.log("axiosError:", e);
       });
   }, [token]);
 
-  console.log("This should be full ofneat stuff-----", opportunities)
   
   return (
     <>

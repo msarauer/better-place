@@ -1,9 +1,9 @@
-import { BoldLink, BoxContainer, FormContainer, Input, MutedLink, SubmitButton } from "./common"
+import { BoldLink, BoxContainer, MutedLink, SubmitButton } from "./common"
 import { Marginer } from './Marginer';
 import { AccountContext } from './accountContext'
 import { useContext, useState } from "react";
 import TextField from "@material-ui/core/TextField";
-import { makeStyles, Typography } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 import axios from 'axios';
 
 const useStyles = makeStyles({
@@ -23,24 +23,7 @@ const LoginForm = ({ setToken, token, toggleLogin, setLoginPage}) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
-  // const loginUser = (credentials) => {
-  //   return axios
-  //   .post('/login', credentials)
-  //   .then((data) => console.log(credentials))
-  //   .catch(e => console.log(e))
-  // }
-
-  // const toggleLogin = (anchor, open) => (event) => {
-  //   if (
-  //     event.type === "keydown" &&
-  //     (event.key === "Tab" || event.key === "Shift")
-  //   ) {
-  //     return;
-  //   }
-
-  //   setLoginPage({ ...loginPage, [anchor]: open });
-  // };
-
+  
 
   const handleSubmit = async e => {
     e.preventDefault();

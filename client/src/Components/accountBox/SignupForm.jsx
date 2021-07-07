@@ -2,7 +2,6 @@ import {
   BoldLink,
   BoxContainer,
   FormContainer,
-  Input,
   MutedLink,
   SubmitButton,
 } from "./common";
@@ -11,7 +10,7 @@ import { AccountContext } from "./accountContext";
 import { useContext, useState } from "react";
 import axios from "axios";
 import TextField from "@material-ui/core/TextField";
-import { makeStyles, Typography } from "@material-ui/core";
+import { makeStyles} from "@material-ui/core";
 
 const useStyles = makeStyles({
   field: {
@@ -33,7 +32,7 @@ const SignupForm = ({ setToken, setLoginPage }) => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [address, setAddress] = useState("");
   const [bio, setBio] = useState("");
-  const [profilePic, setProfilePic] = useState(""); // Some sort of defult image maybe?
+  const [profilePic ] = useState(""); // Some sort of defult image maybe?
 
   const handleSubmit = (e) => {
     const userSave = (data) => {
@@ -77,17 +76,6 @@ const SignupForm = ({ setToken, setLoginPage }) => {
   };
 
 
-  // const handleCreateUser = (e) => {
-  //   e.preventDefault();
-  //   axios
-  //     .post('/login', {email, password})
-  //     .then((data) => {
-  //       // console.log('loginToken:',data.data.token)
-  //       setToken((prev) => ({prev, ...data.data.token}))
-  //       setLoginPage({right: false})
-  //     })
-  //     .catch(e => console.log(e))
-  // }
 
   return (
     <BoxContainer>
@@ -193,41 +181,3 @@ const SignupForm = ({ setToken, setLoginPage }) => {
 };
 
 export default SignupForm;
-
-{/* <Input
-type="email"
-placeholder="Email"
-onChange={(e) => setEmail(e.target.value)}
-/>
-<Input
-type="password"
-placeholder="Password"
-onChange={(e) => setPassword(e.target.value)}
-/>
-<Input type="password" placeholder="Confirm Password" />
-  I forget how to get the passwords to be same, something to do with password digest in database
-<Input
-type="text"
-placeholder="Full Name"
-onChange={(e) => setName(e.target.value)}
-/>
-<Input
-type="text"
-placeholder="PhoneNumber"
-onChange={(e) => setPhoneNumber(e.target.value)}
-/>
-<Input
-type="text"
-placeholder="Address"
-onChange={(e) => setAddress(e.target.value)}
-/>
-<Input
-type="textarea"
-placeholder="Bio"
-onChange={(e) => setBio(e.target.value)}
-/>
-<Input
-type="textarea"
-placeholder="Picture URL"
-onChange={(e) => setProfilePic(e.target.value)}
-/> */}
