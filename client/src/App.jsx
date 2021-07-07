@@ -2,14 +2,8 @@ import React, { useState, useRef } from "react";
 import "./App.css";
 import NavBar from "./Components/NavBar";
 import Header from "./Components/Header";
-<<<<<<< HEAD
-import Search from "./Components/Search";
-import Sidebar from './Components/Sidebar'
-import Footer from './Components/Footer'
-=======
 import Footer from "./Components/Footer";
 import Sidebar from "./Components/Sidebar";
->>>>>>> 7c822a8eb901de7b325d19323306b68ec7b5fa9e
 import CategoryList from "./Components/CategoryList";
 import OpportunityList from "./Components/OpportunityList";
 import CreateNewOpportunityWithModal from "./Components/CreateNewOpportunityWithModal";
@@ -108,11 +102,6 @@ function App() {
       <CategoryList click={goToSideBarSection} handleClick={(data) => setCategory(data)} categories={categories} setCategories={setCategories}/>
  
       {/* Conditional for SearchList */}
-<<<<<<< HEAD
-      <CreateNewOpportunityWithModal opportunities={opportunities} setOpportunities={setOpportunities} onSave={save} location={city} categories={categories} setCategories={setCategories} host_id={token}/>
-
-      <Sidebar rows={rows} setRows={setRows} lat={lat} lng={lng} token={token} opportunities={opportunities} setOpportunities={setOpportunities} location={city} category={category}/>
-=======
       <CreateNewOpportunityWithModal rows={rows} setRows={setRows} opportunities={opportunities} setOpportunities={setOpportunities} onSave={save} location={city} categories={categories} setCategories={setCategories} host_id={token}/>
       <div className="container">
         <div className= "row">
@@ -124,7 +113,6 @@ function App() {
           </div>
         </div>
       </div>
->>>>>>> 7c822a8eb901de7b325d19323306b68ec7b5fa9e
       <br />
        <BackTop />
        <Footer />
