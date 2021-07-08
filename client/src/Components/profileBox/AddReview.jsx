@@ -10,17 +10,17 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles({
   root: {
-    width: '80%',
+    // width: '80%',
     display: 'flex',
   },
   field: {
-    marginLeft: 11,
+    marginLeft: 5,
     marginTop: 5,
     marginBottom: 5,
     maxLength:"225"
   },
   rating: {
-    marginLeft: 100
+    
   }
 })
 
@@ -64,7 +64,7 @@ return (
       
             <div>
             <TextField 
-              style={{width: '225%'}}
+              style={{width: '100%'}}
               onChange={(e) => setUserFeedback(e.target.value)}
               className={classes.field}
               multiline={true}

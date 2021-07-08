@@ -7,7 +7,7 @@ CREATE TABLE opportunities (
   name VARCHAR(255) NOT NULL, 
   number_of_volunteers_needed INTEGER,
   number_of_volunteers_added INTEGER DEFAULT 0,
-  description VARCHAR(255),
+  description TEXT,
   location VARCHAR(255) NOT NULL,
   date DATE NOT NULL,
   time_commitment VARCHAR(255) NOT NULL,
