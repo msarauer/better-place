@@ -10,6 +10,7 @@ import CreateNewOpportunityWithModal from "./Components/CreateNewOpportunityWith
 import axios from 'axios'
 import { BackTop } from 'antd';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Filterbar from "./Components/Filterbar";
 
 
 
@@ -21,7 +22,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
   // const getToken = () => {
   //   const tokenString = sessionStorage.getItem('token');
   //   const userToken = JSON.parse(tokenString);
-  //   console.log('userToken:', userToken.token)
+  //   console.log('userToken:', userToke.n.token)
   //   return userToken?.token
   // }
 
@@ -39,7 +40,11 @@ function App() {
   const [column, setColumn] = useState('')
   const [timeCommitment, setTimeCommitment] = useState('');
   const [search, setSearch ] = useState('');
-  const [distance, setDistance] = useState(20000);
+  const [distance, setDistance] = useState('');
+  const [open, setOpen] = useState(false);
+  // const [location, setLocation] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  
 
   const sideBarSection = useRef(null);
 
@@ -81,6 +86,10 @@ function App() {
     })
   }
 
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
   // useEffect(() => {
   //   console.log('tokenUseEffect:', token)
   //   // setLoggedIn(token)
@@ -97,19 +106,26 @@ function App() {
 
   return (
     <div className="App">
-      <NavBar setLat={setLat} setLng={setLng} handleLocation={handleLocation} city={city} country={country} token={token} setToken={setToken} />
+
+      <NavBar setLat={setLat} setLng={setLng} handleLocation={handleLocation} city={city} country={country} token={token} setToken={setToken} opportunities={opportunities} />
+      
       <Header />
+
       <CategoryList click={goToSideBarSection} handleClick={(data) => setCategory(data)} categories={categories} setCategories={setCategories}/>
  
-      {/* Conditional for SearchList */}
-      <CreateNewOpportunityWithModal rows={rows} setRows={setRows} opportunities={opportunities} setOpportunities={setOpportunities} onSave={save} location={city} categories={categories} setCategories={setCategories} host_id={token}/>
+      <CreateNewOpportunityWithModal open={open} setOpen={setOpen} rows={rows} setRows={setRows} opportunities={opportunities} setOpportunities={setOpportunities} onSave={save} location={city} categories={categories} setCategories={setCategories} host_id={token}/>
       <div className="container">
         <div className= "row">
           <div className="col-3" ref={sideBarSection}>
             <Sidebar distance={distance} setDistance={setDistance} timeCommitment={timeCommitment} categoryFromApp={category} search={search} setSearch={setSearch} setRows={setRows} setTimeCommitment={(data) => setTimeCommitment(data)} handleClick={(data) => setCategory(data)} setCategory={setCategory} rows={rows} setColumn={setColumn} categories={categories} />
           </div>
           <div className="col-9">
-            <OpportunityList search={search} timeCommitment={timeCommitment} column={column} rows={rows} setRows={setRows} lat={lat} lng={lng} token={token} opportunities={opportunities} setOpportunities={setOpportunities} location={city} category={category} distance={distance} />
+            <div className= "row text-right no-gutters">
+              <Filterbar setRows={setRows} opportunities={opportunities} rows={rows} handleClickOpen={handleClickOpen} host_id={token}/>
+            </div>
+            <div className= "row no-gutters">
+              <OpportunityList currentPage ={currentPage} setCurrentPage={setCurrentPage} search={search} timeCommitment={timeCommitment} column={column} rows={rows} setRows={setRows} lat={lat} lng={lng} token={token} opportunities={opportunities} setOpportunities={setOpportunities} location={city} category={category} distance={distance} />
+            </div>
           </div>
         </div>
       </div>

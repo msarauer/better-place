@@ -159,3 +159,15 @@ export const BorderSeperator = styled.div`
   border-bottom: 1.5px solid rgba(26, 188, 156, 1);
   
 `;
+
+export const BorderReviewSeperator = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 430px;
+  margin-left: 85px;
+  margin-bottom: 20px;
+  
+  border-bottom: 1.5px solid rgba(26, 188, 156, 1);
+  
+`;

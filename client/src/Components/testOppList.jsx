@@ -8,11 +8,10 @@ import {
   countVolunteersAdded,
   getUncompletedOpportunities,
   getUsersForOpportunity,
-  getAverageRating
 } from "../helpers/filters-and-sorters";
 import { getDistances } from "../helpers/location-helpers";
 import "antd/dist/antd.css";
-import { List, Avatar, Space, Rate } from "antd";
+import { List, Avatar, Space } from "antd";
 import {
   StarOutlined,
   ClockCircleOutlined,
@@ -46,21 +45,6 @@ const useStyles = makeStyles((theme) => ({
   avatarGroup: {
     paddingLeft: "18px",
   },
-  name: {
-    fontSize: "14px",
-    fontWeight: "400",
-    marginRight: "10px"
-  },
-  title: {
-    fontSize: "16px"
-  },
-  stars: {
-    fontSize: "14px"
-  },
-  flex: {
-    display: "flex"
-  }
-
 }));
 
 const OpportunityList = ({
@@ -89,7 +73,6 @@ const OpportunityList = ({
   const [clickedId, setClickedId] = useState(0);
   const [loading, setLoading] = useState(false);
   const [users, setUsers] = useState([]);
-  const [reviews, setReviews] = useState([]);
 
   const handleClickOpen = (id) => {
     setOpen(true);
@@ -128,7 +111,6 @@ const OpportunityList = ({
       axios.get("/api/opportunities"),
       axios.get("/api/users_opportunities"),
       axios.get("/api/users"),
-      axios.get("/api/reviews")
     ])
       .then((all) => {
         setOpportunities((prev) =>
@@ -137,14 +119,13 @@ const OpportunityList = ({
         setUsersOpportunities((prev) => all[1].data.usersOpportunities);
         setLoading(false);
         setUsers((prev) => all[2].data.users);
-        setReviews((prev) => all[3].data.reviews);
       })
       .then(() => {
         //      console.log(getDistance({latitude: 51.5103, longitude: 7.49347},
         // {latitude: "51° 31' N", longitude: "7° 28' E"}))
       })
       .catch((e) => console.log(e));
-  }, [location, category]);
+  }, [location, category, setOpportunities]);
 
   // Get users_opportunities specific to user to make switches 'switched' already
   useEffect(() => {
@@ -159,11 +140,7 @@ const OpportunityList = ({
         })
         .then(() => {});
     }
-<<<<<<< HEAD
-  }, [token]);
-=======
   }, [token, setRows]);
->>>>>>> a3547d55a91eecfcc28828becc41e4f5f38f09bd
 
   // Calculate distance between opportunities and user
   // useEffect(() => {
@@ -200,9 +177,6 @@ const OpportunityList = ({
     //   setRows((prev) => [...newRows])
     // setUsersOpportunities((prev) => [...data.data.usersOpportunities]);
     // })
-<<<<<<< HEAD
-  }, [location, category, opportunities, timeCommitment, search, distance]);
-=======
   }, [
     location,
     category,
@@ -215,7 +189,6 @@ const OpportunityList = ({
     lat,
     lng,
   ]);
->>>>>>> a3547d55a91eecfcc28828becc41e4f5f38f09bd
 
   // DO NOT delete, will need for sorting later
 
@@ -259,6 +232,120 @@ const OpportunityList = ({
     }
   };
 
+  const listItems = rows.map((item) => {
+    return (
+      <List.Item
+        key={item.name}
+        actions={[
+          <IconText
+            icon={ClockCircleOutlined}
+            text={item.time_commitment}
+            key="list-vertical-star-o"
+          />,
+          <IconText
+            icon={PushpinOutlined}
+            text={`${item.location}(${Math.round(item.distance / 1000)} km)`}
+            key="list-vertical-star-o"
+          />,
+          <IconText
+            className={classes.selected}
+            icon={CalendarOutlined}
+            text={dateFormatter(item.date)}
+            key="list-vertical-star-o"
+            id={item.host_id}
+          />,
+          <IconTextReview
+            className={classes.selected}
+            icon={StarOutlined}
+            text="Reviews"
+            key="list-vertical-star-o"
+            id={item.host_id}
+          />,
+        ]}
+        extra={
+          <div>
+            <Progress
+              strokeColor={{
+                "0%": "#108ee9",
+                "100%": "#87d068",
+              }}
+              type="circle"
+              // percent={100}
+              percent={getPercentage(
+                item.number_of_volunteers_needed,
+                item.volunteer_count
+              )}
+              format={(percent) => (
+                <AvatarGroup max={3} className={classes.avatarGroup}>
+                  {
+                    getUsersForOpportunity(
+                      item.id,
+                      users,
+                      usersOpportunities
+                    ).map((user) => {
+                      return (
+                        <Avatar2
+                          alt={user.name}
+                          src={user.picture_url}
+                          className={classes.small}
+                        />
+                      );
+                    })
+
+                    //   <AvatarGroup max={3} className={classes.avatarGroup}>
+                    //   <Avatar2 alt="Remy Sharp" src="https://i.pravatar.cc/301" className={classes.small}/>
+                    //   <Avatar2 alt="Travis Howard" src="https://i.pravatar.cc/303" className={classes.small}/>
+                    //   <Avatar2 alt="Cindy Baker" src="https://i.pravatar.cc/302" className={classes.small}/>
+                    //   <Avatar2 alt="Agnes Walker" src="https://i.pravatar.cc/301" className={classes.small}/>
+                    //   <Avatar2 alt="Trevor Henderson" src={"https://i.pravatar.cc/303"} className={classes.small}/>
+                  }
+                </AvatarGroup>
+              )}
+            />
+          </div>
+        }
+      >
+        <List.Item.Meta
+          avatar={<Avatar size={64} src={item.avatar} />}
+          title={
+            <a
+              href={
+                "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+              }
+            >
+              {item.name}
+            </a>
+          }
+          description={item.category_name}
+        />
+        {item.description}
+        <br />
+        <br />
+        {token && !item.selected && (
+          <Switch
+            className={item.id}
+            id={item.id}
+            checkedChildren="Volunteering"
+            unCheckedChildren="Volunteer"
+            onChange={onChange}
+          />
+        )}
+        {token && item.selected && (
+          <>
+            <Switch
+              defaultChecked
+              className={item.id}
+              checkedChildren="Volunteering"
+              unCheckedChildren="Volunteer"
+              id={item.id}
+              onChange={onChange}
+            />
+          </>
+        )}
+      </List.Item>
+    );
+  });
+
   return (
     <div>
       <List
@@ -274,120 +361,11 @@ const OpportunityList = ({
           },
           pageSize: 10,
         }}
-        dataSource={rows}
         loading={false}
-        renderItem={(item) => (
-          <List.Item
-            key={item.name}
-            actions={[
-              <IconText
-                icon={ClockCircleOutlined}
-                text={item.time_commitment}
-                key="list-vertical-star-o"
-              />,
-              <IconText
-                icon={PushpinOutlined}
-                text={`${item.location}(${Math.round(
-                  item.distance / 1000
-                )} km)`}
-                key="list-vertical-star-o"
-              />,
-              <IconText
-                className={classes.selected}
-                icon={CalendarOutlined}
-                text={dateFormatter(item.date)}
-                key="list-vertical-star-o"
-                id={item.host_id}
-              />,
-              <IconTextReview
-                className={classes.selected}
-                icon={StarOutlined}
-                text="Reviews"
-                key="list-vertical-star-o"
-                id={item.host_id}
-              />,
-            ]}
-            extra={
-              <div>
-                <Progress
-                  strokeColor={{
-                    "0%": "#108ee9",
-                    "100%": "#87d068",
-                  }}
-                  type="circle"
-                  // percent={100}
-                  percent={getPercentage(
-                    item.number_of_volunteers_needed,
-                    item.volunteer_count
-                  )}
-                  format={(percent) => (
-                    <AvatarGroup max={3} className={classes.avatarGroup}>
-                      {
-                        getUsersForOpportunity(
-                          item.id,
-                          users,
-                          usersOpportunities
-                        ).map((user) => {
-                          return (
-                            <Avatar2
-                              alt={user.name}
-                              src={user.picture_url}
-                              className={classes.small}
-                            />
-                          );
-                        })
-
-                      }
-                    </AvatarGroup>
-                  )}
-                />
-              </div>
-            }
-          >
-            <List.Item.Meta
-              avatar={<Avatar size={64} src={item.avatar} />}
-              title={
-                <div>
-                <p className={classes.title}>
-                  {item.name}
-                </p>
-                <div className={classes.flex}>
-                <p className={classes.name}>{users.find(user => item.host_id === user.id).name}</p>
-                <Rate className={classes.stars} disabled defaultValue={getAverageRating(reviews, item.host_id)} />
-                </div>
-                </div>
-              }
-              // description={<div><p>{users.find(user => item.host_id === user.id)}</p><Rate disabled defaultValue={getAverageRating(reviews, item.host_id)} /></div>}
-              
-            />
-            {item.description}
-            <br />
-            <br />
-            {token && !item.selected && (
-              <Switch
-                className={item.id}
-                id={item.id}
-                checkedChildren="Volunteering"
-                unCheckedChildren="Volunteer"
-                onChange={onChange}
-              />
-            )}
-            {token && item.selected && (
-              <>
-                <Switch
-                  defaultChecked
-                  className={item.id}
-                  checkedChildren="Volunteering"
-                  unCheckedChildren="Volunteer"
-                  id={item.id}
-                  onChange={onChange}
-                />
-              </>
-            )}
-          </List.Item>
-        )}
-      />
-      <Reviews reviews={reviews} host_id={clickedId} handleClose={handleClose} open={open} />
+      >
+        <FlipMove>{listItems}</FlipMove>
+      </List>
+      <Reviews host_id={clickedId} handleClose={handleClose} open={open} />
     </div>
   );
 };

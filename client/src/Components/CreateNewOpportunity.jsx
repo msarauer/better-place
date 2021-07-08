@@ -118,7 +118,6 @@ const CreateNewOpportunity = ({
 
     const fullAddress = `${address}, ${city}`;
     getCoords(fullAddress).then((coords) => {
-      
       const saveData = {
         host_id: findUser.id,
         name: title,
@@ -132,7 +131,6 @@ const CreateNewOpportunity = ({
         lat: coords.lat,
         lng: coords.lng
       };
-      console.log('coordsFromCreate:', saveData)
 
 
       onSave(saveData);

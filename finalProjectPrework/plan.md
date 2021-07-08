@@ -3,40 +3,55 @@
 - Create (modal) button for new opportunities
 
 ## Create Opportunity Form ALMOST DONE (fix picture bug)
-- date/host_name added to items, checkmark when done, 
+
+- date/host_name added to items, checkmark when done,
 
 SIDEBAR SORT
 
-- SortBY: Distance, Category, Time_commitment(dropdown), date, search(keywords), 
+- SortBY: Distance, Category, Time_commitment(dropdown), date, search(keywords),
 
 - Functionality completed
 
 ## Profile/Edit Profile Form JUST POLISHING LEFT
 
+- functionality done, just need to pretty up
+
 - Cecil
 
-## Category Functionality 
+## Category Functionality
 
-- Main category, smaller cats below, then you get a list of opps in subcategory, tool bar somewhere with dropdown to choose categories there after.
+- just need to fix the styling (styles overwritten by ant)
 
-## Login/Registration Functionality (functionality SUNDAY) DONE -- could add cookies
+- Need to add sorting functionality for distance, time_commitment
 
-- Add state to form
+## Get distance from for each opportunity TUESDAY
 
-## Cookies (SUNDAY)
+## Click to volunteer DONE
 
-## Click to volunteer
- - send a message (stretch)
+- confirmation popup
+- send a message (stretch)
 
-## Add a review
+## Add a review CECIL \* rating
 
+## List Polish PICTURE UPDATE BUG and LINE BREAK
 
+## More SEEDS
+
+- Reviews,
+- make sure seeds don't conflict
+- opportunities
+
+- add rating,
+- name to search results
+
+## Sorting bar MITCH
+
+- add rating sort
 
 ---- STRETCH ----
 
-MAP -leaflet
-
-- distance to opportunity DONE
-
 CHAT
 
+MAP -leaflet
+
+Location picker

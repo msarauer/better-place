@@ -1,39 +1,23 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import CreateNewOpportunity from './CreateNewOpportunity';
-import Icon from '@material-ui/core/Icon';
-import "./CreateNew.scss"
+
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function CreateNewOpportunityWithModal ( { onSave, location, opportunities, setOpportunities, categories, setCategories, host_id, rows, setRows }) {
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+export default function CreateNewOpportunityWithModal ( { open, setOpen, onSave, location, opportunities, setOpportunities, categories, setCategories, host_id, rows, setRows }) {
+  
 
   const handleClose = () => {
     setOpen(false);
   };
 
   return (
-    <div className="addNewButton">
-      {host_id && 
-      <div><Button
-      variant="contained"
-      onClick={handleClickOpen}
-      color="primary"
-      endIcon={<Icon >add_circle</Icon>}
-    >
-      Add new
-    </Button></div>
-      }
+    
       <Dialog
         fullWidth
         open={open}
@@ -46,6 +30,6 @@ export default function CreateNewOpportunityWithModal ( { onSave, location, oppo
         <DialogTitle id="alert-dialog-slide-title">{"Tell us about your need."}</DialogTitle>
           <CreateNewOpportunity rows={rows} set={setRows} handleClose={handleClose} setOpportunities={setOpportunities} opportunities={opportunities} location={location}  onSave={onSave} categories={categories} setCategories={setCategories} host_id={host_id}/>
       </Dialog>
-    </div>
+    
   );
 }

@@ -10,7 +10,6 @@ module.exports = (db) => {
       [req.params.email]
     )
       .then((data) => {
-        console.log("WE IN THE ROUTER BB-----", data);
         const opportunities = data.rows;
         res.json({ opportunities });
       })
