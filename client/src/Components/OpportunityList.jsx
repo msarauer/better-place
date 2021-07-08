@@ -121,7 +121,7 @@ const OpportunityList = ({
         // {latitude: "51° 31' N", longitude: "7° 28' E"}))
       })
       .catch((e) => console.log(e));
-  }, [location, category, setOpportunities]);
+  }, [location, category]);
 
   // Get users_opportunities specific to user to make switches 'switched' already
   useEffect(() => {
@@ -136,7 +136,7 @@ const OpportunityList = ({
         })
         .then(() => {});
     }
-  }, [token, rows, setRows]);
+  }, [token]);
 
   // Calculate distance between opportunities and user
   // useEffect(() => {
@@ -161,7 +161,7 @@ const OpportunityList = ({
     //   setRows((prev) => [...newRows])
     // setUsersOpportunities((prev) => [...data.data.usersOpportunities]);
     // })
-  }, [location, category, opportunities, timeCommitment, search, distance, lat, lng, setRows, usersOpportunities]);
+  }, [location, category, opportunities, timeCommitment, search, distance]);
 
   // DO NOT delete, will need for sorting later
 

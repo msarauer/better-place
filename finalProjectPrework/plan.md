@@ -19,14 +19,13 @@ SIDEBAR SORT
 
 - Main category, smaller cats below, then you get a list of opps in subcategory, tool bar somewhere with dropdown to choose categories there after.
 
-## Login/Registration Functionality (functionality SUNDAY)
+## Login/Registration Functionality (functionality SUNDAY) DONE -- could add cookies
 
 - Add state to form
 
 ## Cookies (SUNDAY)
 
 ## Click to volunteer
- - confirmation popup
  - send a message (stretch)
 
 ## Add a review
