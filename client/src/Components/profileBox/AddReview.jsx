@@ -10,7 +10,7 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles({
   root: {
-    display: 'flex',
+    // display: 'flex',
   },
   field: {
     width: '75%',
@@ -23,13 +23,24 @@ const useStyles = makeStyles({
     marginTop: 25,
     marginLeft: 200,
   },
+  submit: {
+    margin: 10,
+    marginTop: 15,
+
+    color: '#716bcc',
+    '&:hover': {
+      color:'#5ae2b5',
+      background: '#fff'
+    }
+  },
   button: {
     display: 'flex',
-    marginTop: 10,
-    marginLeft: 208,
+    flexDirection:'row',
+    justifyContent: 'center'
 
   }
 })
+
 
 
 const AddReview = ({token, setToken, opportunities, opportunity, city, completedOpportunities, open, setOpen, handleClose}) => {
@@ -100,9 +111,15 @@ return (
 
 
               <div className={classes.button}>
-                <Button onClick={handleClose} color="primary">Cancel</Button>
+                <Button 
+                  className={classes.submit}
+                  onClick={handleClose} 
+                  color="primary"
+                  >Cancel
+                </Button>
                 
                 <Button 
+                  className={classes.submit}
                   type="submit" 
                   onClick={handleSubmitReview}
                   color="primary"

@@ -48,8 +48,8 @@ const Filterbar = ({ opportunities, handleClickOpen, host_id, rows, setRows }) =
       case "Distance: nearest first":
         setRows((prev) => [ ...sortRowsByDistance(prev, true)])
         break;
-      case "Host rating: highest first":
-        break;
+      // case "Host rating: highest first":
+      //   break;
       default:
         break;
     }
@@ -125,9 +125,9 @@ const Filterbar = ({ opportunities, handleClickOpen, host_id, rows, setRows }) =
                   <MenuItem value={"Distance: nearest first"}>
                     Distance: nearest first
                   </MenuItem>
-                  <MenuItem value={"Host rating: highest first"}>
+                  {/* <MenuItem value={"Host rating: highest first"}>
                     Host rating: highest first
-                  </MenuItem>
+                  </MenuItem> */}
                 </Select>
               </FormControl>
             </div>

@@ -11,6 +11,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
+import Box from '@material-ui/core/Box'
 import {
   BorderReviewSeperator
 } from "./common";
@@ -19,6 +20,8 @@ import { Marginer } from "./Marginer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    // display:'flex',
+    // justifyContent: 'center',
   
   },
   button: {
@@ -32,7 +35,13 @@ const useStyles = makeStyles((theme) => ({
     
   },
   info: {
-    
+    width: '85%',
+    marginLeft: 35,
+    marginRight: 50
+  },
+  description: {
+    width: '75%',
+    marginLeft: 70
   },
   border: {
     width: '100px'
@@ -54,11 +63,12 @@ const ReviewMod = ({token, setToken, opportunities, opportunity, city, completed
   };
 
   return (
-    <div>
+    <div className={classes.root}>
 
       <Button className={classes.button} onClick={handleClickOpen}>
        <AddCircleIcon/> Add Review
       </Button>
+      
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
       <ListItem className={classes.info} key={opportunity.opportunity_id} alignItems="flex-start">
             <ListItemAvatar>
@@ -85,7 +95,7 @@ const ReviewMod = ({token, setToken, opportunities, opportunity, city, completed
         {/* <DialogTitle id="form-dialog-title">Add Review</DialogTitle> */}
         <DialogContent>
           <DialogContentText>
-            <ListItemText>Please leave a comment & rating!</ListItemText>
+            <ListItemText className={classes.description} >Please leave a comment & rating!</ListItemText>
           </DialogContentText>
 
           <AddReview open={open} setOpen={setOpen} handleClose={handleClose} city={city} token={token} setToken={setToken} opportunity={opportunity} opportunities={opportunities} completedOpportunities={completedOpportunities} />
@@ -97,7 +107,8 @@ const ReviewMod = ({token, setToken, opportunities, opportunity, city, completed
           <Button onClick={handleClose} color="primary">
             Subscribe
           </Button>
-        </DialogActions> */}
+      
+      </DialogActions> */}
       </Dialog>
     </div>
   );

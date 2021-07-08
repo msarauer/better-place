@@ -27,7 +27,6 @@ import Link from "@material-ui/core/Link";
 import "./OpportunityList.scss";
 import AvatarGroup from "@material-ui/lab/AvatarGroup";
 import { Avatar as Avatar2 } from "@material-ui/core";
-import FlipMove from "react-flip-move";
 
 const axios = require("axios");
 
@@ -131,9 +130,7 @@ const OpportunityList = ({
       axios.get("/api/reviews")
     ])
       .then((all) => {
-        setOpportunities((prev) =>
-          getUncompletedOpportunities(all[0].data.opportunities)
-        );
+        setOpportunities((prev) => getUncompletedOpportunities(all[0].data.opportunities));
         setUsersOpportunities((prev) => all[1].data.usersOpportunities);
         setLoading(false);
         setUsers((prev) => all[2].data.users);
@@ -144,7 +141,7 @@ const OpportunityList = ({
         // {latitude: "51° 31' N", longitude: "7° 28' E"}))
       })
       .catch((e) => console.log(e));
-  }, [location, category]);
+  }, []);
 
   // Get users_opportunities specific to user to make switches 'switched' already
   useEffect(() => {
@@ -159,11 +156,7 @@ const OpportunityList = ({
         })
         .then(() => {});
     }
-<<<<<<< HEAD
-  }, [token]);
-=======
   }, [token, setRows]);
->>>>>>> a3547d55a91eecfcc28828becc41e4f5f38f09bd
 
   // Calculate distance between opportunities and user
   // useEffect(() => {
@@ -200,9 +193,6 @@ const OpportunityList = ({
     //   setRows((prev) => [...newRows])
     // setUsersOpportunities((prev) => [...data.data.usersOpportunities]);
     // })
-<<<<<<< HEAD
-  }, [location, category, opportunities, timeCommitment, search, distance]);
-=======
   }, [
     location,
     category,
@@ -215,7 +205,6 @@ const OpportunityList = ({
     lat,
     lng,
   ]);
->>>>>>> a3547d55a91eecfcc28828becc41e4f5f38f09bd
 
   // DO NOT delete, will need for sorting later
 
@@ -264,6 +253,8 @@ const OpportunityList = ({
       <List
         itemLayout="vertical"
         size="large"
+        total={rows.length}
+        showTotal={(total, range) => `${range[0]}-${range[1]} of ${total} items`}
         pagination={{
           onChange: (page) => {
             console.log("page:", page);
