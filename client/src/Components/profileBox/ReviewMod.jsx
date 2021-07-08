@@ -1,19 +1,38 @@
 import React, {useState}from 'react';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import AddReview from './AddReview';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import { makeStyles } from "@material-ui/core/styles";
+
+
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+  
+  },
+  button: {
+    marginLeft: '85px',
+    margin: 'auto',
+    color: '#716bcc',
+    '&:hover': {
+      color:'#5ae2b5',
+      background: '#f5f6fa'
+    }
+  }
+}));
+
+
 
 const ReviewMod = ({token, setToken, opportunities, opportunity, city, completedOpportunities})  => {
+  const classes = useStyles();
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
-    console.log("OPPS INSIDE OF REVIEW MOD",opportunities)
-    console.log('test6')
     setOpen(true);
   };
 
@@ -24,8 +43,8 @@ const ReviewMod = ({token, setToken, opportunities, opportunity, city, completed
   // console.log("OppsID in REVIEWMOD", opportunityId)
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Open form dialog
+      <Button className={classes.button} onClick={handleClickOpen}>
+       <AddCircleIcon/> Add Review
       </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
@@ -34,7 +53,7 @@ const ReviewMod = ({token, setToken, opportunities, opportunity, city, completed
             To subscribe to this website, please enter your email address here. We will send updates
             occasionally.
           </DialogContentText>
-          <AddReview  city={city} token={token} setToken={setToken} opportunity={opportunity} opportunities={opportunities} completedOpportunities={completedOpportunities} />
+          <AddReview open={open} setOpen={setOpen} handleClose={handleClose} city={city} token={token} setToken={setToken} opportunity={opportunity} opportunities={opportunities} completedOpportunities={completedOpportunities} />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">

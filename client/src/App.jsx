@@ -5,7 +5,6 @@ import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 import Sidebar from "./Components/Sidebar";
 import CategoryList from "./Components/CategoryList";
-import AddReview from "./Components/profileBox/AddReview";
 import OpportunityList from "./Components/OpportunityList";
 import CreateNewOpportunityWithModal from "./Components/CreateNewOpportunityWithModal";
 import axios from 'axios'
@@ -43,7 +42,9 @@ function App() {
   const [search, setSearch ] = useState('');
   const [distance, setDistance] = useState('');
   const [open, setOpen] = useState(false);
-  const [location, setLocation] = useState('');
+  // const [location, setLocation] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  
 
   const sideBarSection = useRef(null);
 
@@ -120,10 +121,10 @@ function App() {
           </div>
           <div className="col-9">
             <div className= "row text-right no-gutters">
-              <Filterbar handleClickOpen={handleClickOpen} host_id={token}/>
+              <Filterbar setRows={setRows} opportunities={opportunities} rows={rows} handleClickOpen={handleClickOpen} host_id={token}/>
             </div>
             <div className= "row no-gutters">
-              <OpportunityList search={search} timeCommitment={timeCommitment} column={column} rows={rows} setRows={setRows} lat={lat} lng={lng} token={token} opportunities={opportunities} setOpportunities={setOpportunities} location={city} category={category} distance={distance} />
+              <OpportunityList currentPage ={currentPage} setCurrentPage={setCurrentPage} search={search} timeCommitment={timeCommitment} column={column} rows={rows} setRows={setRows} lat={lat} lng={lng} token={token} opportunities={opportunities} setOpportunities={setOpportunities} location={city} category={category} distance={distance} />
             </div>
           </div>
         </div>

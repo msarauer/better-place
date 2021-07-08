@@ -1,30 +1,36 @@
 import React, {useState, useEffect} from 'react'
+import Button from '@material-ui/core/Button';
+import GradeIcon from '@material-ui/icons/Grade';
+import Rating from '@material-ui/lab/Rating';
 import axios from "axios"
+import TextField from "@material-ui/core/TextField";
+import { makeStyles } from "@material-ui/core";
 
-const AddReview = ({token, setToken, opportunities, opportunity, city, completedOpportunities}) => {
+
+
+const useStyles = makeStyles({
+  root: {
+    width: '80%',
+    display: 'flex',
+  },
+  field: {
+    marginLeft: 11,
+    marginTop: 5,
+    marginBottom: 5,
+    maxLength:"225"
+  },
+  rating: {
+    marginLeft: 100
+  }
+})
+
+
+const AddReview = ({token, setToken, opportunities, opportunity, city, completedOpportunities, open, setOpen, handleClose}) => {
+  const classes = useStyles();
 
 const [userFeedback, setUserFeedback] = useState("")
 const [rating, setRating] = useState("Rating")
 const [reviews, setReviews] = useState([]);
-
-console.log("OPP ID ID I D----", opportunity.opportunity_id)
-
-// useEffect(() => {
-//   axios
-//   .get(`/api/reviews`)
-//   .then((data) => {
-//     const newReviews = data.data.reviews;
-//     console.log("DATA NEW REVIEWS----", newReviews)
-//     setReviews('test')
-//     console.log('SHABLAGOOO----', reviews)
-//   })
-//   .then(() => {
-
-//     })
-//     .catch((e) => {
-//       console.log("axiosError:", e);
-//     });
-// }, [token]);
 
 
 
@@ -34,7 +40,6 @@ const handleSubmitReview = (e) => {
     axios
       .post(`/api/reviews`, data)
       .then((data) => {
-        console.log("SHABLAGOOOO TOKEN-----", data);
       })
       .catch((e) => {
         console.log("post error:", e.message);
@@ -48,62 +53,55 @@ const handleSubmitReview = (e) => {
     rating
     
   };
-  console.log("SAVED DATA-----", saveData)
+  setOpen(false)
   userSave(saveData);
-  
-
 };
 
-// console.log("REIVIEWS INSIDE OF ADD REVIEW----", reviews)
 
 return (
-  <div className="mb-2">
+  <div>
     <form action="">
-      <div className="form-row">
-        <div className="form-group col-8">
-          {/* <label htmlFor="name">Name</label>
-          <input
-            // value={name}
-            // onChange={(e) => setName(e.target.value)}
-            id="name"
-            placeholder="name"
-            type="text"
-            className="form-control"
-          /> */}
-        </div>
-        <div className="form-group col-4">
-          <label htmlFor="rating">Rating</label>
-          <select
-            value={rating}
-            onChange={(e) => setRating(e.target.value)}
-            id="rating"
-            className="custom-select"
-          >
-            <option disabled>Rating</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-          </select>
-        </div>
-      </div>
-      <div className="form-group">
-        <label htmlFor="Review">Review</label>
-        <textarea
-          value={userFeedback}
-          onChange={(e) => setUserFeedback(e.target.value)}
-          id="Review"
-          className="form-control"
-        ></textarea>
-      </div>
-      <button
-        type="submit"
-        onClick={handleSubmitReview}
-        className="btn btn-primary"
-      >
-        Submit
-      </button>
+      
+            <div>
+            <TextField 
+              style={{width: '225%'}}
+              onChange={(e) => setUserFeedback(e.target.value)}
+              className={classes.field}
+              multiline={true}
+              rows={4}
+              name="Description"
+              label="Review"
+              placeholder="Please leave your comment here..."
+              autoComplete="off"
+              variant="outlined"
+              // error={titleError}
+              value={userFeedback}
+              inputProps={{maxLength: 225}}
+            />
+            </div>
+
+              <div>
+                <Rating 
+                  className={classes.rating}
+                  value={rating} 
+                  onChange={(e) => setRating(e.target.value)} 
+                  name="size-large" 
+                  defaultValue={2} 
+                  size="large" 
+                />
+              </div>
+
+
+              <div>
+                <Button onClick={handleClose} color="primary">Cancel</Button>
+                
+                <Button 
+                  type="submit" 
+                  onClick={handleSubmitReview}
+                  color="primary"
+                  >Submit
+                </Button>
+              </div>
     </form>
   </div>
 );

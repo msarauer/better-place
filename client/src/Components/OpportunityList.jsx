@@ -26,6 +26,7 @@ import Link from "@material-ui/core/Link";
 import "./OpportunityList.scss";
 import AvatarGroup from '@material-ui/lab/AvatarGroup';
 import {Avatar as Avatar2 } from '@material-ui/core';
+import FlipMove from 'react-flip-move';
 
 const axios = require("axios");
 
@@ -60,7 +61,9 @@ const OpportunityList = ({
   column,
   timeCommitment,
   search,
-  distance
+  distance,
+  currentPage,
+  setCurrentPage,
 }) => {
   const classes = useStyles();
 
@@ -215,8 +218,6 @@ const OpportunityList = ({
 
 
   
-
-  
   return (
     <div>
       <List
@@ -224,7 +225,11 @@ const OpportunityList = ({
         size="large"
         pagination={{
           onChange: (page) => {
-            console.log(page);
+            console.log("page:", page);
+            setCurrentPage((prev) => {
+              return page
+            })
+            console.log(currentPage)
           },
           pageSize: 10,
         }}

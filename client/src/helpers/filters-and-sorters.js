@@ -39,7 +39,7 @@ export const rowFilter = (
   if (distance) {
     rows = rows.filter((opp) => {
       return opp.distance < distance;
-    })
+    });
   }
 
   return rows;
@@ -166,4 +166,57 @@ export const getUsersForOpportunity = (oppId, users, usersOpps) => {
   });
 
   return usersList;
+};
+
+export const sortRowsByTimeCommitment = (opps, descending = false) => {
+  // Break out all categories of time commitment into their own array
+  const quick = opps.filter((opp) => {
+    return opp.time_commitment === "Quick (Minutes)";
+  });
+
+  const short = opps.filter((opp) => {
+    return opp.time_commitment === "Short (3 hours or less)";
+  });
+
+  const medium = opps.filter((opp) => {
+    return opp.time_commitment === "Medium (8 hours or less)";
+  });
+
+  const long = opps.filter((opp) => {
+    return opp.time_commitment === "Long (Full day)";
+  });
+
+  const extraLong = opps.filter((opp) => {
+    return opp.time_commitment === "Extra Long (Multiple days)";
+  });
+
+  // Depending on whether the user chooses ascending or descending organize the arrays above in order, put them into an array and set in state in the application
+  if (descending) {
+    return [...extraLong, ...long, ...medium, ...short, ...quick];
+  }
+  return [...quick, ...short, ...medium, ...long, ...extraLong];
+};
+
+export const sortRowsByDate = (opps, descending = false) => {
+  const sorted = [...opps];
+  sorted.sort((a, b) => {
+    if (a.date < b.date) {
+      return -1;
+    }
+    if (a.date > b.date) {
+      return 1;
+    }
+    return 0;
+  });
+
+  return descending ? sorted : sorted.reverse();
+};
+
+export const sortRowsByDistance = (opps, descending = false) => {
+  const rows = [...opps];
+  rows.sort((a, b) => {
+    return a.distance - b.distance;
+  });
+
+  return rows;
 };

@@ -13,7 +13,9 @@ import ReviewMod from "./ReviewMod"
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    // width: "86.5%",
     width: "86.5%",
+
     maxWidth: "60ch",
     // minHeight: "29%",
     // maxHeight: "29%",
@@ -26,6 +28,15 @@ const useStyles = makeStyles((theme) => ({
   inline: {
     display: "inline",
   },
+  item: {
+    border: '1px solid transparent',
+    '&:hover': {
+      background: '#f5f6fa',
+      borderBottom: '1px solid #5ae2b5',
+      borderTop: '1px solid #5ae2b5',
+      borderLeft: '1px solid #5ae2b5'
+    }
+  }
 }));
 
 export default function AlignItemsList({ token, setToken, opportunities, city, opportunityId }) {
@@ -42,13 +53,12 @@ export default function AlignItemsList({ token, setToken, opportunities, city, o
         console.log("axiosError:", e);
       });
   }, [token]);
-
   
   return (
     <>
       <List className={classes.root}>
         {completedOpportunities.map((opportunity) => (
-          <ListItem key={token.id}alignItems="flex-start">
+          <ListItem className={classes.item} key={opportunity.opportunity_id} alignItems="flex-start">
             <ListItemAvatar>
               <Avatar alt="Remy Sharp" src={opportunity.avatar} />
             </ListItemAvatar>
