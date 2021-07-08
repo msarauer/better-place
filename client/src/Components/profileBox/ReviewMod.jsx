@@ -1,14 +1,20 @@
 import React, {useState}from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import AddReview from './AddReview';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import { makeStyles } from "@material-ui/core/styles";
-
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import Avatar from "@material-ui/core/Avatar";
+import Typography from "@material-ui/core/Typography";
+import {
+  BorderReviewSeperator
+} from "./common";
+import { Marginer } from "./Marginer";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -22,7 +28,14 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       color:'#5ae2b5',
       background: '#f5f6fa'
-    }
+    },
+    
+  },
+  info: {
+    
+  },
+  border: {
+    width: '100px'
   }
 }));
 
@@ -40,29 +53,51 @@ const ReviewMod = ({token, setToken, opportunities, opportunity, city, completed
     setOpen(false);
   };
 
-  // console.log("OppsID in REVIEWMOD", opportunityId)
   return (
     <div>
+
       <Button className={classes.button} onClick={handleClickOpen}>
        <AddCircleIcon/> Add Review
       </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+      <ListItem className={classes.info} key={opportunity.opportunity_id} alignItems="flex-start">
+            <ListItemAvatar>
+              <Avatar alt="Remy Sharp" src={opportunity.avatar} />
+            </ListItemAvatar>
+            <ListItemText
+              primary={opportunity.opportunity_name}
+              secondary={
+                <React.Fragment>
+                  <Typography
+                    component="span"
+                    variant="body2"
+                    className={classes.inline}
+                    color="textPrimary"
+                  >
+                    {opportunity.username}
+                  </Typography>
+                  {` — ${opportunity.description}`}
+                </React.Fragment>
+              }
+            />
+          </ListItem>
+          <BorderReviewSeperator />
+        {/* <DialogTitle id="form-dialog-title">Add Review</DialogTitle> */}
         <DialogContent>
           <DialogContentText>
-            To subscribe to this website, please enter your email address here. We will send updates
-            occasionally.
+            <ListItemText>Please leave a comment & rating!</ListItemText>
           </DialogContentText>
+
           <AddReview open={open} setOpen={setOpen} handleClose={handleClose} city={city} token={token} setToken={setToken} opportunity={opportunity} opportunities={opportunities} completedOpportunities={completedOpportunities} />
         </DialogContent>
-        <DialogActions>
+        {/* <DialogActions>
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
           <Button onClick={handleClose} color="primary">
             Subscribe
           </Button>
-        </DialogActions>
+        </DialogActions> */}
       </Dialog>
     </div>
   );

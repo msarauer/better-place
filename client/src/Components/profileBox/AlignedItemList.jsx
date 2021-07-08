@@ -36,6 +36,9 @@ const useStyles = makeStyles((theme) => ({
       borderTop: '1px solid #5ae2b5',
       borderLeft: '1px solid #5ae2b5'
     }
+  },
+  reviewMod: {
+    maxHeight: 100
   }
 }));
 
@@ -75,7 +78,7 @@ export default function AlignItemsList({ token, setToken, opportunities, city, o
                     {opportunity.username}
                   </Typography>
                   {` — ${opportunity.description}`}
-                  <ReviewMod city={city} token={token} setToken={setToken} opportunity={opportunity} completedOpportunities={completedOpportunities} opportunities={opportunities}/>
+                  <ReviewMod className={classes.reviewMod} city={city} token={token} setToken={setToken} opportunity={opportunity} completedOpportunities={completedOpportunities} opportunities={opportunities}/>
                 </React.Fragment>
               }
             />

@@ -33,18 +33,20 @@ SIDEBAR SORT
 
 ## Add a review CECIL \* rating
 
-## List Polish
+## List Polish PICTURE UPDATE BUG and LINE BREAK
+
+## More SEEDS
+
+- Reviews,
+- make sure seeds don't conflict
+- opportunities
 
 - add rating,
 - name to search results
 
 ## Sorting bar MITCH
 
-- old/vs new,
-- time commitment,
-- distance,
-- rating
-- date
+- add rating sort
 
 ---- STRETCH ----
 

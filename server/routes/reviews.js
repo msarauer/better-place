@@ -4,8 +4,9 @@ const router = express.Router();
 module.exports = (db) => {
   // BROWSE all volunteer_reviews
   router.get("/", (req, res) => {
-    let query = `SELECT * FROM volunteer_reviews;`;
+    let query = `SELECT volunteer_reviews.*, users.name as name, users.picture_url as avatar FROM volunteer_reviews JOIN users ON users.id = user_id;`;
     console.log(query);
+    console.log("data:", req.body);
     db.query(query)
       .then((data) => {
         const reviews = data.rows;

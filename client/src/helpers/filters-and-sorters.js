@@ -220,3 +220,15 @@ export const sortRowsByDistance = (opps, descending = false) => {
 
   return rows;
 };
+
+export const getAverageRating = (reviews, id) => {
+  const userReviews = reviews.filter((review) => {
+    return review.user_id === id;
+  });
+
+  let total = 0;
+  userReviews.forEach((review) => (total += review.rating));
+  if (total > 0) {
+    return total / userReviews.length;
+  }
+};

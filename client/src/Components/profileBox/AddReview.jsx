@@ -10,17 +10,24 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles({
   root: {
-    // width: '80%',
     display: 'flex',
   },
   field: {
-    marginLeft: 5,
+    width: '75%',
+    marginLeft: 70,
     marginTop: 5,
     marginBottom: 5,
     maxLength:"225"
   },
   rating: {
-    
+    marginTop: 25,
+    marginLeft: 200,
+  },
+  button: {
+    display: 'flex',
+    marginTop: 10,
+    marginLeft: 208,
+
   }
 })
 
@@ -64,7 +71,7 @@ return (
       
             <div>
             <TextField 
-              style={{width: '100%'}}
+              
               onChange={(e) => setUserFeedback(e.target.value)}
               className={classes.field}
               multiline={true}
@@ -92,7 +99,7 @@ return (
               </div>
 
 
-              <div>
+              <div className={classes.button}>
                 <Button onClick={handleClose} color="primary">Cancel</Button>
                 
                 <Button 
@@ -101,7 +108,7 @@ return (
                   color="primary"
                   >Submit
                 </Button>
-              </div>
+                  </div>
     </form>
   </div>
 );
