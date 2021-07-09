@@ -176,6 +176,7 @@ const Chat = ({
   const handleKeyDown = (event) => {
     if(event.key === 'Enter') {
       console.log('I PRESSED ENTER')
+      sendMessage(receiver)
     }
   }
 
@@ -248,9 +249,9 @@ const Chat = ({
 
   // const messages = messageList.map((message) => {
     const messages = getConversation(messageList, token.id, receiver).map((message) => {
-      // if (message.id === 1) {
-        // console.log(message)
-      // }
+
+      console.log("message:", message)
+
       return (
         <ListItem key={users.id}>
         <Grid container>
@@ -267,11 +268,11 @@ const Chat = ({
               className={token.id === message.author ? classes.dateSend : classes.dateReceive}
               align={token.id === message.author ? "right" : "left"}
               secondary={
-                `${getMinutes(message.date, time)} seconds ago`
+                `${getMinutes(message.time, time)}`
               }
             ></ListItemText>
 
-          </Grid>
+          </Grid> 
         </Grid>
       </ListItem>
     );
@@ -333,6 +334,7 @@ const Chat = ({
                 fullWidth
                 form="text-form"
                 value={message}
+                onKeyDown={handleKeyDown}
                 onChange={(e) => {
                   setMessage((prev) => e.target.value);
                 }}

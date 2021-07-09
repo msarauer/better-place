@@ -119,7 +119,7 @@ import Fade from '@material-ui/core/Fade';
             author: token.id,
             receiver: userId,
             message: message,
-            date
+            time: date
           }
         }
         socket.emit("send_message", messageContent);

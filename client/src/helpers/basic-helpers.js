@@ -46,12 +46,14 @@ export const timeFormatter = (time) => {
 
 export const getMinutes = (date, currentMS) => {
   if (!date || !currentMS) {
-    return 0;
+    return "0";
   }
   const newDate = new Date(date);
-  console.log("newDate", newDate);
+  console.log("date", date);
   const ms = newDate.getTime();
-  const minutes = Math.round((currentMS - ms) / 1000);
-  // const minutes = Math.round(now.getDate() / 100000)
-  return minutes;
+  const seconds = Math.round((currentMS - ms) / 1000);
+
+  if (seconds < 59) return `${seconds} seconds ago`;
+  if (seconds < 3599) return `${Math.round(seconds / 60)} minutes ago`;
+  else return `${Math.round(seconds / 86400)} days ago`;
 };

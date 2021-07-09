@@ -8,6 +8,8 @@ module.exports = (db) => {
       req.params.id,
     ])
       .then((data) => {
+        console.log(data.rows);
+        console.log(new Date());
         const messages = data.rows;
         res.json({ messages });
       })
