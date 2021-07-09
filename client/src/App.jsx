@@ -87,6 +87,7 @@ import Fade from '@material-ui/core/Fade';
           socket.on("receive_message", (message) => {
           console.log('receive_message:', message);
           // if (data.receiver === token.id) {
+            // console.log('message', message)
 
             setMessageList((prev) => ([ ...prev, message ]))
           // }

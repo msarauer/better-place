@@ -341,11 +341,19 @@ export const getUsersFromMessages = (messages, allUsers, id) => {
   }
   const userIds = [];
   messages.forEach((message) => {
-    if (message.author === id && !userIds.includes(message.receiver)) {
+    if (
+      message.author === id &&
+      !userIds.includes(message.receiver) &&
+      message.receiver !== id
+    ) {
       userIds.push(message.receiver);
     }
-    if (message.receiver === id && !userIds.includes(message.author)) {
-      userIds.push(message.receiver);
+    if (
+      message.receiver === id &&
+      !userIds.includes(message.author) &&
+      message.author !== id
+    ) {
+      userIds.push(message.author);
     }
   });
 
@@ -383,8 +391,13 @@ export const getUsersFromMessages = (messages, allUsers, id) => {
 // };;
 
 export const getConversation = (messages, author, receiver) => {
+  // console.log("author", author, "receiver", receiver);
   const conversation = messages.filter((message) => {
-    return message.author === author || message.receiver === receiver;
+    return (
+      (message.author === author || message.receiver === author) &&
+      (message.receiver === receiver || message.author === receiver)
+    );
   });
+  console.log("conversation:", conversation);
   return conversation;
 };

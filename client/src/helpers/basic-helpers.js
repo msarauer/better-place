@@ -13,43 +13,45 @@ export const dateFormatter = (date) => {
 };
 
 export const timeFormatter = (time) => {
-
   // "2021-07-08 14:08:25-07"
 
-
-  const arr = time.split(" ")
-  const time2 = arr[1].split(':')
+  const arr = time.split(" ");
+  const time2 = arr[1].split(":");
   // const time3 = time2.split('-')
   if (time2[0] > 12) {
     time2[0] -= 12;
-    time2.join(':')
-    const time3 = (`${time2[0]}:${time2[2]}`)
+    time2.join(":");
+    const time3 = `${time2[0]}:${time2[2]}`;
     const time4 = time3.substring(0, time3.length - 3);
-    return `${time4} pm`
+    return `${time4} pm`;
   }
-  if (time2[0] === '12') {
-    time2.join(':')
-    const time3 = (`${time2[0]}:${time2[2]}`)
+  if (time2[0] === "12") {
+    time2.join(":");
+    const time3 = `${time2[0]}:${time2[2]}`;
     const time4 = time3.substring(0, time3.length - 3);
-    return `${time4} pm`
+    return `${time4} pm`;
   }
-  if (time2[0] === '00') {
-    time2.join(':')
+  if (time2[0] === "00") {
+    time2.join(":");
     time2[0] = 12;
-    const time3 = (`${time2[0]}:${time2[2]}`)
+    const time3 = `${time2[0]}:${time2[2]}`;
     const time4 = time3.substring(0, time3.length - 3);
-    return `${time4} am`
+    return `${time4} am`;
   }
-   time2.join(':')
-    const time3 = (`${time2[0]}:${time2[2]}`)
-    const time4 = time3.substring(0, time3.length - 3);
-    return `${time4} am`
+  time2.join(":");
+  const time3 = `${time2[0]}:${time2[2]}`;
+  const time4 = time3.substring(0, time3.length - 3);
+  return `${time4} am`;
+};
 
-}
-
-
-export const getMinutes = (date) => {
-  const now = new Date();
-  const minutes = Math.round(now.getDate() / 100000)
-  return minutes
-}
+export const getMinutes = (date, currentMS) => {
+  if (!date || !currentMS) {
+    return 0;
+  }
+  const newDate = new Date(date);
+  console.log("newDate", newDate);
+  const ms = newDate.getTime();
+  const minutes = Math.round((currentMS - ms) / 1000);
+  // const minutes = Math.round(now.getDate() / 100000)
+  return minutes;
+};

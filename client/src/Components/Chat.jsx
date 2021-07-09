@@ -185,9 +185,23 @@ const Chat = ({
   //   setMessageList((prev) => [filterMessages(prev, token.id)])
 
   // }, [])
-
+  const [time, setTime] = useState(new Date().getTime());
+  const [loop, setLoop] = useState('');
   // const [now, setNow] = useState();
+  useEffect(() => {
+    console.log("in the setinterval useeffect")
+    const interval = setInterval(() => {
+      let t = new Date();
+      let ms = t.getTime();
+      setTime(prev => prev + 1000);
+      console.log(t);
+    }, 1000)
 
+    // const clearLoop = () => {
+      // clearInterval(loop)
+    // }
+    return () => clearInterval(interval);
+  }, [time])
   // const timeInterval = () => {
   //   const int = () => {
   //     setInterval(() => {
@@ -218,11 +232,11 @@ const Chat = ({
   
 
   const usersInChat = getUsersFromMessages(messageList, users, token.id).map((user) => {
-    console.log(user.name)
+    // console.log(user.name)
     // const usersInChat = users.map((user) => {
     // changed usersInChat from users because  conflict with users prop.
     return (
-      <ListItem onClick={() => { return setReceiver(user.id)}} button key={user.id}>
+      <ListItem onClick={() => { return setReceiver(prev => user.id)}} button key={user.id}>
         {/* <div ref={messagesEndRef} />   */}
         <ListItemIcon>
           <Avatar alt={user.name} src={user.picture_url} />
@@ -232,8 +246,11 @@ const Chat = ({
     );
   });
 
-  const messages = messageList.map((message) => {
-    // const messages = getConversation(messageList, token.id, receiver).map((message) => {
+  // const messages = messageList.map((message) => {
+    const messages = getConversation(messageList, token.id, receiver).map((message) => {
+      // if (message.id === 1) {
+        // console.log(message)
+      // }
       return (
         <ListItem key={users.id}>
         <Grid container>
@@ -250,8 +267,7 @@ const Chat = ({
               className={token.id === message.author ? classes.dateSend : classes.dateReceive}
               align={token.id === message.author ? "right" : "left"}
               secondary={
-                getMinutes(message.date) === 0
-                  ? "Just now" : `${getMinutes(message.date)} min ago`
+                `${getMinutes(message.date, time)} seconds ago`
               }
             ></ListItemText>
 
@@ -282,7 +298,7 @@ const Chat = ({
       <Grid container component={Paper} className={classes.chatSection}>
         <Grid item xs={3} className={classes.borderRight500}>
           <List>
-            <ListItem button key={token.id}>
+            <ListItem key={token.id}>
               <ListItemIcon>
                 <Avatar alt={token.name} src={token.picture_url} variant="rounded" style={{ border: "5px solid #1abc9c",position:"fixed", top:"20px", height: '70px', width: '70px' }} />
               </ListItemIcon>
