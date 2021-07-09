@@ -34,11 +34,17 @@ const testData = {
   
   const userIds = [];
   messages.forEach((message) => {
-    console.log(userIds.includes(message.author))
-    if (userIds.includes(message.author) === false && message.author !== id && message.receiver === id) {
-      userIds.push(message.author);
+    // console.log(userIds.includes(message.author))
+    // if (!userIds.includes(message.author) && message.author !== id && message.receiver === id) {
+    //   userIds.push(message.author);
+    // }
+    // if (!userIds.includes(message.reveiver) && message.receiver !== id && message.author === id) {
+    //   userIds.push(message.receiver);
+    // }
+    if (message.author === id && !userIds.includes(message.receiver)) {
+      userIds.push(message.receiver);
     }
-    if (userIds.includes(message.reveiver) === false && message.receiver !== id && message.author === id) {
+    if (message.receiver === id && !userIds.includes(message.author)) {
       userIds.push(message.receiver);
     }
   });
@@ -52,12 +58,6 @@ const testData = {
       }
     }
   })
-  // const users = allUsers.filter((user) => {
-  //   for (id of userIds) {
-  //     return id === user.id
-  //   }
-  // })
-
   return users
 };
 

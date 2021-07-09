@@ -75,14 +75,28 @@ import Fade from '@material-ui/core/Fade';
       useEffect(() => {
         socket = io(CONNECTION_PORT)
       }, [])
+
+      useEffect(() => {
+        axios
+        .get('/api/messages')
+        .then((data) => {
+          console.log(data.data.messages)
+          setMessageList((prev) => [...data.data.messages])
+          // socket.on("receive_message", (message) => {
+          // console.log('receive_message:', data);
+          // setMessageList((prev) => ([ ...prev, data ]))
+        // })
+
+
+        })
+      }, [token])
       
       // socket = io(CONNECTION_PORT);
       useEffect(()=> {
-        console.log('useEffect:')
-        socket.on("receive_message", (data) => {
-          console.log('receive_message:', data);
-          setMessageList((prev) => ([ ...prev, data ]))
-        })
+        // socket.on("receive_message", (data) => {
+        //   console.log('receive_message:', data);
+        //   setMessageList((prev) => ([ ...prev, data ]))
+        // })
       }, [])
 
      

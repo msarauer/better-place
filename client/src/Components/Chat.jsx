@@ -140,19 +140,24 @@ const Chat = ({
   const [receiver, setReceiver] = useState(0);
 
   useEffect(() => {
-    // setCurrentUsers(getUsersFromMessages(filterMessages(messageList, token.id)), users, token.id)
-  }, [messageList, token.id])
+    setCurrentUsers(getUsersFromMessages(filterMessages(messageList, token.id)), users, token.id)
+  }, [messageList, token.id, users])
+
+  // useEffect(() => {
+    // setMessageList()
+  // })
 
   
 
-  const usersInChat = users.map((user) => {
+  const usersInChat = getUsersFromMessages(messageList, users, token.id).map((user) => {
+    // const usersInChat = users.map((user) => {
     // changed usersInChat from users because  conflict with users prop.
     return (
       <ListItem onClick={() => setReceiver(user.id)} button key={user.id}>
         <ListItemIcon>
           <Avatar alt={user.name} src={user.picture_url} />
         </ListItemIcon>
-        <ListItemText primary={user.name}>Alice</ListItemText>
+        <ListItemText primary={user.name}></ListItemText>
       </ListItem>
     );
   });

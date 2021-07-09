@@ -186,6 +186,9 @@ export const getUncompletedOpportunities = (opps) => {
 };
 
 export const getUsersForOpportunity = (oppId, users, usersOpps) => {
+  if (!usersOpps) {
+    return [];
+  }
   const selectUserOpps = usersOpps.filter((userOpp) => {
     return oppId === userOpp.opportunity_id;
   });
@@ -276,6 +279,9 @@ export const sortByRating = (opps) => {
 };
 
 export const filterMessages = (messages, id) => {
+  if (!messages) {
+    return [];
+  }
   const userMessages = messages.filter((message) => {
     return message.author === id || message.receiver === id;
   });
@@ -283,24 +289,30 @@ export const filterMessages = (messages, id) => {
   return userMessages;
 };
 
-export const getUsersFromMessages = (messages, allUsers, id) => {
-  
+ export const getUsersFromMessages = (messages, allUsers, id) => {
+  if (!messages || !allUsers) {
+    return [];
+  } 
   const userIds = [];
+  if (!messages) {
+    return [];
+  }
   messages.forEach((message) => {
-    if (!users.includes(message.author && message.receiver !== id)) {
-      users.push(message.author);
+    if (message.author === id && !userIds.includes(message.receiver)) {
+      userIds.push(message.receiver);
     }
-    if (!users.includes(message.reveiver && message.receiver !== id)) {
-      users.push(message.receiver);
+    if (message.receiver === id && !userIds.includes(message.author)) {
+      userIds.push(message.receiver);
     }
   });
 
-  const users = allUsers.filter((user) => {
-    for (id of userIds) {
-      return id === user.id
+  const users = []
+  allUsers.forEach((user) => {
+    for (let id of userIds) {
+      if (id === user.id) {
+        users.push(user);
+      }
     }
   })
-
   return users
 };
-

@@ -3,9 +3,9 @@ DROP TABLE IF EXISTS messages CASCADE;
 
 CREATE TABLE messages (
   id SERIAL PRIMARY KEY NOT NULL,
-  sentTime TIMESTAMP,
+  sender INTEGER NOT NULL,
+  receiver INTEGER NOT NULL,
   message TEXT,
-  sender INTEGER,
-  reciever
+  time TIMESTAMP
 );
 
