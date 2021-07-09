@@ -100,7 +100,7 @@ import Fade from '@material-ui/core/Fade';
         }
         socket.emit("send_message", messageContent);
         // setMessageList((prev) => ([ ...prev, messageContent.content ]));
-         setMessageList(messageList => [ ...messageList, messageContent.content ]);
+         setMessageList((prev) => [ ...prev, messageContent.content ]);
         setMessage("");
       }
       
