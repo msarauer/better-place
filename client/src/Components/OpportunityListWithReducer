@@ -19,7 +19,7 @@ import {
   PushpinOutlined,
   CalendarOutlined,
 } from "@ant-design/icons";
-import React, { useEffect, useState, useReducer } from "react";
+import React, { useEffect, useState } from "react";
 import { Progress, Switch } from "antd";
 import ReactTooltip from "react-tooltip";
 import Reviews from "./Reviews";
@@ -62,31 +62,6 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
- const initialState = {
-    usersOpportunities: [],
-    open: false,
-    clickedId: 0,
-    loading: false,
-    users: [],
-    reviews: []
-  }
-
-  const SET_OPPORTUNITY_LIST_DATA = "SET_OPPORTUNITY_LIST_DATA";
-
-  const reducer = (state, action) => {
-    switch (action.type) {
-      case SET_OPPORTUNITY_LIST_DATA:
-        return {
-          ...state,
-          opportunities: action.opportunities,
-          usersOpportunities: action.usersOpportunities,
-          users: action.users,
-          reviews: action.reviews
-        };
-      default:
-    }
-  }
-
 const OpportunityList = ({
   lat,
   lng,
@@ -108,11 +83,6 @@ const OpportunityList = ({
   const classes = useStyles();
 
   // const [rows, setRows] = useState([]);
-
-
- 
-  const [state, dispatch] = useReducer(reducer, initialState);
-
   const [usersOpportunities, setUsersOpportunities] = useState([]);
   const [open, setOpen] = useState(false);
   const [clickedId, setClickedId] = useState(0);
@@ -159,21 +129,16 @@ const OpportunityList = ({
       axios.get("/api/users"),
       axios.get("/api/reviews")
     ])
-      // .then((all) => {
-      //   setOpportunities((prev) => getUncompletedOpportunities(all[0].data.opportunities));
-      //   setUsersOpportunities((prev) => all[1].data.usersOpportunities);
-      //   setLoading(false);
-      //   setUsers((prev) => all[2].data.users);
-      //   setReviews((prev) => all[3].data.reviews);
-      // })
       .then((all) => {
-        dispatch({
-          type: SET_OPPORTUNITY_LIST_DATA,  
-          opportunities: all[0].data.opportunities,
-          usersOpportunities: all[1].data.usersOpportunities,
-          users: all[2].data.users,
-          reviews: all[3].data.reviews
-        })
+        setOpportunities((prev) => getUncompletedOpportunities(all[0].data.opportunities));
+        setUsersOpportunities((prev) => all[1].data.usersOpportunities);
+        setLoading(false);
+        setUsers((prev) => all[2].data.users);
+        setReviews((prev) => all[3].data.reviews);
+      })
+      .then(() => {
+        //      console.log(getDistance({latitude: 51.5103, longitude: 7.49347},
+        // {latitude: "51° 31' N", longitude: "7° 28' E"}))
       })
       .catch((e) => console.log(e));
   }, []);

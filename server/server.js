@@ -1,5 +1,6 @@
 const Express = require("express");
 const app = Express();
+const socket = require('socket.io');
 const PORT = 8001;
 const morgan = require("morgan");
 const cookieSession = require("cookie-session");
@@ -70,9 +71,30 @@ app.post("/login", (req, res) => {
   );
 });
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   // eslint-disable-next-line no-console
   console.log(
     `Express seems to be listening on port ${PORT} so that's pretty good 👍`
   );
 });
+
+io = socket(server)
+
+io.on('connection', (socket) => {
+  console.log('enter Socket io')
+  console.log(socket.id)
+
+  socket.on('chat', (data) => {
+    socket.join(data)
+    console.log("user joined chat: ", data);
+  })
+
+  socket.on('send_message', (data) => {
+    socket.to(data.chat).emit('receive_message', data.content);
+    console.log('send_message:', data);
+  })
+
+  socket.on('disconnect', () => {
+    console.log('User disconnected')
+  })
+})

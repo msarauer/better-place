@@ -79,6 +79,8 @@ const OpportunityList = ({
   distance,
   currentPage,
   setCurrentPage,
+  users,
+  setUsers
 }) => {
   const classes = useStyles();
 
@@ -87,7 +89,7 @@ const OpportunityList = ({
   const [open, setOpen] = useState(false);
   const [clickedId, setClickedId] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [users, setUsers] = useState([]);
+
   const [reviews, setReviews] = useState([]);
 
   const handleClickOpen = (id) => {
@@ -141,7 +143,7 @@ const OpportunityList = ({
         // {latitude: "51° 31' N", longitude: "7° 28' E"}))
       })
       .catch((e) => console.log(e));
-  }, []);
+  }, [setOpportunities]);
 
   // Get users_opportunities specific to user to make switches 'switched' already
   useEffect(() => {
@@ -253,8 +255,6 @@ const OpportunityList = ({
       <List
         itemLayout="vertical"
         size="large"
-        total={rows.length}
-        showTotal={(total, range) => `${range[0]}-${range[1]} of ${total} items`}
         pagination={{
           onChange: (page) => {
             console.log("page:", page);
@@ -343,7 +343,7 @@ const OpportunityList = ({
                   {item.name}
                 </p>
                 <div className={classes.flex}>
-                <p className={classes.name}>{users.find(user => item.host_id === user.id).name}</p>
+                <p className={classes.name}>{users.find(user => item.host_id === user.id) ? users.find(user => item.host_id === user.id).name : 'name'}</p>
                 <Rate className={classes.stars} disabled defaultValue={getAverageRating(reviews, item.host_id)} />
                 </div>
                 </div>

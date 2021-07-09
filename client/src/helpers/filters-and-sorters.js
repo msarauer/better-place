@@ -232,3 +232,11 @@ export const getAverageRating = (reviews, id) => {
     return total / userReviews.length;
   }
 };
+
+export const sortByRating = (opps) => {
+  const rows = [...opps];
+  rows.sort((a,b) => {
+    return a.rating - b.rating;
+  });
+  return rows;
+};

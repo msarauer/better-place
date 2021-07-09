@@ -11,3 +11,38 @@ export const dateFormatter = (date) => {
   const newDate = new Date(date);
   return newDate.toString().split(" ").splice(0, 4).join(" ");
 };
+
+export const timeFormatter = (time) => {
+
+  // "2021-07-08 14:08:25-07"
+
+
+  const arr = time.split(" ")
+  const time2 = arr[1].split(':')
+  // const time3 = time2.split('-')
+  if (time2[0] > 12) {
+    time2[0] -= 12;
+    time2.join(':')
+    const time3 = (`${time2[0]}:${time2[2]}`)
+    const time4 = time3.substring(0, time3.length - 3);
+    return `${time4} pm`
+  }
+  if (time2[0] === '12') {
+    time2.join(':')
+    const time3 = (`${time2[0]}:${time2[2]}`)
+    const time4 = time3.substring(0, time3.length - 3);
+    return `${time4} pm`
+  }
+  if (time2[0] === '00') {
+    time2.join(':')
+    time2[0] = 12;
+    const time3 = (`${time2[0]}:${time2[2]}`)
+    const time4 = time3.substring(0, time3.length - 3);
+    return `${time4} am`
+  }
+   time2.join(':')
+    const time3 = (`${time2[0]}:${time2[2]}`)
+    const time4 = time3.substring(0, time3.length - 3);
+    return `${time4} am`
+
+}
