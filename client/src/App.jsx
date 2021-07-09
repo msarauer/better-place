@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import "./App.css";
 import NavBar from "./Components/NavBar";
 import Header from "./Components/Header";
@@ -13,6 +13,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Filterbar from "./Components/Filterbar";
 import Chat from "./Components/Chat";
 import { io } from "socket.io-client";
+import ChatIcon from '@material-ui/icons/Chat';
+import Popper from '@material-ui/core/Popper';
+import Fade from '@material-ui/core/Fade';
 
 
 
@@ -31,6 +34,7 @@ import { io } from "socket.io-client";
     const CONNECTION_PORT = '/';
     
     function App() {
+
       
       const [city, setCity] = useState("What is your Location?");
       const [country, setCountry] = useState("");
@@ -49,46 +53,60 @@ import { io } from "socket.io-client";
       // const [location, setLocation] = useState('');
       const [currentPage, setCurrentPage] = useState(1);
       const [users, setUsers] = useState([]);
-
+      
       const [ message, setMessage ] = useState();
       const [ messageList, setMessageList ] = useState([]);
+      const [anchorEl, setAnchorEl] = useState(null);
+
+      const handleClickPopper = (event) => {
+        setAnchorEl(anchorEl ? null : event.currentTarget);
+      };
+
+      const open2 = Boolean(anchorEl);
+      const id = open2 ? 'transitions-popper' : undefined;
+
       const sideBarSection = useRef(null);
       
       const goToSideBarSection = () => {
         window.scrollTo({ top: (sideBarSection.current.offsetTop - 70), behavior: "smooth"})
         console.log("ref:", sideBarSection)
       }
-      
+      // let socket; 
       useEffect(() => {
-       socket = io(CONNECTION_PORT)
-      }, [CONNECTION_PORT])
+        socket = io(CONNECTION_PORT)
+      }, [])
       
+      // socket = io(CONNECTION_PORT);
       useEffect(()=> {
+        console.log('useEffect:')
         socket.on("receive_message", (data) => {
-          console.log('recieve_message:', data);
+          console.log('receive_message:', data);
           setMessageList((prev) => ([ ...prev, data ]))
         })
-      })
+      }, [])
 
-      const sendMessage = async (userId) => {
+     
+      
+      const sendMessage = (userId) => {
+        const date = new Date();
         let messageContent = {
           chat: 'chat',
           content: {
-            author: token.id, 
+            author: token.id,
             receiver: userId,
             message: message,
-            time: "2021-07-08 14:08:25-07"
+            date
           }
         }
         socket.emit("send_message", messageContent);
         // setMessageList((prev) => ([ ...prev, messageContent.content ]));
-        await setMessageList([ ...messageList, messageContent.content ]);
+         setMessageList(messageList => [ ...messageList, messageContent.content ]);
         setMessage("");
       }
       
-      const connectToChat = () => {
-        socket.emit('chat', 'betsy')
-      }
+      // const connectToChat = () => {
+        // socket.emit('chat', 'betsy')
+      // }
       
       
       // const { token, setToken } = useToken();
@@ -126,7 +144,7 @@ import { io } from "socket.io-client";
           
           const handleClickOpen = () => {
             setOpen(true);
-            connectToChat()
+            // connectToChat()
           };
 
           // useEffect(() => {
@@ -149,7 +167,9 @@ import { io } from "socket.io-client";
       <Header />
 
       <CategoryList click={goToSideBarSection} handleClick={(data) => setCategory(data)} categories={categories} setCategories={setCategories}/>
-       <Chat message={message} messageList={messageList} sendMessage={sendMessage} setMessage={setMessage} host_id={token} users={users}/>
+
+
+       {/* <Chat setMessageList={setMessageList} token={token} message={message} messageList={messageList} sendMessage={sendMessage} setMessage={setMessage} users={users}/> */}
  
       <CreateNewOpportunityWithModal open={open} setOpen={setOpen} rows={rows} setRows={setRows} opportunities={opportunities} setOpportunities={setOpportunities} onSave={save} location={city} categories={categories} setCategories={setCategories} host_id={token}/>
       <div className="container">
@@ -172,6 +192,16 @@ import { io } from "socket.io-client";
        <BackTop />
        <Footer />
 
+      <Popper id={id} open={open2} anchorEl={anchorEl} transition >
+        {({ TransitionProps }) => (
+          <Fade {...TransitionProps} timeout={350}>
+            <div  style={{ width: '600px', height: '1000px', zIndex: 12}}>
+              <Chat className="chat-div" setMessageList={setMessageList} token={token} message={message} messageList={messageList} sendMessage={sendMessage} setMessage={setMessage} users={users}/>
+            </div>
+          </Fade>
+        )}
+      </Popper>
+      <ChatIcon aria-describedby={id} className="chat-button" fontSize="large" color="primary" onClick={handleClickPopper}/>
     </div>
 
   );

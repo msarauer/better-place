@@ -78,23 +78,36 @@ const server = app.listen(PORT, () => {
   );
 });
 
-io = socket(server)
+const io = socket(server, {
+  cors: {
+    origin: '*'
+  }
+})
+
 
 io.on('connection', (socket) => {
-  console.log('enter Socket io')
   console.log(socket.id)
+  // socket.join(chat) // might have to change this to "chat"
 
-  socket.on('chat', (data) => {
-    socket.join(data)
-    console.log("user joined chat: ", data);
-  })
+  // socket.on('chat', (data) => {
+  //   socket.join(data)
+  //   console.log("user joined chat: ", data);
+  // })
+
 
   socket.on('send_message', (data) => {
-    socket.to(data.chat).emit('receive_message', data.content);
+    socket.broadcast.emit('receive_message', data.content);
     console.log('send_message:', data);
   })
 
-  socket.on('disconnect', () => {
-    console.log('User disconnected')
+  // socket.on('disconnect', () => {
+  //   console.log('User disconnected')
+  // })
+
+  socket.on('broadcast', () => {
+
   })
+  
+
+
 })

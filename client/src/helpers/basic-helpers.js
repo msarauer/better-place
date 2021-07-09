@@ -46,3 +46,10 @@ export const timeFormatter = (time) => {
     return `${time4} am`
 
 }
+
+
+export const getMinutes = (date) => {
+  const now = new Date();
+  const minutes = Math.round(now.getDate() / 100000)
+  return minutes
+}
