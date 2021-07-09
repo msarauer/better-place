@@ -1,6 +1,6 @@
 const Express = require("express");
 const app = Express();
-const socket = require('socket.io');
+const socket = require("socket.io");
 const PORT = 8001;
 const morgan = require("morgan");
 const cookieSession = require("cookie-session");
@@ -53,7 +53,7 @@ app.use("/api/user", userRoutes(db));
 app.use("/api/users", usersRoutes(db));
 app.use("/api/review", reviewRoutes(db));
 app.use("/api/reviews", reviewsRoutes(db));
-app.use("/api/messages", messagesRoutes(db)); 
+app.use("/api/messages", messagesRoutes(db));
 app.use("/api/category", categoryRoutes(db));
 app.use("/api/categories", categoriesRoutes(db));
 app.use("/api/opportunity", opportunityRoutes(db));
@@ -67,6 +67,10 @@ app.post("/login", (req, res) => {
       const user = data.rows[0];
       if (req.body.password === user.password) {
         return res.json({ token: user });
+      } else {
+        return res
+          .status(418)
+          .json({ message: "Wrong Email/Password Combination" });
       }
       // return res.json({ token: false });
     }
@@ -82,13 +86,12 @@ const server = app.listen(PORT, () => {
 
 const io = socket(server, {
   cors: {
-    origin: '*'
-  }
-})
+    origin: "*",
+  },
+});
 
-
-io.on('connection', (socket) => {
-  console.log(socket.id)
+io.on("connection", (socket) => {
+  console.log(socket.id);
   // socket.join(chat) // might have to change this to "chat"
 
   // socket.on('chat', (data) => {
@@ -96,20 +99,14 @@ io.on('connection', (socket) => {
   //   console.log("user joined chat: ", data);
   // })
 
+  socket.on("send_message", (data) => {
+    socket.broadcast.emit("receive_message", data.content);
+    console.log("send_message:", data);
+  });
 
-  socket.on('send_message', (data) => {
-    socket.broadcast.emit('receive_message', data.content);
-    console.log('send_message:', data);
-  })
+  socket.on("disconnect", () => {
+    console.log("User disconnected");
+  });
 
-  // socket.on('disconnect', () => {
-  //   console.log('User disconnected')
-  // })
-
-  socket.on('broadcast', () => {
-
-  })
-  
-
-
-})
+  socket.on("broadcast", () => {});
+});

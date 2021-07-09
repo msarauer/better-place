@@ -1,19 +1,19 @@
 // @use postcss-nested;
 
 :root {
-  --send-bg: #0B93F6;
+  --send-bg: #0b93f6;
   --send-color: white;
-  --receive-bg: #E5E5EA;
+  --receive-bg: #e5e5ea;
   --receive-text: black;
   --page-background: white;
 }
 
 body {
-	font-family: "Helvetica Neue", Helvetica, sans-serif;
-	font-size: 20px;
-	font-weight: normal;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 20px;
+  font-weight: normal;
   max-width: 450px;
-	margin: 50px auto;
+  margin: 50px auto;
   display: flex;
   flex-direction: column;
   background-color: var(--page-background);
@@ -25,52 +25,53 @@ p {
   margin-bottom: 12px;
   line-height: 24px;
   position: relative;
-	padding: 10px 20px;
+  padding: 10px 20px;
   border-radius: 25px;
-  
-  &:before, &:after {
+
+  &:before,
+  &:after {
     content: "";
-		position: absolute;
+    position: absolute;
     bottom: 0;
     height: 25px;
   }
 }
 
 .send {
-	color: var(--send-color); 
-	background: var(--send-bg);
-	align-self: flex-end;
-		
-	&:before {
-		right: -7px;
+  color: var(--send-color);
+  background: var(--send-bg);
+  align-self: flex-end;
+
+  &:before {
+    right: -7px;
     width: 20px;
     background-color: var(--send-bg);
-		border-bottom-left-radius: 16px 14px;
-	}
+    border-bottom-left-radius: 16px 14px;
+  }
 
-	&:after {
-		right: -26px;
+  &:after {
+    right: -26px;
     width: 26px;
     background-color: var(--page-background);
-		border-bottom-left-radius: 10px;
-	}
+    border-bottom-left-radius: 10px;
+  }
 }
 .receive {
-	background: var(--receive-bg);
-	color: black;
+  background: var(--receive-bg);
+  color: black;
   align-self: flex-start;
-		
-	&:before {
-		left: -7px;
+
+  &:before {
+    left: -7px;
     width: 20px;
     background-color: var(--receive-bg);
-		border-bottom-right-radius: 16px 14px;
-	}
+    border-bottom-right-radius: 16px 14px;
+  }
 
-	&:after {
-		left: -26px;
+  &:after {
+    left: -26px;
     width: 26px;
     background-color: var(--page-background);
-		border-bottom-right-radius: 10px;
-	}
+    border-bottom-right-radius: 10px;
+  }
 }

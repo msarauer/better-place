@@ -75,29 +75,38 @@ import Fade from '@material-ui/core/Fade';
       useEffect(() => {
         socket = io(CONNECTION_PORT)
       }, [])
+      // socket = io(CONNECTION_PORT);
 
       useEffect(() => {
+        if (token) {
         axios
-        .get('/api/messages')
+        .get(`/api/messages/${token.id}`)
         .then((data) => {
           console.log(data.data.messages)
           setMessageList((prev) => [...data.data.messages])
-          // socket.on("receive_message", (message) => {
-          // console.log('receive_message:', data);
-          // setMessageList((prev) => ([ ...prev, data ]))
-        // })
+          socket.on("receive_message", (message) => {
+          console.log('receive_message:', message);
+          // if (data.receiver === token.id) {
 
-
+            setMessageList((prev) => ([ ...prev, message ]))
+          // }
         })
+        })
+        }
+        if (!token) {
+          setMessageList([])
+        }
+        
       }, [token])
       
-      // socket = io(CONNECTION_PORT);
-      useEffect(()=> {
-        // socket.on("receive_message", (data) => {
-        //   console.log('receive_message:', data);
-        //   setMessageList((prev) => ([ ...prev, data ]))
-        // })
-      }, [])
+      // useEffect(()=> {
+      //   socket.on("receive_message", (data) => {
+      //     console.log('receive_message:', data);
+      //     // if (data.author === token.id) {
+      //       setMessageList((prev) => ([ ...prev, data ]))
+      //     // }
+      //   })
+      // }, [])
 
      
       
@@ -115,6 +124,10 @@ import Fade from '@material-ui/core/Fade';
         socket.emit("send_message", messageContent);
         // setMessageList((prev) => ([ ...prev, messageContent.content ]));
          setMessageList((prev) => [ ...prev, messageContent.content ]);
+        //  axios
+        //  .post('/api/messages', {
+        //    ...messageContent.content
+        //  })
         setMessage("");
       }
       
@@ -210,7 +223,7 @@ import Fade from '@material-ui/core/Fade';
         {({ TransitionProps }) => (
           <Fade {...TransitionProps} timeout={350}>
             <div  style={{ width: '600px', height: '1000px', zIndex: 12}}>
-              <Chat className="chat-div" setMessageList={setMessageList} token={token} message={message} messageList={messageList} sendMessage={sendMessage} setMessage={setMessage} users={users}/>
+              <Chat className="chat-div" setMessageList={setMessageList} token={token} message={message} messageList={messageList} click={handleClickPopper} sendMessage={sendMessage} setMessage={setMessage} users={users}/>
             </div>
           </Fade>
         )}

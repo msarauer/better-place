@@ -15,13 +15,14 @@ import FormControl from "@material-ui/core/FormControl";
 
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
+import CloseIcon from '@material-ui/icons/Close';
+
 import Avatar from "@material-ui/core/Avatar";
 import Fab from "@material-ui/core/Fab";
 import SendIcon from "@material-ui/icons/Send";
 import { timeFormatter, getMinutes } from "../helpers/basic-helpers";
 import {
-  filterMessages,
-  getUsersFromMessages,
+  getUsersFromMessages, getConversation
 } from "../helpers/filters-and-sorters";
 // import ChatBubble from "@bit/mui-org.material-ui-icons.chat-bubble";
 
@@ -47,8 +48,22 @@ const useStyles = makeStyles({
     textAlign: "rig",
   },
   send: {
+    display: 'inline-block',
+    float: 'right',
+    maxWidth: '285px',
+    alignSelf: 'flex-end',
+    wordWrap: 'break-word',
+    marginBottom: '0px',
+    lineHeight: '24px',
+    position: 'relative',
+	  padding: '10px 20px',
+    borderRadius: '25px',
     color: 'white',
-    background: '#0B93F6',
+    // background: '#0B93F6',
+    background:
+      "linear-gradient(90deg, rgba(26,188,156,1) 20%, rgba(0,153,255,1)98%)",
+    textAlign: 'left',
+    marginLeft: '120px',
     '&::before': {
       right: '-7px',
       width: '20px',
@@ -63,9 +78,47 @@ const useStyles = makeStyles({
     } 
 
   },
+  receive : { 
+    maxWidth: '285px',
+    display: 'inline-block',
+    
+    wordWrap: 'break-word',
+    marginBottom: '0px',
+    lineHeight: '24px',
+    position: 'relative',
+	  padding: '10px 20px',
+    borderRadius: '25px',
+    color: 'black',
+    // background: '#E5E5EA',
+    background: 'linear-gradient(90deg, rgba(255,204,121,1) 23%, rgba(144,144,245,1) 100%)',
+    '&::before': {
+      right: '-7px',
+      width: '20px',
+      backgroundColor: '#E5E5EA',
+      borderBottomLeftRadius: "16px 14px",
+      
+    },
+    '&::after': {
+      right: '-26px',
+      width: '26px',
+      backgroundColor: '#E5E5EA',
+      borderBottomLeftRadius: '10px'
+    },
+
+  },
   paperRoot: {
-    backgroundColor: '#3f51b5',
-    color: 'white'
+    background:
+      "linear-gradient(90deg, rgba(0,153,255,1) 20%, rgba(26,188,156,1)98%)",
+      color: "white"
+    },
+    headerText: {
+    color: 'white',
+    paddingLeft: "100px",
+    paddingTop: "10px"
+  },
+  closeButton: {
+
+    paddingRight: "15px"
   }
 });
 
@@ -101,6 +154,7 @@ const Chat = ({
   message,
   token,
   setMessageList,
+  click
 }) => {
   const classes = useStyles();
   // console.log("OPP USER IN CHAT-----", users)
@@ -108,11 +162,24 @@ const Chat = ({
   // ALL THIS IS USED FOR SCROLL TO BOTTOM FUNCTIONALITY MUST WAIT TO BE IN MODAL TO WORK NICE
   const messagesEndRef = useRef(null);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
 
-  useEffect(() => {scrollToBottom()}, [message]);
+  // useEffect(() => {
+  //   if(messagesEndRef) {
+  //     console.log("messref:", messagesEndRef.current)
+  //     messagesEndRef.current.addEventListener('DOMNodeInserted', event => {
+  //       const {currentTarget: target} = event;
+  //       target.scroll({top:target.scrollHeight, behavior: 'smooth'})
+  //     })
+  //   }
+  // }, []);
+
+  const handleKeyDown = (event) => {
+    if(event.key === 'Enter') {
+      console.log('I PRESSED ENTER')
+    }
+  }
+
+
 
   // useEffect(() => {
   //   setMessageList((prev) => [filterMessages(prev, token.id)])
@@ -136,11 +203,12 @@ const Chat = ({
 
   // timeInterval();
 
-  const [currentUsers, setCurrentUsers] = useState([]);
-  const [receiver, setReceiver] = useState(0);
+  // const [currentUsers, setCurrentUsers] = useState([]);
+  const [receiver, setReceiver] = useState(false);
+  // const [conversation, setConversation] = useState(false);
 
   useEffect(() => {
-    setCurrentUsers(getUsersFromMessages(filterMessages(messageList, token.id)), users, token.id)
+    // setCurrentUsers(getUsersFromMessages(filterMessages(messageList, token.id)), users, token.id)
   }, [messageList, token.id, users])
 
   // useEffect(() => {
@@ -150,10 +218,12 @@ const Chat = ({
   
 
   const usersInChat = getUsersFromMessages(messageList, users, token.id).map((user) => {
+    console.log(user.name)
     // const usersInChat = users.map((user) => {
     // changed usersInChat from users because  conflict with users prop.
     return (
-      <ListItem onClick={() => setReceiver(user.id)} button key={user.id}>
+      <ListItem onClick={() => { return setReceiver(user.id)}} button key={user.id}>
+        {/* <div ref={messagesEndRef} />   */}
         <ListItemIcon>
           <Avatar alt={user.name} src={user.picture_url} />
         </ListItemIcon>
@@ -162,13 +232,14 @@ const Chat = ({
     );
   });
 
-  const messages = filterMessages(messageList, token.id).map((message) => {
-    return (
-      <ListItem key={users.id}>
+  const messages = messageList.map((message) => {
+    // const messages = getConversation(messageList, token.id, receiver).map((message) => {
+      return (
+        <ListItem key={users.id}>
         <Grid container>
           <Grid item xs={12}>
             <ListItemText
-              className={classes.send}
+              className={token.id === message.author ? classes.send : classes.receive}
               align={token.id === message.author ? "right" : "left"}
               primary={message.message}
             ></ListItemText>
@@ -176,16 +247,14 @@ const Chat = ({
           </Grid>
           <Grid item xs={12}>
             <ListItemText
-              className={classes.send}
+              className={token.id === message.author ? classes.dateSend : classes.dateReceive}
               align={token.id === message.author ? "right" : "left"}
               secondary={
-                getMinutes(message.date) === "0"
-                  ? `${getMinutes(message.date)} min ago`
-                  : "Just now"
+                getMinutes(message.date) === 0
+                  ? "Just now" : `${getMinutes(message.date)} min ago`
               }
             ></ListItemText>
 
-        <div ref={messagesEndRef} />  
           </Grid>
         </Grid>
       </ListItem>
@@ -196,10 +265,17 @@ const Chat = ({
     <div>
       <Grid container>
         <Grid item xs={12}>
-        <Paper className={classes.paperRoot} >
-          <Typography variant="h5" className="header-message">
+        <Paper className={classes.paperRoot} onClick={click}>
+        <Grid container>
+        <Grid item xs={6}>
+          <Typography square variant="h6" className={classes.headerText}>
             Chat
           </Typography>
+          </Grid>
+          <Grid item xs={6} container alignItems="flex-end" direction="row-reverse" className={classes.closeButton}>
+          <CloseIcon />
+          </Grid>
+      </Grid>
           </Paper>
         </Grid>
       </Grid>
@@ -208,37 +284,30 @@ const Chat = ({
           <List>
             <ListItem button key={token.id}>
               <ListItemIcon>
-                <Avatar alt={token.name} src={token.picture_url} />
+                <Avatar alt={token.name} src={token.picture_url} variant="rounded" style={{ border: "5px solid #1abc9c",position:"fixed", top:"20px", height: '70px', width: '70px' }} />
               </ListItemIcon>
-              <ListItemText primary={token.name}></ListItemText>
+              {/* <ListItemText primary={token.name}></ListItemText> */}
             </ListItem>
           </List>
 
-          <Divider />
+          <Divider style={{marginTop:"35px"}}/>
           <Grid item xs={12} style={{ padding: "10px" }}>
             <TextField
               id="outlined-basic-email"
               label="Search"
               variant="outlined"
               fullWidth
+              
             />
           </Grid>
           {usersInChat}
           <Divider />
-          <List>
-            <ListItem button key="CindyBaker">
-              <ListItemIcon>
-                <Avatar
-                  alt="Cindy Baker"
-                  src="https://material-ui.com/static/images/avatar/2.jpg"
-                />
-              </ListItemIcon>
-              <ListItemText primary="Cindy Baker">Cindy Baker</ListItemText>
-            </ListItem>
-          </List>
+
         </Grid>
         <Grid item xs={9}>
-          <List className={classes.messageArea}>{messages}</List>
+          <List className={classes.messageArea}>
+            {receiver && messages}
+            </List>
           <Divider />
           <Grid container style={{ padding: "20px" }}>
             <Grid item xs={11}>
@@ -258,7 +327,7 @@ const Chat = ({
                 {/* <IconButton form="text-form" type="submit"  > */}
                 <SendIcon
                   onClick={() => {
-                    message && sendMessage(1);
+                    message && sendMessage(receiver);
                   }}
                 />
                 {/* </IconButton> */}
