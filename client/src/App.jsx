@@ -57,7 +57,7 @@ function App() {
   const [messageList, setMessageList] = useState([]);
   // const [anchorEl, setAnchorEl] = useState(null);
   const [unseenStatus, setUnseenStatus] = useState({
-    unseen: false,
+    unseenMessagesExist: false,
     sender: [],
   });
   const [receiver, setReceiver] = useState(false);
@@ -91,13 +91,16 @@ function App() {
         setMessageList((prev) => ([ ...prev, data ]))
         // }
       })
-      // socket.disconnect()
+      return ()=>{ 
+        socket.disconnect(); 
+       }
   }, []);
   // socket = io(CONNECTION_PORT);
 
   useEffect(() => {
     console.log("inside useeffect for status");
     const messageArr = [];
+    console.log('messageListLength:',messageList.length)
     for (const message of messageList) {
       if (message.receiver === token.id) {
         if (message.seen === false) {
@@ -105,7 +108,7 @@ function App() {
         }
       }
       if (messageArr.length > 0) {
-        setUnseenStatus(prev => ({ ...prev, unseen: true, sender: messageArr }));
+        setUnseenStatus(prev => ({ ...prev, unseenMessagesExist: true, sender: messageArr }));
       }
     }
   }, [messageList, token]);
@@ -149,6 +152,7 @@ function App() {
       },
     };
     socket.emit("send_message", messageContent);
+    // socket.disconnect()
     // setMessageList((prev) => ([ ...prev, messageContent.content ]));
     setMessageList((prev) => [...prev, messageContent.content]);
     axios.post("/api/messages", { ...messageContent.content });
@@ -328,7 +332,7 @@ function App() {
         )}
       </Popper>
       {token &&
-        (unseenStatus.unseen ? (
+        (unseenStatus.unseenMessagesExist ? (
           <ChatIcon
             className="message-waiting"
             aria-describedby={id}

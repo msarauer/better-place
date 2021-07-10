@@ -8,7 +8,6 @@ module.exports = (db) => {
       req.params.id,
     ])
       .then((data) => {
-        console.log(data.rows);
         console.log(new Date());
         const messages = data.rows;
         res.json({ messages });
@@ -27,7 +26,7 @@ module.exports = (db) => {
     )
       .then((data) => {
         const message = data.rows;
-        console.log('messageFromServer:', message)
+        // console.log("messageFromServer:", message);
         res.json({ message });
       })
       .catch((e) => {
@@ -36,8 +35,10 @@ module.exports = (db) => {
       });
   });
   router.put("/:id", (req, res) => {
-    const data = req.body;
-    db.query(`UPDATE messages SET (seen) = (true) WHERE author = $1 AND receiver = $2`, [req.params.id, req.body.id])
+    db.query(
+      `UPDATE messages SET seen = true WHERE author = $1 AND receiver = $2`,
+      [req.params.id, req.body.id]
+    )
       .then((data) => {
         const message = data.rows[0];
         res.json({ message });

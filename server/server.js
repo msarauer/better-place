@@ -92,6 +92,7 @@ const io = socket(server, {
 
 io.on("connection", (socket) => {
   console.log(socket.id);
+  console.log(io.engine.clientsCount);
   // socket.join(chat) // might have to change this to "chat"
 
   // socket.on('chat', (data) => {

@@ -207,10 +207,10 @@ const Chat = ({
     console.log("sender Array", newArr);
 
     if (newArr.length < 1) {
-      setUnseenStatus((prev) => ({ ...prev, unseen: false, sender: newArr }));
+      setUnseenStatus((prev) => ({ ...prev, unseenMessagesExist: false, sender: newArr }));
       console.log("YOU CANT SEE ME-------", unseenStatus)
     } else {
-      setUnseenStatus((prev) => ({ ...prev, unseen: true, sender: newArr }));
+      setUnseenStatus((prev) => ({ ...prev, unseenMessagesExist: true, sender: newArr }));
     }
     setReceiver((prev) => id);
 
