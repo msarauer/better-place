@@ -104,13 +104,17 @@ function App() {
     for (const message of messageList) {
       if (message.receiver === token.id) {
         if (message.seen === false) {
+          console.log('author:', message.author)
           messageArr.push(message.author);
         }
       }
       if (messageArr.length > 0) {
         setUnseenStatus(prev => ({ ...prev, unseenMessagesExist: true, sender: messageArr }));
+      } else {
+        setUnseenStatus(prev => ({ ...prev, unseenMessagesExist: false, sender: messageArr }));
       }
     }
+    console.log('messageARR:', messageArr)
   }, [messageList, token]);
 
   useEffect(() => {

@@ -30,6 +30,7 @@ import { timeFormatter, getMinutes } from "../helpers/basic-helpers";
 import {
   getUsersFromMessages,
   getConversation,
+  getMessagesFromAuthor
 } from "../helpers/filters-and-sorters";
 import axios from "axios";
 // import ChatBubble from "@bit/mui-org.material-ui-icons.chat-bubble";
@@ -201,6 +202,7 @@ const Chat = ({
   // })
   const onReceiverClick = (id) => {
     const arr = [...unseenStatus.sender];
+    console.log('sender:', unseenStatus.sender)
     const newArr = arr.filter((item) => {
       return item !== id;
     });
@@ -214,6 +216,7 @@ const Chat = ({
     }
     setReceiver((prev) => id);
 
+    setMessageList((prev) => [ ...getMessagesFromAuthor(messageList, id)]);
     axios
     .put(`/api/messages/${id}`, { id: token.id })
   };

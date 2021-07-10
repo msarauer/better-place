@@ -401,3 +401,19 @@ export const getConversation = (messages, author, receiver) => {
   // console.log("conversation:", conversation);
   return conversation;
 };
+
+export const getMessagesFromAuthor = (messageList, author) => {
+  if (!messageList) {
+    return [];
+  }
+  console.log("messageList:::", messageList);
+  const messages = messageList.map((message) => {
+    if (message.author === author && message.seen === false) {
+      message.seen = true;
+      return message;
+    }
+    return message;
+  });
+
+  return messages;
+};
