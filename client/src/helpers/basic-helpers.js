@@ -53,7 +53,10 @@ export const getMinutes = (date, currentMS) => {
   const ms = newDate.getTime();
   const seconds = Math.round((currentMS - ms) / 1000);
 
-  if (seconds < 59) return `${seconds} seconds ago`;
-  if (seconds < 3599) return `${Math.round(seconds / 60)} minutes ago`;
+  if (seconds < 0) return `0 seconds ago`;
+  if (seconds === 1) return `1 second ago`;
+  if (seconds < 60) return `${seconds} seconds ago`;
+  if (seconds < 120) return `${Math.round(seconds / 60)} minute ago`;
+  if (seconds < 3600) return `${Math.round(seconds / 60)} minutes ago`;
   else return `${Math.round(seconds / 86400)} days ago`;
 };

@@ -4,11 +4,12 @@ const router = express.Router();
 module.exports = (db) => {
   // GET ALL MESSAGES
   router.get("/:id", (req, res) => {
-    db.query(`SELECT * FROM messages WHERE author = $1 OR receiver = $1;`, [
-      req.params.id,
-    ])
+    db.query(
+      `SELECT author, receiver, message, time FROM messages WHERE author = $1 OR receiver = $1;`,
+      [req.params.id]
+    )
       .then((data) => {
-        console.log(new Date());
+        console.log(data.rows);
         const messages = data.rows;
         res.json({ messages });
       })

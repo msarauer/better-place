@@ -61,6 +61,7 @@ function App() {
     sender: [],
   });
   const [receiver, setReceiver] = useState(false);
+  // const [newContact, setNewContact] = 
   const anchorRef = useRef();
 
   const handleClickPopper = (event) => {
@@ -120,7 +121,7 @@ function App() {
   useEffect(() => {
     if (token) {
       axios.get(`/api/messages/${token.id}`).then((data) => {
-        console.log(data.data.messages);
+        console.log("messages:",data.data.messages);
         setMessageList((prev) => [...data.data.messages]);
         // socket.on("receive_message", (message) => {
         //   console.log("receive_message:", message);
@@ -145,6 +146,7 @@ function App() {
 
   const sendMessage = (userId) => {
     const date = new Date();
+    console.log("date", date)
     let messageContent = {
       chat: "chat",
       content: {
@@ -302,6 +304,8 @@ function App() {
                 distance={distance}
                 handleClickPopper={handleClickPopper}
                 setReceiver={setReceiver}
+                // setNewContact={setNewContact}
+                // newContact={newContact}
               />
             </div>
           </div>

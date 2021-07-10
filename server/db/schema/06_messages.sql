@@ -1,4 +1,4 @@
-SET TIMEZONE = 'SystemV/PST8PDT';
+-- SET TIMEZONE = 'SystemV/PST8PDT';
 DROP TABLE IF EXISTS messages CASCADE;
 
 CREATE TABLE messages (
@@ -6,7 +6,7 @@ CREATE TABLE messages (
   author INTEGER NOT NULL,
   receiver INTEGER NOT NULL,
   message TEXT,
-  time TIMESTAMP,
+  time TIMESTAMPTZ,
   seen BOOLEAN NOT NULL DEFAULT true
 );
 

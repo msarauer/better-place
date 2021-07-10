@@ -241,26 +241,36 @@ const OpportunityList = ({
       opportunity_id: opportunityId,
     });
   };
-
+  
   const removeVolunteer = (opportunityId) => {
     axios.delete(`/api/users_opportunities/${opportunityId}`, {
       data: { user_id: token.id },
     });
   };
-
+  
   // When volunteer switch is flipped state is updated optimistically and axios call runs in the background adding/deleting user_opportunities
   const onChange = (checked, event) => {
     console.log(`switch to ${checked}`);
     const oppId = event.currentTarget.id;
-
+    
     if (checked) {
       const newRows = addOpportunity(rows, oppId);
+      // setUsersOpportunities((prev) => ([...prev, {opportunity_id: oppId, user_id: token.id}]))
       setRows((prev) => [...newRows]);
       addVolunteer(oppId);
     }
-
+    
     if (!checked) {
       const newRows = removeOpportunity(rows, oppId);
+      console.log('oppId:', oppId, 'usersOpportunities:', usersOpportunities)
+      // const usersOpps = usersOpportunities.filter((opp) => {
+      //   if (opp.user_id !== token.id || opp.opportunity_id !== Number(oppId)) {
+      //     return true
+      //   }
+      //   // return (opp.opportunity_id !== Number(oppId) || opp.user_id === token.id)
+      // })
+      // console.log('usersOpps:', usersOpps)
+      // setUsersOpportunities((prev) => ([...usersOpps]))
       setRows((prev) => [...newRows]);
       removeVolunteer(oppId);
     }

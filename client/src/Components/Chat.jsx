@@ -221,7 +221,7 @@ const Chat = ({
     .put(`/api/messages/${id}`, { id: token.id })
   };
 
-  const usersInChat = getUsersFromMessages(messageList, users, token.id).map(
+  const usersInChat = getUsersFromMessages(messageList, users, token.id, receiver).map(
     (user) => {
       // console.log(user.name)
       // const usersInChat = users.map((user) => {

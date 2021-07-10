@@ -129,7 +129,8 @@ const CreateNewOpportunity = ({
         category_id: category,
         description: description,
         lat: coords.lat,
-        lng: coords.lng
+        lng: coords.lng,
+        avatar: host_id.picture_url
       };
 
 

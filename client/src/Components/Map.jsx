@@ -1,8 +1,10 @@
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import { MapContainer, TileLayer, Marker, Popup, Map } from 'react-leaflet';
+import { Icon } from "leaflet";
+
 
 import React from 'react'
 
-const Map = () => {
+const Maps = () => {
   return (
     <div>
       
@@ -21,4 +23,4 @@ const Map = () => {
   )
 }
 
-export default Map
+export default Maps
