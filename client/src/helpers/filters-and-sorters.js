@@ -398,6 +398,6 @@ export const getConversation = (messages, author, receiver) => {
       (message.receiver === receiver || message.author === receiver)
     );
   });
-  console.log("conversation:", conversation);
+  // console.log("conversation:", conversation);
   return conversation;
 };

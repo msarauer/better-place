@@ -49,7 +49,7 @@ export const getMinutes = (date, currentMS) => {
     return "0";
   }
   const newDate = new Date(date);
-  console.log("date", date);
+  // console.log("date", date);
   const ms = newDate.getTime();
   const seconds = Math.round((currentMS - ms) / 1000);
 

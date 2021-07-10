@@ -11,6 +11,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Icon from "@material-ui/core/Icon";
 import "./NewButton.scss";
 import {sortRowsByDate, sortRowsByTimeCommitment, sortRowsByDistance} from '../helpers/filters-and-sorters'
+import ExploreIcon from '@material-ui/icons/Explore';
+import RoomIcon from '@material-ui/icons/Room';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -28,7 +30,6 @@ const Filterbar = ({ opportunities, handleClickOpen, host_id, rows, setRows }) =
   const [filter, setFilter] = useState("");
 
   const handleChange = () => {
-    console.log('filter:', filter)
     switch (filter) {
       case "Date: soonest first":
         setRows((prev) => [ ...sortRowsByDate(prev, true)])
@@ -75,7 +76,15 @@ const Filterbar = ({ opportunities, handleClickOpen, host_id, rows, setRows }) =
     <Paper elevation={0} className={classes.paper}>
       <div className="row">
         <div className="col-6 text-left align-self-end">
-          <span>&nbsp;&nbsp;&nbsp;Showing 1-10 of {rows.length}</span>
+        <Button
+          // variant="contained"
+          color="primary"
+          className={classes.button}
+          endIcon={<RoomIcon/>}
+          style={{paddingLeft: "20px"}}
+          >
+          Map View
+        </Button>
         </div>
         <div className="col-6">
           <div className="row">

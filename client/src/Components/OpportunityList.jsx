@@ -10,6 +10,7 @@ import {
   getUsersForOpportunity,
   getAverageRating
 } from "../helpers/filters-and-sorters";
+import { messageBoxForOpportunity } from "../helpers/handlers";
 import { getDistances } from "../helpers/location-helpers";
 import "antd/dist/antd.css";
 import { List, Avatar, Space, Rate } from "antd";
@@ -18,6 +19,7 @@ import {
   ClockCircleOutlined,
   PushpinOutlined,
   CalendarOutlined,
+  SendOutlined
 } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import { Progress, Switch } from "antd";
@@ -27,6 +29,7 @@ import Link from "@material-ui/core/Link";
 import "./OpportunityList.scss";
 import AvatarGroup from "@material-ui/lab/AvatarGroup";
 import { Avatar as Avatar2 } from "@material-ui/core";
+import { Chat, Send, ChatBubbleOutline } from '@material-ui/icons'
 
 const axios = require("axios");
 
@@ -58,6 +61,17 @@ const useStyles = makeStyles((theme) => ({
   },
   flex: {
     display: "flex"
+  },
+  column: {
+    display: "flex",
+    flexDirection: "column"
+  },
+  message: {
+    marginTop: "60px",
+    marginLeft: "60px",
+    // bottom: "30px",
+    fontSize: "30px",
+    // color: "linear-gradient(90deg, rgba(0,153,255,1) 20%, rgba(26,188,156,1)98%)" 
   }
 
 }));
@@ -80,7 +94,9 @@ const OpportunityList = ({
   currentPage,
   setCurrentPage,
   users,
-  setUsers
+  setUsers,
+  handleClickPopper,
+  setReceiver
 }) => {
   const classes = useStyles();
 
@@ -250,6 +266,11 @@ const OpportunityList = ({
     }
   };
 
+  const handleChatButton = (id) => {
+    handleClickPopper()
+    setReceiver(id)
+  }
+
   return (
     <div>
       <List
@@ -289,17 +310,17 @@ const OpportunityList = ({
                 text={dateFormatter(item.date)}
                 key="list-vertical-star-o"
                 id={item.host_id}
-              />,
-              <IconTextReview
+                />,
+                <IconTextReview
                 className={classes.selected}
                 icon={StarOutlined}
                 text="Reviews"
                 key="list-vertical-star-o"
                 id={item.host_id}
-              />,
-            ]}
-            extra={
-              <div>
+                />,
+              ]}
+              extra={
+                <div className={classes.column}>
                 <Progress
                   strokeColor={{
                     "0%": "#108ee9",
@@ -310,31 +331,36 @@ const OpportunityList = ({
                   percent={getPercentage(
                     item.number_of_volunteers_needed,
                     item.volunteer_count
-                  )}
-                  format={(percent) => (
-                    <AvatarGroup max={3} className={classes.avatarGroup}>
+                    )}
+                    format={(percent) => (
+                      <AvatarGroup max={3} className={classes.avatarGroup}>
                       {
                         getUsersForOpportunity(
                           item.id,
                           users,
                           usersOpportunities
-                        ).map((user) => {
-                          return (
-                            <Avatar2
+                          ).map((user) => {
+                            return (
+                              <Avatar2
                               alt={user.name}
                               src={user.picture_url}
                               className={classes.small}
-                            />
-                          );
-                        })
-
-                      }
+                              />
+                              );
+                            })
+                            
+                          }
                     </AvatarGroup>
                   )}
-                />
+                  />
+                  {
+                  token &&
+                    <Chat onClick={() => handleChatButton(item.host_id)} color="primary" className={classes.message} />
+
+                  }
               </div>
             }
-          >
+            >
             <List.Item.Meta
               avatar={<Avatar size={64} src={item.avatar} />}
               title={
@@ -350,7 +376,7 @@ const OpportunityList = ({
               }
               // description={<div><p>{users.find(user => item.host_id === user.id)}</p><Rate disabled defaultValue={getAverageRating(reviews, item.host_id)} /></div>}
               
-            />
+              />
             {item.description}
             <br />
             <br />
