@@ -6,6 +6,7 @@ CREATE TABLE messages (
   author INTEGER NOT NULL,
   receiver INTEGER NOT NULL,
   message TEXT,
-  time TIMESTAMP
+  time TIMESTAMP,
+  seen BOOLEAN NOT NULL DEFAULT true
 );
 

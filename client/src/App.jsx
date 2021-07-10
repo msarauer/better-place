@@ -57,6 +57,7 @@ import Fade from '@material-ui/core/Fade';
       const [ message, setMessage ] = useState();
       const [ messageList, setMessageList ] = useState([]);
       const [anchorEl, setAnchorEl] = useState(null);
+      const [ unseenStatus, setUnseenStatus ] = useState(false)
 
       const handleClickPopper = (event) => {
         setAnchorEl(anchorEl ? null : event.currentTarget);
@@ -78,6 +79,20 @@ import Fade from '@material-ui/core/Fade';
       // socket = io(CONNECTION_PORT);
 
       useEffect(() => {
+        console.log("inside useeffect for status")
+
+        for (const message of messageList) {
+          if(message.receiver === token.id) {
+            if(message.seen === false) {
+              setUnseenStatus(true);
+            }
+          }
+        }
+          
+        
+      },[messageList, token])
+
+      useEffect(() => {
         if (token) {
         axios
         .get(`/api/messages/${token.id}`)
@@ -88,8 +103,7 @@ import Fade from '@material-ui/core/Fade';
           console.log('receive_message:', message);
           // if (data.receiver === token.id) {
             // console.log('message', message)
-
-            setMessageList((prev) => ([ ...prev, message ]))
+          setMessageList((prev) => ([ ...prev, message ]))
           // }
         })
         })
@@ -119,7 +133,8 @@ import Fade from '@material-ui/core/Fade';
             author: token.id,
             receiver: userId,
             message: message,
-            time: date
+            time: date,
+            seen: false
           }
         }
         socket.emit("send_message", messageContent);
@@ -229,7 +244,9 @@ import Fade from '@material-ui/core/Fade';
           </Fade>
         )}
       </Popper>
-      <ChatIcon aria-describedby={id} className="chat-button" fontSize="large" color="primary" onClick={handleClickPopper}/>
+      {unseenStatus ?
+      <ChatIcon aria-describedby={id} className="chat-button" fontSize="large" color="secondary" onClick={handleClickPopper}/>
+    : <ChatIcon aria-describedby={id} className="chat-button" fontSize="large" color="primary" onClick={handleClickPopper}/>}
     </div>
 
   );

@@ -12,10 +12,10 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import IconButton from "@material-ui/core/IconButton";
 import FormControl from "@material-ui/core/FormControl";
-
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import CloseIcon from '@material-ui/icons/Close';
+import ScrollToBottom, {useScrollToBottom, useSticky} from 'react-scroll-to-bottom';
 
 import Avatar from "@material-ui/core/Avatar";
 import Fab from "@material-ui/core/Fab";
@@ -122,6 +122,8 @@ const useStyles = makeStyles({
   }
 });
 
+
+
 const fakeMessages = [
   {
     id: 1,
@@ -159,19 +161,10 @@ const Chat = ({
   const classes = useStyles();
   // console.log("OPP USER IN CHAT-----", users)
 
-  // ALL THIS IS USED FOR SCROLL TO BOTTOM FUNCTIONALITY MUST WAIT TO BE IN MODAL TO WORK NICE
-  const messagesEndRef = useRef(null);
+  
+  const scrollToBottom = useScrollToBottom()
+  
 
-
-  // useEffect(() => {
-  //   if(messagesEndRef) {
-  //     console.log("messref:", messagesEndRef.current)
-  //     messagesEndRef.current.addEventListener('DOMNodeInserted', event => {
-  //       const {currentTarget: target} = event;
-  //       target.scroll({top:target.scrollHeight, behavior: 'smooth'})
-  //     })
-  //   }
-  // }, []);
 
   const handleKeyDown = (event) => {
     if(event.key === 'Enter') {
@@ -231,14 +224,13 @@ const Chat = ({
   // })
 
   
-
+  
   const usersInChat = getUsersFromMessages(messageList, users, token.id).map((user) => {
     // console.log(user.name)
     // const usersInChat = users.map((user) => {
-    // changed usersInChat from users because  conflict with users prop.
-    return (
-      <ListItem onClick={() => { return setReceiver(prev => user.id)}} button key={user.id}>
-        {/* <div ref={messagesEndRef} />   */}
+      // changed usersInChat from users because  conflict with users prop.
+      return (
+        <ListItem onClick={() => { return setReceiver(prev => user.id)}} button key={user.id}>
         <ListItemIcon>
           <Avatar alt={user.name} src={user.picture_url} />
         </ListItemIcon>
@@ -246,12 +238,10 @@ const Chat = ({
       </ListItem>
     );
   });
-
+  
   // const messages = messageList.map((message) => {
     const messages = getConversation(messageList, token.id, receiver).map((message) => {
-
-      console.log("message:", message)
-
+      
       return (
         <ListItem key={users.id}>
         <Grid container>
@@ -277,7 +267,7 @@ const Chat = ({
       </ListItem>
     );
   });
-
+  
   return (
     <div>
       <Grid container>
@@ -355,7 +345,6 @@ const Chat = ({
           </Grid>
         </Grid>
       </Grid>
-
     </div>
   );
 };
