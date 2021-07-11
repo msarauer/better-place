@@ -9,7 +9,6 @@ module.exports = (db) => {
       [req.params.id]
     )
       .then((data) => {
-        console.log(data.rows);
         const messages = data.rows;
         res.json({ messages });
       })

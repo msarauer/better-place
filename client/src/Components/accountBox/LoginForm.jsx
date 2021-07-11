@@ -66,7 +66,7 @@ const LoginForm = ({ setToken, token, toggleLogin, setLoginPage}) => {
               variant="outlined"
               fullWidth
               required
-              // error={titleError}
+              error={emailError}
               // value={email}
               inputProps={{maxLength: 55}}
 
@@ -80,7 +80,7 @@ const LoginForm = ({ setToken, token, toggleLogin, setLoginPage}) => {
               variant="outlined"
               fullWidth
               required
-              // error={titleError}
+              error={passwordError}
               // value={email}
               inputProps={{maxLength: 55}}
 
