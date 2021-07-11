@@ -57,10 +57,11 @@ function App() {
   const [messageList, setMessageList] = useState([]);
   // const [anchorEl, setAnchorEl] = useState(null);
   const [unseenStatus, setUnseenStatus] = useState({
-    unseen: false,
+    unseenMessagesExist: false,
     sender: [],
   });
   const [receiver, setReceiver] = useState(false);
+  // const [newContact, setNewContact] = 
   const anchorRef = useRef();
 
   const handleClickPopper = (event) => {
@@ -84,28 +85,46 @@ function App() {
       socket.disconnect();
     }
     socket = io(CONNECTION_PORT);
+<<<<<<< HEAD
+=======
+    
+    socket.on("receive_message", (data) => {
+      console.log('receive_message:', data);
+      // if (data.author === token.id) {
+        setMessageList((prev) => ([ ...prev, data ]))
+        // }
+      })
+      return ()=>{ 
+        socket.disconnect(); 
+       }
+>>>>>>> 04c55feea0a350bd9b5f9cc9999d0f609c5d4b2b
   }, []);
   // socket = io(CONNECTION_PORT);
 
   useEffect(() => {
     console.log("inside useeffect for status");
     const messageArr = [];
+    console.log('messageListLength:',messageList.length)
     for (const message of messageList) {
       if (message.receiver === token.id) {
         if (message.seen === false) {
+          console.log('author:', message.author)
           messageArr.push(message.author);
         }
       }
       if (messageArr.length > 0) {
-        setUnseenStatus(prev => ({ ...prev, unseen: true, sender: messageArr }));
+        setUnseenStatus(prev => ({ ...prev, unseenMessagesExist: true, sender: messageArr }));
+      } else {
+        setUnseenStatus(prev => ({ ...prev, unseenMessagesExist: false, sender: messageArr }));
       }
     }
+    console.log('messageARR:', messageArr)
   }, [messageList, token]);
 
   useEffect(() => {
     if (token) {
       axios.get(`/api/messages/${token.id}`).then((data) => {
-        console.log(data.data.messages);
+        console.log("messages:",data.data.messages);
         setMessageList((prev) => [...data.data.messages]);
         // socket.on("receive_message", (message) => {
         //   console.log("receive_message:", message);
@@ -130,6 +149,7 @@ function App() {
 
   const sendMessage = (userId) => {
     const date = new Date();
+    console.log("date", date)
     let messageContent = {
       chat: "chat",
       content: {
@@ -141,6 +161,7 @@ function App() {
       },
     };
     socket.emit("send_message", messageContent);
+    // socket.disconnect()
     // setMessageList((prev) => ([ ...prev, messageContent.content ]));
     setMessageList((prev) => [...prev, messageContent.content]);
     axios.post("/api/messages", { ...messageContent.content });
@@ -286,6 +307,8 @@ function App() {
                 distance={distance}
                 handleClickPopper={handleClickPopper}
                 setReceiver={setReceiver}
+                // setNewContact={setNewContact}
+                // newContact={newContact}
               />
             </div>
           </div>
@@ -320,7 +343,7 @@ function App() {
         )}
       </Popper>
       {token &&
-        (unseenStatus.unseen ? (
+        (unseenStatus.unseenMessagesExist ? (
           <ChatIcon
             className="message-waiting"
             aria-describedby={id}

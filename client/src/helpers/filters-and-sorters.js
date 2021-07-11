@@ -162,7 +162,7 @@ export const updateRows = (opps, userOpps) => {
 };
 
 export const addOpportunity = (opps, id) => {
-  const rows = opps;
+  const rows = [...opps];
   rows.forEach((opp) => {
     if (Number(id) === Number(opp.id)) {
       opp.selected = true;
@@ -173,7 +173,7 @@ export const addOpportunity = (opps, id) => {
 };
 
 export const removeOpportunity = (opps, id) => {
-  const rows = opps;
+  const rows = [...opps];
   rows.forEach((opp) => {
     if (Number(id) === Number(opp.id)) {
       opp.selected = false;
@@ -181,6 +181,11 @@ export const removeOpportunity = (opps, id) => {
     }
   });
   return rows;
+};
+
+export const addUsersOpportunity = (userOpps, oppid) => {
+  const rows = [...userOpps];
+  rows.push({});
 };
 
 export const countVolunteersAdded = (opps, allUserOpps) => {
@@ -335,7 +340,8 @@ export const filterMessages = (messages, id) => {
   return userMessages;
 };
 
-export const getUsersFromMessages = (messages, allUsers, id) => {
+export const getUsersFromMessages = (messages, allUsers, id, newContactId) => {
+  console.log("newContactId:", newContactId);
   if (!messages || !allUsers) {
     return [];
   }
@@ -356,6 +362,15 @@ export const getUsersFromMessages = (messages, allUsers, id) => {
       userIds.push(message.author);
     }
   });
+  // const contact = allUsers.filter((user) => {
+  //   if (user.id === newContactId) {
+  //     console.log("user:", user);
+  //   }
+  //   return user.id === newContactId;
+  // });
+  if (!userIds.includes(newContactId)) {
+    userIds.push(newContactId);
+  }
 
   const users = [];
   allUsers.forEach((user) => {
@@ -400,4 +415,20 @@ export const getConversation = (messages, author, receiver) => {
   });
   // console.log("conversation:", conversation);
   return conversation;
+};
+
+export const getMessagesFromAuthor = (messageList, author) => {
+  if (!messageList) {
+    return [];
+  }
+  console.log("messageList:::", messageList);
+  const messages = messageList.map((message) => {
+    if (message.author === author && message.seen === false) {
+      message.seen = true;
+      return message;
+    }
+    return message;
+  });
+
+  return messages;
 };

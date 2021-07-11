@@ -30,6 +30,7 @@ import { timeFormatter, getMinutes } from "../helpers/basic-helpers";
 import {
   getUsersFromMessages,
   getConversation,
+  getMessagesFromAuthor
 } from "../helpers/filters-and-sorters";
 import axios from "axios";
 // import ChatBubble from "@bit/mui-org.material-ui-icons.chat-bubble";
@@ -201,24 +202,26 @@ const Chat = ({
   // })
   const onReceiverClick = (id) => {
     const arr = [...unseenStatus.sender];
+    console.log('sender:', unseenStatus.sender)
     const newArr = arr.filter((item) => {
       return item !== id;
     });
     console.log("sender Array", newArr);
 
     if (newArr.length < 1) {
-      setUnseenStatus((prev) => ({ ...prev, unseen: false, sender: newArr }));
+      setUnseenStatus((prev) => ({ ...prev, unseenMessagesExist: false, sender: newArr }));
       console.log("YOU CANT SEE ME-------", unseenStatus)
     } else {
-      setUnseenStatus((prev) => ({ ...prev, unseen: true, sender: newArr }));
+      setUnseenStatus((prev) => ({ ...prev, unseenMessagesExist: true, sender: newArr }));
     }
     setReceiver((prev) => id);
 
+    setMessageList((prev) => [ ...getMessagesFromAuthor(messageList, id)]);
     axios
     .put(`/api/messages/${id}`, { id: token.id })
   };
 
-  const usersInChat = getUsersFromMessages(messageList, users, token.id).map(
+  const usersInChat = getUsersFromMessages(messageList, users, token.id, receiver).map(
     (user) => {
       // console.log(user.name)
       // const usersInChat = users.map((user) => {
