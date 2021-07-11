@@ -8,7 +8,9 @@ import {
   countVolunteersAdded,
   getUncompletedOpportunities,
   getUsersForOpportunity,
-  getAverageRating
+  getAverageRating,
+  addUsersOpportunity,
+  removeUsersOpportunity
 } from "../helpers/filters-and-sorters";
 import { messageBoxForOpportunity } from "../helpers/handlers";
 import { getDistances } from "../helpers/location-helpers";
@@ -240,12 +242,18 @@ const OpportunityList = ({
       user_id: token.id,
       opportunity_id: opportunityId,
     });
+    const newUsersOpportunities = addUsersOpportunity(usersOpportunities, opportunityId, token.id);
+    setUsersOpportunities((prev) => [ ...prev, { opportunity_id: Number(opportunityId), user_id: token.id }]);
   };
   
   const removeVolunteer = (opportunityId) => {
     axios.delete(`/api/users_opportunities/${opportunityId}`, {
       data: { user_id: token.id },
     });
+    // console.log('BEFORE', 'oppId:', opportunityId, 'tokenId:', token.id, usersOpportunities)
+    const newUsersOpportunities = removeUsersOpportunity(usersOpportunities, Number(opportunityId), Number(token.id));
+    setUsersOpportunities(newUsersOpportunities);
+    // console.log('AFTER', 'oppId:', opportunityId, 'tokenId:', token.id, usersOpportunities)
   };
   
   // When volunteer switch is flipped state is updated optimistically and axios call runs in the background adding/deleting user_opportunities
@@ -255,22 +263,13 @@ const OpportunityList = ({
     
     if (checked) {
       const newRows = addOpportunity(rows, oppId);
-      // setUsersOpportunities((prev) => ([...prev, {opportunity_id: oppId, user_id: token.id}]))
       setRows((prev) => [...newRows]);
       addVolunteer(oppId);
     }
     
     if (!checked) {
       const newRows = removeOpportunity(rows, oppId);
-      console.log('oppId:', oppId, 'usersOpportunities:', usersOpportunities)
-      // const usersOpps = usersOpportunities.filter((opp) => {
-      //   if (opp.user_id !== token.id || opp.opportunity_id !== Number(oppId)) {
-      //     return true
-      //   }
-      //   // return (opp.opportunity_id !== Number(oppId) || opp.user_id === token.id)
-      // })
-      // console.log('usersOpps:', usersOpps)
-      // setUsersOpportunities((prev) => ([...usersOpps]))
+      // console.log('oppId:', oppId, 'usersOpportunities:', usersOpportunities)
       setRows((prev) => [...newRows]);
       removeVolunteer(oppId);
     }
