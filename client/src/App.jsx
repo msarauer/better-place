@@ -85,8 +85,6 @@ function App() {
       socket.disconnect();
     }
     socket = io(CONNECTION_PORT);
-<<<<<<< HEAD
-=======
     
     socket.on("receive_message", (data) => {
       console.log('receive_message:', data);
@@ -97,7 +95,6 @@ function App() {
       return ()=>{ 
         socket.disconnect(); 
        }
->>>>>>> 04c55feea0a350bd9b5f9cc9999d0f609c5d4b2b
   }, []);
   // socket = io(CONNECTION_PORT);
 
