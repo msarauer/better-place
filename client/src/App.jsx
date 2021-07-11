@@ -84,14 +84,6 @@ function App() {
       socket.disconnect();
     }
     socket = io(CONNECTION_PORT);
-    
-    socket.on("receive_message", (data) => {
-      console.log('receive_message:', data);
-      // if (data.author === token.id) {
-        setMessageList((prev) => ([ ...prev, data ]))
-        // }
-      })
-      // socket.disconnect()
   }, []);
   // socket = io(CONNECTION_PORT);
 
@@ -127,13 +119,13 @@ function App() {
   }, [token]);
 
   useEffect(()=> {
-    // socket.on("receive_message", (data) => {
-    //   console.log('receive_message:', data);
-    //   // if (data.author === token.id) {
-    //     setMessageList((prev) => ([ ...prev, data ]))
-    //     // }
-    //   })
-    //   socket.disconnect()
+    socket.on("receive_message", (data) => {
+      console.log('receive_message:', data);
+      // if (data.author === token.id) {
+        setMessageList((prev) => ([ ...prev, data ]))
+        // }
+      })
+      socket.disconnect()
   }, [])
 
   const sendMessage = (userId) => {
