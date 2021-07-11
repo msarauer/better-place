@@ -96,7 +96,9 @@ const OpportunityList = ({
   users,
   setUsers,
   handleClickPopper,
-  setReceiver
+  setReceiver,
+  reviews,
+  setReviews
 }) => {
   const classes = useStyles();
 
@@ -106,7 +108,7 @@ const OpportunityList = ({
   const [clickedId, setClickedId] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  const [reviews, setReviews] = useState([]);
+  // const [reviews, setReviews] = useState([]);
 
   const handleClickOpen = (id) => {
     setOpen(true);

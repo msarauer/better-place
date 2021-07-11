@@ -18,11 +18,16 @@ const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
     minWidth: 120,
+    maxWidth: 200
   },
   paper: {
     marginBottom: "5px",
     width: "100%",
   },
+  map: {
+    marginBottom: '16px',
+    marginLeft: '50px'
+  }
 }));
 
 const Filterbar = ({ opportunities, handleClickOpen, host_id, rows, setRows, setMap, map }) => {
@@ -79,14 +84,14 @@ const Filterbar = ({ opportunities, handleClickOpen, host_id, rows, setRows, set
         <Button
           // variant="contained"
           color="primary"
-          className={classes.button}
+          className={classes.map}
           endIcon={<RoomIcon/>}
           style={{paddingLeft: "20px"}}
           onClick={() => {
             console.log(map)
             setMap(!map)}}
           >
-          Map View
+          {map ? "Map View" : "List View"}
         </Button>
         </div>
         <div className="col-6">
@@ -123,19 +128,19 @@ const Filterbar = ({ opportunities, handleClickOpen, host_id, rows, setRows, set
                     <em>None</em>
                   </MenuItem>
                   <MenuItem value={"Date: soonest first"}>
-                    Date: soonest first
+                    Date: Earliest
                   </MenuItem>
                   <MenuItem value={"Date: latest first"}>
-                    Date: latest first
+                    Date: Latest
                   </MenuItem>
                   <MenuItem value={"Time Commitment: shortest first"}>
-                    Time Commitment: shortest first
+                    Time: Shortest
                   </MenuItem>
                   <MenuItem value={"Time Commitment: longest first"}>
-                    Time Commitment: longest first
+                    Time: Longest
                   </MenuItem>
                   <MenuItem value={"Distance: nearest first"}>
-                    Distance: nearest first
+                    Distance: Nearest
                   </MenuItem>
                   {/* <MenuItem value={"Host rating: highest first"}>
                     Host rating: highest first

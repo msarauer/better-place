@@ -40,7 +40,7 @@ const useStyles = makeStyles({
 
 function App() {
   const classes = useStyles();
-  const [city, setCity] = useState("What is your Location?");
+  const [city, setCity] = useState("Location Unknown");
   const [country, setCountry] = useState("");
   const [category, setCategory] = useState("");
   const [opportunities, setOpportunities] = useState([]);
@@ -52,9 +52,10 @@ function App() {
   const [column, setColumn] = useState("");
   const [timeCommitment, setTimeCommitment] = useState("");
   const [search, setSearch] = useState("");
-  const [distance, setDistance] = useState("");
+  const [distance, setDistance] = useState('');
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
+  const [reviews, setReviews] = useState([]);
 
   // const [location, setLocation] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
@@ -298,10 +299,11 @@ function App() {
             <div className="row no-gutters">
 
             {
-              lat && <div style={{ height: '77vh', width: '100%' }} className={map ? classes.alternate : ''}><Map handleClickPopper={handleClickPopper} setReceiver={setReceiver} latitude={lat} longitude={lng} rows={rows} /></div>
+              lat && <div style={{ height: '77vh', width: '100%' }} className={map ? classes.alternate : ''}><Map reviews={reviews} handleClickPopper={handleClickPopper} setReceiver={setReceiver} latitude={lat} longitude={lng} rows={rows} setRows={setRows} token={token} /></div>
             }
               <div className={map ? '' : classes.alternate}><OpportunityList
-                
+                reviews={reviews}
+                setReviews={setReviews} 
                 users={users}
                 setUsers={setUsers}
                 currentPage={currentPage}
