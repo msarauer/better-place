@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Filterbar = ({ opportunities, handleClickOpen, host_id, rows, setRows }) => {
+const Filterbar = ({ opportunities, handleClickOpen, host_id, rows, setRows, setMap, map }) => {
   const classes = useStyles();
   const [filter, setFilter] = useState("");
 
@@ -82,6 +82,9 @@ const Filterbar = ({ opportunities, handleClickOpen, host_id, rows, setRows }) =
           className={classes.button}
           endIcon={<RoomIcon/>}
           style={{paddingLeft: "20px"}}
+          onClick={() => {
+            console.log(map)
+            setMap(!map)}}
           >
           Map View
         </Button>
@@ -106,7 +109,7 @@ const Filterbar = ({ opportunities, handleClickOpen, host_id, rows, setRows }) =
             <div className="col-7 text-left align-self-center">
               <FormControl variant="outlined" className={classes.formControl}>
                 <InputLabel id="demo-simple-select-outlined-label">
-                  Filter
+                  Sort
                 </InputLabel>
                 <Select
                   labelId="demo-simple-select-outlined-label"

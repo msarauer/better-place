@@ -16,7 +16,8 @@ import { io } from "socket.io-client";
 import ChatIcon from "@material-ui/icons/Chat";
 import Popper from "@material-ui/core/Popper";
 import Fade from "@material-ui/core/Fade";
-// import Map from './Components/Map'
+import Map from './Components/Map'
+import { makeStyles } from "@material-ui/core/styles";
 
 // const setToken = userToken => {
 //   console.log('setToken called')
@@ -31,8 +32,14 @@ import Fade from "@material-ui/core/Fade";
 // }
 let socket;
 const CONNECTION_PORT = "/";
+const useStyles = makeStyles({
+  alternate: {
+    display: "none"
+  },
+})
 
 function App() {
+  const classes = useStyles();
   const [city, setCity] = useState("What is your Location?");
   const [country, setCountry] = useState("");
   const [category, setCategory] = useState("");
@@ -52,6 +59,7 @@ function App() {
   // const [location, setLocation] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [users, setUsers] = useState([]);
+  const [map, setMap] = useState(true);
 
   const [message, setMessage] = useState();
   const [messageList, setMessageList] = useState([]);
@@ -217,6 +225,8 @@ function App() {
 
   // }, [])
 
+
+
   return (
     <div className="App">
       <NavBar
@@ -281,10 +291,17 @@ function App() {
                 rows={rows}
                 handleClickOpen={handleClickOpen}
                 host_id={token}
+                setMap={setMap}
+                map={map}
               />
             </div>
             <div className="row no-gutters">
-              <OpportunityList
+
+            {
+              lat && <div style={{ height: '77vh', width: '100%' }} className={map ? classes.alternate : ''}><Map handleClickPopper={handleClickPopper} setReceiver={setReceiver} latitude={lat} longitude={lng} rows={rows} /></div>
+            }
+              <div className={map ? '' : classes.alternate}><OpportunityList
+                
                 users={users}
                 setUsers={setUsers}
                 currentPage={currentPage}
@@ -307,6 +324,7 @@ function App() {
                 // setNewContact={setNewContact}
                 // newContact={newContact}
               />
+              </div>
             </div>
           </div>
         </div>
@@ -359,7 +377,20 @@ function App() {
             ref={anchorRef}
           />
         ))}
-      {/* <Map/> */}
+
+      {/* <MapContainer center={[49.282, 123.120]} zoom={13} scrollWheelZoom={false}>
+  <TileLayer
+    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+  />
+  <Marker position={[49.282, 123.120]}>
+    <Popup>
+      A pretty CSS3 popup. <br /> Easily customizable.
+    </Popup>
+  </Marker>
+</MapContainer> */}
+
+
     </div>
   );
 }

@@ -29,7 +29,7 @@ import Link from "@material-ui/core/Link";
 import "./OpportunityList.scss";
 import AvatarGroup from "@material-ui/lab/AvatarGroup";
 import { Avatar as Avatar2 } from "@material-ui/core";
-import { Chat, Send, ChatBubbleOutline } from '@material-ui/icons'
+import { Chat } from '@material-ui/icons'
 
 const axios = require("axios");
 
