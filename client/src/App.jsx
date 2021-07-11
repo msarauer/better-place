@@ -141,7 +141,6 @@ function App() {
         setMessageList((prev) => ([ ...prev, data ]))
         // }
       })
-      socket.disconnect()
   }, [])
 
   const sendMessage = (userId) => {
