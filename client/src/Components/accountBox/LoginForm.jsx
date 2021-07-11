@@ -22,10 +22,25 @@ const LoginForm = ({ setToken, token, toggleLogin, setLoginPage}) => {
   const {switchToSignup} = useContext(AccountContext)
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const  [emailError, setEmailError] = useState(false)
+  const  [passwordError, setPasswordError] = useState(false)
 
   
 
   const handleSubmit = async e => {
+
+    setEmailError(false);
+    setPasswordError(false);
+
+    if (email === "") {
+      setEmailError(true);
+    }
+    if (password === "") {
+      setPasswordError(true);
+    }
+
+
+
     e.preventDefault();
     axios
       .post('/login', {email, password})
@@ -70,11 +85,11 @@ const LoginForm = ({ setToken, token, toggleLogin, setLoginPage}) => {
               inputProps={{maxLength: 55}}
 
             />
-      <Marginer direction="vertical" margin={60} />
+      <Marginer direction="vertical" margin={40} />
       <SubmitButton type="submit">SignIn</SubmitButton>
       </form>
       <Marginer direction="vertical" margin={15} />
-      <MutedLink href="#">Forgot Your password?</MutedLink>
+      {/* <MutedLink >Forgot Your password?</MutedLink> */}
       <Marginer direction="vertical" margin='1.6em' />
       <MutedLink href="#">Dont have an account? <BoldLink href='#' onClick={switchToSignup}>SignUp</BoldLink></MutedLink>
     </BoxContainer>

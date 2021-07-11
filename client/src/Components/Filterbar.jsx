@@ -18,14 +18,19 @@ const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
     minWidth: 120,
+    maxWidth: 200
   },
   paper: {
     marginBottom: "5px",
     width: "100%",
   },
+  map: {
+    marginBottom: '16px',
+    marginLeft: '50px'
+  }
 }));
 
-const Filterbar = ({ opportunities, handleClickOpen, host_id, rows, setRows }) => {
+const Filterbar = ({ opportunities, handleClickOpen, host_id, rows, setRows, setMap, map }) => {
   const classes = useStyles();
   const [filter, setFilter] = useState("");
 
@@ -79,11 +84,14 @@ const Filterbar = ({ opportunities, handleClickOpen, host_id, rows, setRows }) =
         <Button
           // variant="contained"
           color="primary"
-          className={classes.button}
+          className={classes.map}
           endIcon={<RoomIcon/>}
           style={{paddingLeft: "20px"}}
+          onClick={() => {
+            console.log(map)
+            setMap(!map)}}
           >
-          Map View
+          {map ? "Map View" : "List View"}
         </Button>
         </div>
         <div className="col-6">
@@ -106,7 +114,7 @@ const Filterbar = ({ opportunities, handleClickOpen, host_id, rows, setRows }) =
             <div className="col-7 text-left align-self-center">
               <FormControl variant="outlined" className={classes.formControl}>
                 <InputLabel id="demo-simple-select-outlined-label">
-                  Filter
+                  Sort
                 </InputLabel>
                 <Select
                   labelId="demo-simple-select-outlined-label"
@@ -120,19 +128,19 @@ const Filterbar = ({ opportunities, handleClickOpen, host_id, rows, setRows }) =
                     <em>None</em>
                   </MenuItem>
                   <MenuItem value={"Date: soonest first"}>
-                    Date: soonest first
+                    Date: Earliest
                   </MenuItem>
                   <MenuItem value={"Date: latest first"}>
-                    Date: latest first
+                    Date: Latest
                   </MenuItem>
                   <MenuItem value={"Time Commitment: shortest first"}>
-                    Time Commitment: shortest first
+                    Time: Shortest
                   </MenuItem>
                   <MenuItem value={"Time Commitment: longest first"}>
-                    Time Commitment: longest first
+                    Time: Longest
                   </MenuItem>
                   <MenuItem value={"Distance: nearest first"}>
-                    Distance: nearest first
+                    Distance: Nearest
                   </MenuItem>
                   {/* <MenuItem value={"Host rating: highest first"}>
                     Host rating: highest first

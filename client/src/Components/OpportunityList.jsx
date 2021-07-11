@@ -29,7 +29,7 @@ import Link from "@material-ui/core/Link";
 import "./OpportunityList.scss";
 import AvatarGroup from "@material-ui/lab/AvatarGroup";
 import { Avatar as Avatar2 } from "@material-ui/core";
-import { Chat, Send, ChatBubbleOutline } from '@material-ui/icons'
+import { Chat } from '@material-ui/icons'
 
 const axios = require("axios");
 
@@ -96,7 +96,9 @@ const OpportunityList = ({
   users,
   setUsers,
   handleClickPopper,
-  setReceiver
+  setReceiver,
+  reviews,
+  setReviews
 }) => {
   const classes = useStyles();
 
@@ -106,7 +108,7 @@ const OpportunityList = ({
   const [clickedId, setClickedId] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  const [reviews, setReviews] = useState([]);
+  // const [reviews, setReviews] = useState([]);
 
   const handleClickOpen = (id) => {
     setOpen(true);

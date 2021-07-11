@@ -69,7 +69,11 @@ export default function Sidebar({ distance, setDistance, timeCommitment, categor
 
   const handleCheck = (event) => {
     setChecked(event.target.checked);
-    setDistance(80000);
+    if(checked) {
+      setDistance(80000);
+    }
+    else setDistance(800000000000)
+    console.log(distance)
   }
 
 

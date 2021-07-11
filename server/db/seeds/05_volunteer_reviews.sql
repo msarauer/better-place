@@ -1,2 +1,26 @@
 INSERT INTO volunteer_reviews (user_id, opportunity_id, user_feedback, rating)
-VALUES (1, 2, 'I had a great time helping', 3), (2, 2, 'It was fun', 5), (2, 3, 'It was okay', 1),(12,3,'Worst time of my life', 1)
+VALUES 
+(1, 2, 'I had a great time helping Betsy with her chores, lovely lady!', 5), 
+(1, 2, 'I had a great time helping', 3), 
+(2, 2, 'Cecil was very helpful, the other day, could not have fixed my door without him, we went for a drink after to celebrate the day!', 5), 
+(2, 2, 'It was fun', 5), 
+(3, 3, 'Frodo, was questionable as a helper, his friend Sam came with him which was fine but to be honest he did most of the work.', 1),
+(3, 3, 'It was okay', 1),
+(4, 3,'Mitch was great, definitely would help him in return!', 5),
+(4, 3,'I really liked helping Mitch, he really appreciated the help.', 5),
+(5, 2, 'Logan was good to volunteer for, he likes talking and we got to know eachother pretty well by the end of the volunteering session.', 5), 
+(6, 2, 'Frodo wouldnt have got far without Sam.', 5), 
+(7, 3, 'Sally is a lovely woman, I was happy to help her out at her beautiful resort.', 4),
+(8,3,'I did not like the way Tobey treated me, he is a run of the mill washed up actor and he still thinks he is the king of the world, spiderman 3 was like 10 years ago man.', 1),
+(9, 2, 'What can I say, a wizard is never late... well Gandalf WAS late, he did not show up until I had been sitting there waiting for an hour to help.', 2), 
+(10, 2, 'Very helpful, he kept talking about his precious whatever that is, so I told him I would give it to him if he did some extra work... well my whole house is clean, the door is fixed, laundry is all done. I would have given him 5 stars but after he realized I did not have his precious or whatever it is called, he flipped out on me and nearly bit my arm off.', 4), 
+(11, 3, 'It was okay', 1),
+(12,3,'Worst time of my life', 1),
+(13, 2, 'I had a great time helping', 3), 
+(14, 2, 'It was fun', 5), 
+(15, 3, 'It was okay', 1),
+(16,3,'Worst time of my life', 1),
+(17, 2, 'I had a great time helping', 3), 
+(18, 2, 'It was fun', 5), 
+(19, 3, 'It was okay', 1),
+(20,3,'Worst time of my life', 1)

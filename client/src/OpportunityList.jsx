@@ -289,15 +289,6 @@ const OpportunityList = ({
                       getUsersForOpportunity(item.id, users, usersOpportunities).map((user) => {
                         return <Avatar2 alt={user.name} src={user.picture_url} className={classes.small}/>
                       })
-                      
-                      //   <AvatarGroup max={3} className={classes.avatarGroup}>
-                      //   <Avatar2 alt="Remy Sharp" src="https://i.pravatar.cc/301" className={classes.small}/>
-                      //   <Avatar2 alt="Travis Howard" src="https://i.pravatar.cc/303" className={classes.small}/>
-                      //   <Avatar2 alt="Cindy Baker" src="https://i.pravatar.cc/302" className={classes.small}/>
-                      //   <Avatar2 alt="Agnes Walker" src="https://i.pravatar.cc/301" className={classes.small}/>
-                      //   <Avatar2 alt="Trevor Henderson" src={"https://i.pravatar.cc/303"} className={classes.small}/>
-                      
-                      
                       }
                       </AvatarGroup>
                     }
