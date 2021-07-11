@@ -143,14 +143,14 @@ function App() {
     }
   }, [token]);
 
-  useEffect(()=> {
-    socket.on("receive_message", (data) => {
-      console.log('receive_message:', data);
-      // if (data.author === token.id) {
-        setMessageList((prev) => ([ ...prev, data ]))
-        // }
-      })
-  }, [])
+  // useEffect(()=> {
+  //   socket.on("receive_message", (data) => {
+  //     console.log('receive_message:', data);
+  //     // if (data.author === token.id) {
+  //       setMessageList((prev) => ([ ...prev, data ]))
+  //       // }
+  //     })
+  // }, [])
 
   const sendMessage = (userId) => {
     const date = new Date();
