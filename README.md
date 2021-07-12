@@ -1,3 +1,5 @@
+!["Screenshot of URLs page"](https://github.com/msarauer/better-place/blob/master/docs/better-place.png?raw=true)
+
 # Description
 
 This project was created and presented as our teams' final project for Lighthouse Lab's Web Development Course in July 2021. The application allows users to seek out 
@@ -28,10 +30,21 @@ The following features have been implemented in our application as of July 17, 2
 
 ## Screenshots
 
+### Profile/Login comes out from the side of the application, with a smooth transition.
+
 !["Screenshot of URLs page"](https://github.com/msarauer/better-place/blob/master/docs/profile.png?raw=true)
+
+### Dynamic list of volunteer opportunities that can be filtered and sorted by location, time commitment, distance, category and search term.
+
 !["Screenshot of register page"](https://github.com/msarauer/better-place/blob/master/docs/list.png?raw=true)
 
+### Switch to a map visual of all the data in the opportunity list with all the same filtering and sorting capabilities.
+
 !["Screenshot of register page"](https://github.com/msarauer/better-place/blob/master/docs/map.png?raw=true)
+
+### Create a new opportunity with a title, description, address, category, and time commitment that volunteers can then sign up for.
+
+!["Screenshot of register page"](https://github.com/msarauer/better-place/blob/master/docs/new.png?raw=true)
 
 ## Setup
 
