@@ -70,7 +70,8 @@ const HeaderPicture = styled.img`
   border-radius: 50%;
   width: 175px;
   height: 175px;
-  margin-left: 20px;
+  margin-right: 140px;
+  /* margin-left: 20px; */
   margin-top: 10px;
   margin-bottom: 40px;
 `;
@@ -81,7 +82,8 @@ const HeaderEditPicture = styled.img`
   border-radius: 50%;
   width: 175px;
   height: 175px;
-  margin-left: 20px;
+  margin-right: 140px;
+  /* margin-left: 20px; */
   margin-top: 10px;
   margin-bottom: 35px;
 `;

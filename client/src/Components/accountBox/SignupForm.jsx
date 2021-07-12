@@ -28,13 +28,72 @@ const SignupForm = ({ setToken, setLoginPage }) => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const {passwordConfirm, setPasswordConfirm} = useState("")
   const [name, setName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [address, setAddress] = useState("");
   const [bio, setBio] = useState("");
   const [profilePic ] = useState(""); // Some sort of defult image maybe?
+  const [emailError, setEmailError] = useState(false)
+  const [passwordError, setPasswordError] = useState(false)
+  const [passwordConfirmError, setPasswordConfirmError] = useState(false)
+  const [nameError, setNameError] = useState(false)
+  const [phoneNumberError, setPhoneNumberError] = useState(false)
+  const [addressError, setAddressError] = useState(false)
+  const [bioError, setBioError] = useState(false)
+
 
   const handleSubmit = (e) => {
+   e.preventDefault()
+
+    setEmailError(false);
+    setPasswordError(false);
+    setPasswordConfirmError(false);
+    setNameError(false);
+    setPhoneNumberError(false);setEmailError(false);
+    setAddressError(false);
+    setBioError(false);
+
+    if (email === "") {
+      setEmailError(true);
+    }
+    if (password === "") {
+      setPasswordError(true);
+    }
+    if (passwordConfirm === "") {
+      setPasswordError(true);
+    }
+    if (name === "") {
+      setNameError(true);
+    }
+    if (phoneNumber === "") {
+      setPhoneNumberError(true);
+    }
+    if (address === "") {
+      setAddressError(true);
+    }
+    if (bio === "") {
+      setBioError(true);
+    }
+    if (password !== passwordConfirm) {
+      setPasswordConfirmError(true);
+      // setPasswordConfirm("Nope Try Again")
+    }
+    
+    
+    if (
+      !(
+        email &&
+        password &&
+        passwordConfirm &&
+        name &&
+        phoneNumber &&
+        address &&
+        bio
+      )
+    ) {
+      return;
+    }
     const userSave = (data) => {
       axios
         .post("/api/users", data)
@@ -79,7 +138,7 @@ const SignupForm = ({ setToken, setLoginPage }) => {
 
   return (
     <BoxContainer>
-      <FormContainer onSubmit={handleSubmit}>
+      <FormContainer noValidate autoComplete="off" onSubmit={handleSubmit}>
       <TextField 
               onChange={(e) => setEmail(e.target.value)}
               className={classes.field}
@@ -87,7 +146,7 @@ const SignupForm = ({ setToken, setLoginPage }) => {
               variant="outlined"
               fullWidth
               required
-              // error={titleError}
+              error={emailError}
               value={email}
               inputProps={{maxLength: 55}}
 
@@ -99,8 +158,8 @@ const SignupForm = ({ setToken, setLoginPage }) => {
               variant="outlined"
               fullWidth
               required
-              // error={titleError}
-              // value={password}
+              error={passwordError}
+              value={password}
               inputProps={{maxLength: 55}}
 
             />
@@ -111,8 +170,8 @@ const SignupForm = ({ setToken, setLoginPage }) => {
               variant="outlined"
               fullWidth
               required
-              // error={titleError}
-              // value={password}
+              error={passwordConfirmError}
+              value={passwordConfirm}
               inputProps={{maxLength: 55}}
 
             />
@@ -123,7 +182,7 @@ const SignupForm = ({ setToken, setLoginPage }) => {
               variant="outlined"
               fullWidth
               required
-              // error={titleError}
+              error={nameError}
               value={name}
               inputProps={{maxLength: 30}}
 
@@ -135,7 +194,7 @@ const SignupForm = ({ setToken, setLoginPage }) => {
               variant="outlined"
               fullWidth
               required
-              // error={titleError}
+              error={phoneNumberError}
               value={phoneNumber}
               inputProps={{maxLength: 55}}
 
@@ -149,7 +208,7 @@ const SignupForm = ({ setToken, setLoginPage }) => {
               required
               inputProps={{maxLength: 55}}
 
-              // error={titleError}
+              error={addressError}
               value={address}
             />
           <TextField 
@@ -159,13 +218,13 @@ const SignupForm = ({ setToken, setLoginPage }) => {
               variant="outlined"
               fullWidth
               required
-              // error={titleError}
+              error={bioError}
               inputProps={{maxLength: 225}}
               value={bio}
             />
       <Marginer direction="vertical" margin={20} />
         
-        <SubmitButton type="submit">SignUp</SubmitButton>
+        <SubmitButton type="submit" >SignUp</SubmitButton>
       </FormContainer>
       <Marginer direction="vertical" margin={65} />
       {/* <Marginer direction="vertical" margin="1.6em" />

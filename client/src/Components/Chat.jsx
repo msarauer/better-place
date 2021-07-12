@@ -1,22 +1,21 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./CategoryList.scss";
 
-import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
-import Badge from '@material-ui/core/Badge';
 import BadgeAvatars from "./BadgeAvatars";
 import Divider from "@material-ui/core/Divider";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import IconButton from "@material-ui/core/IconButton";
-import FormControl from "@material-ui/core/FormControl";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import CloseIcon from "@material-ui/icons/Close";
+import "emoji-mart/css/emoji-mart.css";
+import { Picker } from "emoji-mart";
+import GifBox from "./GifBox";
 
 import ScrollToBottom, {
   useScrollToBottom,
@@ -26,16 +25,26 @@ import ScrollToBottom, {
 import Avatar from "@material-ui/core/Avatar";
 import Fab from "@material-ui/core/Fab";
 import SendIcon from "@material-ui/icons/Send";
-import { timeFormatter, getMinutes } from "../helpers/basic-helpers";
+import { getMinutes } from "../helpers/basic-helpers";
 import {
   getUsersFromMessages,
   getConversation,
-  getMessagesFromAuthor
+  getMessagesFromAuthor,
 } from "../helpers/filters-and-sorters";
 import axios from "axios";
+import Popper from "@material-ui/core/Popper";
+import Button from "@material-ui/core/Button";
+import Fade from "@material-ui/core/Fade";
+import './Chat.scss'
 // import ChatBubble from "@bit/mui-org.material-ui-icons.chat-bubble";
 
 const useStyles = makeStyles({
+  gif: {
+    width: 500,
+    zIndex: 2000,
+  },
+
+
   table: {
     minWidth: 650,
   },
@@ -164,7 +173,7 @@ const Chat = ({
   setUnseenStatus,
   unseenStatus,
   receiver,
-  setReceiver
+  setReceiver,
 }) => {
   const classes = useStyles();
   // console.log("OPP USER IN CHAT-----", users)
@@ -177,7 +186,9 @@ const Chat = ({
       sendMessage(receiver);
     }
   };
-
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [open, setOpen] = React.useState(false);
+  const [placement, setPlacement] = React.useState();
   const [time, setTime] = useState(new Date().getTime());
   const [loop, setLoop] = useState("");
   useEffect(() => {
@@ -189,8 +200,14 @@ const Chat = ({
     return () => clearInterval(interval);
   }, [time]);
 
+  const handleClickPopper = (newPlacement) => (event) => {
+    setAnchorEl(event.currentTarget);
+    setOpen((prev) => placement !== newPlacement || !prev);
+    setPlacement(newPlacement);
+  };
+
   // const [currentUsers, setCurrentUsers] = useState([]);
- 
+
   // const [conversation, setConversation] = useState(false);
 
   useEffect(() => {
@@ -202,52 +219,61 @@ const Chat = ({
   // })
   const onReceiverClick = (id) => {
     const arr = [...unseenStatus.sender];
-    console.log('sender:', unseenStatus.sender)
+    console.log("sender:", unseenStatus.sender);
     const newArr = arr.filter((item) => {
       return item !== id;
     });
     console.log("sender Array", newArr);
 
     if (newArr.length < 1) {
-      setUnseenStatus((prev) => ({ ...prev, unseenMessagesExist: false, sender: newArr }));
-      console.log("YOU CANT SEE ME-------", unseenStatus)
+      setUnseenStatus((prev) => ({
+        ...prev,
+        unseenMessagesExist: false,
+        sender: newArr,
+      }));
+      console.log("YOU CANT SEE ME-------", unseenStatus);
     } else {
-      setUnseenStatus((prev) => ({ ...prev, unseenMessagesExist: true, sender: newArr }));
+      setUnseenStatus((prev) => ({
+        ...prev,
+        unseenMessagesExist: true,
+        sender: newArr,
+      }));
     }
     setReceiver((prev) => id);
 
-    setMessageList((prev) => [ ...getMessagesFromAuthor(messageList, id)]);
-    axios
-    .put(`/api/messages/${id}`, { id: token.id })
+    setMessageList((prev) => [...getMessagesFromAuthor(messageList, id)]);
+    axios.put(`/api/messages/${id}`, { id: token.id });
   };
 
-  const usersInChat = getUsersFromMessages(messageList, users, token.id, receiver).map(
-    (user) => {
-      // console.log(user.name)
-      // const usersInChat = users.map((user) => {
-      // changed usersInChat from users because  conflict with users prop.
-      return (
-        <ListItem onClick={() => onReceiverClick(user.id)} button key={user.id}>
-          <ListItemIcon>
-            
-            {unseenStatus.sender.includes(user.id) ? (
-              <>
+  const usersInChat = getUsersFromMessages(
+    messageList,
+    users,
+    token.id,
+    receiver
+  ).map((user) => {
+    // console.log(user.name)
+    // const usersInChat = users.map((user) => {
+    // changed usersInChat from users because  conflict with users prop.
+    return (
+      <ListItem onClick={() => onReceiverClick(user.id)} button key={user.id}>
+        <ListItemIcon>
+          {unseenStatus.sender.includes(user.id) ? (
+            <>
               <BadgeAvatars />
               <Avatar
                 alt={user.name}
                 src={user.picture_url}
                 style={{ border: "3px solid #e08079" }}
               />
-              </>
-            ) : (
-              <Avatar alt={user.name} src={user.picture_url} />
-            )}
-          </ListItemIcon>
-          <ListItemText primary={user.name}></ListItemText>
-        </ListItem>
-      );
-    }
-  );
+            </>
+          ) : (
+            <Avatar alt={user.name} src={user.picture_url} />
+          )}
+        </ListItemIcon>
+        <ListItemText primary={user.name}></ListItemText>
+      </ListItem>
+    );
+  });
 
   // const messages = messageList.map((message) => {
   const messages = getConversation(messageList, token.id, receiver).map(
@@ -337,6 +363,7 @@ const Chat = ({
               fullWidth
             />
           </Grid>
+          {/* <Picker/ > */}
           {usersInChat}
           <Divider />
         </Grid>
@@ -344,7 +371,47 @@ const Chat = ({
           <List className={classes.messageArea}>{receiver && messages}</List>
           <Divider />
           <Grid container style={{ padding: "20px" }}>
-            <Grid item xs={11}>
+            <Grid item xs={1}>
+              <div>
+                <Popper
+                  open={open}
+                  anchorEl={anchorEl}
+                  placement={placement}
+                  transition
+                  className={classes.gif}
+                >
+                  {({ TransitionProps }) => (
+                    <Fade {...TransitionProps}  timeout={350}>
+                        <GifBox receiver={receiver} setMessage={setMessage} sendMessage={sendMessage} message={message} />
+                    </Fade>
+                  )}
+                </Popper>
+                <Grid container justifyContent="center">
+                  <Grid item>
+                    {/* <Button onClick={handleClickPopper("top-end")}>gifs</Button> */}
+                  </Grid>
+                </Grid>
+              </div>
+            </Grid>
+            
+                {/* <Grid item xs={1}>
+                  <Popper
+                    open={open}
+                    anchorEl={anchorEl}
+                    placement={placement}
+                    transition
+                  >
+                    {({ TransitionProps }) => (
+                      <Fade {...TransitionProps} timeout={350}>
+                        <Paper>
+                          <Picker />
+                        </Paper>
+                      </Fade>
+                    )}
+                  </Popper>
+                </Grid> */}
+
+            <Grid item xs={10}>
               <TextField
                 id="outlined-basic-email"
                 label="Type Something"

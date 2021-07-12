@@ -15,19 +15,20 @@ const Footer = () => {
             </ul>
           </div>
           <div className="col">
-            <h6>STUFF</h6>
+            <h6>Better Place</h6>
             <ul className="list-unstyled">
-              <li>This stuff</li>
-              <li>That stuff</li>
-              <li>Other stuff</li>
+              <li>Mitchel Sarauer</li>
+              <li>Cecil Vogrinetz</li>
+              <li>Logan Thomas</li>
             </ul>
           </div>
           <div className="col">
-            <h6>HERE'S MORE STUFF</h6>
+            <h6>Created With</h6>
             <ul className="list-unstyled">
-              <li>Test 123</li>
-              <li>What else</li>
-              <li>Betsy ya ya ya</li>
+              <li>PostgreSQL for the database, <br/> Express/Node for the backend <br/> with a React frontend. </li>
+              {/* <li>Express</li> */}
+              {/* <li>React</li> */}
+              {/* <li>Node</li> */}
             </ul>
           </div>
         </div>

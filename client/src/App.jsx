@@ -18,6 +18,7 @@ import Popper from "@material-ui/core/Popper";
 import Fade from "@material-ui/core/Fade";
 import Map from './Components/Map'
 import { makeStyles } from "@material-ui/core/styles";
+import GifBox from './Components/GifBox'
 
 // const setToken = userToken => {
 //   console.log('setToken called')
@@ -62,7 +63,7 @@ function App() {
   const [users, setUsers] = useState([]);
   const [map, setMap] = useState(true);
 
-  const [message, setMessage] = useState();
+  const [message, setMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
   // const [anchorEl, setAnchorEl] = useState(null);
   const [unseenStatus, setUnseenStatus] = useState({
@@ -301,14 +302,14 @@ function App() {
               lat && <div style={{ height: '77vh', width: '100%' }} className={map ? classes.alternate : ''}><Map reviews={reviews} handleClickPopper={handleClickPopper} setReceiver={setReceiver} latitude={lat} longitude={lng} rows={rows} setRows={setRows} token={token} /></div>
             }
               <div className={map ? '' : classes.alternate}><OpportunityList
-                reviews={reviews}
-                setReviews={setReviews} 
-                users={users}
-                setUsers={setUsers}
-                currentPage={currentPage}
                 setCurrentPage={setCurrentPage}
-                search={search}
+                currentPage={currentPage}
+                setReviews={setReviews} 
+                reviews={reviews}
+                users={users}
                 timeCommitment={timeCommitment}
+                setUsers={setUsers}
+                search={search}
                 column={column}
                 rows={rows}
                 setRows={setRows}
@@ -390,8 +391,7 @@ function App() {
     </Popup>
   </Marker>
 </MapContainer> */}
-
-
+{/* <GifBox setMessage={setMessage} sendMessage={sendMessage} message={message}/> */}
     </div>
   );
 }

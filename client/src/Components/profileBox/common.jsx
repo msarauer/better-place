@@ -47,7 +47,7 @@ export const EditLink = styled.a`
   color: rgb(26, 188, 156);
   font-weight: 500;
   text-decoration: none;
-  margin-left: 380px;
+  margin-left: 300px;
   margin-bottom: 20px;
   margin-top: -70px;
   position: relative;

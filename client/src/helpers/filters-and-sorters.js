@@ -341,7 +341,6 @@ export const filterMessages = (messages, id) => {
 };
 
 export const getUsersFromMessages = (messages, allUsers, id, newContactId) => {
-  console.log("newContactId:", newContactId);
   if (!messages || !allUsers) {
     return [];
   }
