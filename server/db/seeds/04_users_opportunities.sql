@@ -9,7 +9,6 @@
 -- );
 
 INSERT INTO users_opportunities (user_id, opportunity_id) VALUES 
-(1,1),
 (1,2),
 (4,1),
 (2,2),
@@ -33,5 +32,6 @@ INSERT INTO users_opportunities (user_id, opportunity_id) VALUES
 (6,11),
 (7,11),
 (8,11),
-(9,11)
+(9,11),
+(3,27)
 

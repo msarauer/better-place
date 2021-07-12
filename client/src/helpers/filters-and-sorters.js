@@ -145,7 +145,7 @@ export const columnSort = (opps, column = false) => {
   }
 };
 
-export const updateRows = (opps, userOpps) => {
+export const updateRows = (opps, userOpps, id) => {
   const rows = [...opps];
   rows.forEach((opp) => {
     return (opp.selected = false);
@@ -153,7 +153,10 @@ export const updateRows = (opps, userOpps) => {
 
   for (let i = 0; i < rows.length; i++) {
     for (let j = 0; j < userOpps.length; j++) {
-      if (rows[i].id === userOpps[j].opportunity_id) {
+      if (
+        rows[i].id === userOpps[j].opportunity_id &&
+        userOpps[j].user_id === id
+      ) {
         rows[i].selected = true;
       }
     }
@@ -172,10 +175,13 @@ export const addOpportunity = (opps, id) => {
   return rows;
 };
 export const addUsersOpportunity = (usersOpps, oppId, id) => {
-  console.log('id:', id, 'oppId:', oppId)
-  const newUsersOpps = [ ...usersOpps, {opportunity_id: Number(oppId), user_id: id}];
+  console.log("id:", id, "oppId:", oppId);
+  const newUsersOpps = [
+    ...usersOpps,
+    { opportunity_id: Number(oppId), user_id: id },
+  ];
   return newUsersOpps;
-}
+};
 
 export const removeOpportunity = (opps, id) => {
   const rows = [...opps];
@@ -189,16 +195,21 @@ export const removeOpportunity = (opps, id) => {
 };
 
 export const removeUsersOpportunity = (usersOpps, oppId, id) => {
-  console.log('id:', id, 'oppId:', oppId)
+  console.log("id:", id, "oppId:", oppId);
   const newUsersOpps = usersOpps.filter((userOpp) => {
-    if (Number(userOpp.opportunity_id) === Number(oppId) && userOpp.user_id === id) {
-      console.log('it removed one')
+    if (
+      Number(userOpp.opportunity_id) === Number(oppId) &&
+      userOpp.user_id === id
+    ) {
+      console.log("it removed one");
     }
-    return (Number(userOpp.opportunity_id) !== Number(oppId) || Number(userOpp.user_id) !== Number(id)) 
-  })
+    return (
+      Number(userOpp.opportunity_id) !== Number(oppId) ||
+      Number(userOpp.user_id) !== Number(id)
+    );
+  });
   return newUsersOpps;
-}
-
+};
 
 export const countVolunteersAdded = (opps, allUserOpps) => {
   const rows = [...opps];
@@ -256,8 +267,7 @@ export const getUsersForOpportunity = (oppId, users, usersOpps) => {
     return oppId === userOpp.opportunity_id;
   });
   if (oppId === 6) {
-    console.log('selectUsersOpps:', selectUserOpps)
-
+    console.log("selectUsersOpps:", selectUserOpps);
   }
   const usersList = users.filter((user) => {
     for (let userOpp of selectUserOpps) {
@@ -268,8 +278,7 @@ export const getUsersForOpportunity = (oppId, users, usersOpps) => {
     return false;
   });
   if (oppId === 0) {
-
-    console.log('usersList:', usersList)
+    console.log("usersList:", usersList);
   }
   return usersList;
 };

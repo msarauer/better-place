@@ -4,7 +4,7 @@ const router = express.Router();
 module.exports = (db) => {
   router.put("/:email", (req, res) => {
     db.query(
-      `SELECT host_table.picture_url as avatar, opportunities.id as opportunity_id, host_table.name as UserName, opportunities.name as opportunity_name, description, date FROM opportunities
+      `SELECT users_opportunities.user_id as user_id, host_table.picture_url as avatar, opportunities.id as opportunity_id, host_table.name as UserName, opportunities.name as opportunity_name, description, date FROM opportunities
       JOIN users_opportunities on opportunities.id = opportunity_id
       JOIN users AS user_table ON user_table.id = user_id JOIN users AS host_table ON host_table.id = host_id WHERE user_table.email = $1;`,
       [req.params.email]

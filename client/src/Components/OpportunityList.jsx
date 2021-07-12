@@ -171,7 +171,8 @@ const OpportunityList = ({
         .put(`/api/users_opportunities/${token.email}`)
         .then((data) => {
           // setTokenOpportunities((prev) => [...data.data.opportunities]);
-          setRows((prev) => updateRows(prev, data.data.opportunities));
+          console.log('data.opps:', data.data.opportunities)
+          setRows((prev) => [...updateRows(prev, data.data.opportunities, token.id)]);
           setLoading(false);
         })
         .then(() => {});
@@ -198,7 +199,7 @@ const OpportunityList = ({
       updateRows(
         rowFilter(
           newRows,
-          location,
+          false,
           category,
           timeCommitment,
           search,
@@ -207,12 +208,6 @@ const OpportunityList = ({
         usersOpportunities
       )
     );
-
-    // setRows((prev) => updateRows(rowFilter(newRows, false, false, false, false, false), usersOpportunities));
-    // setOpportunities((prev) => getDistances(lat, lng, opportunities))
-    //   setRows((prev) => [...newRows])
-    // setUsersOpportunities((prev) => [...data.data.usersOpportunities]);
-    // })
   }, [
     location,
     category,
@@ -221,7 +216,7 @@ const OpportunityList = ({
     search,
     distance,
     setRows,
-    usersOpportunities,
+    // usersOpportunities,
     lat,
     lng,
   ]);
@@ -242,8 +237,8 @@ const OpportunityList = ({
       user_id: token.id,
       opportunity_id: opportunityId,
     });
-    const newUsersOpportunities = addUsersOpportunity(usersOpportunities, opportunityId, token.id);
-    setUsersOpportunities((prev) => [ ...prev, { opportunity_id: Number(opportunityId), user_id: token.id }]);
+    // const newUsersOpportunities = addUsersOpportunity(usersOpportunities, opportunityId, token.id);
+    setUsersOpportunities((prev) => [ ...prev, { opportunity_id: Number(opportunityId), user_id: Number(token.id) }]);
   };
   
   const removeVolunteer = (opportunityId) => {
@@ -252,7 +247,7 @@ const OpportunityList = ({
     });
     // console.log('BEFORE', 'oppId:', opportunityId, 'tokenId:', token.id, usersOpportunities)
     const newUsersOpportunities = removeUsersOpportunity(usersOpportunities, Number(opportunityId), Number(token.id));
-    setUsersOpportunities(newUsersOpportunities);
+    setUsersOpportunities([...newUsersOpportunities]);
     // console.log('AFTER', 'oppId:', opportunityId, 'tokenId:', token.id, usersOpportunities)
   };
   
@@ -268,8 +263,8 @@ const OpportunityList = ({
     }
     
     if (!checked) {
-      const newRows = removeOpportunity(rows, oppId);
       // console.log('oppId:', oppId, 'usersOpportunities:', usersOpportunities)
+      const newRows = removeOpportunity(rows, oppId);
       setRows((prev) => [...newRows]);
       removeVolunteer(oppId);
     }
@@ -331,6 +326,7 @@ const OpportunityList = ({
               extra={
                 <div className={classes.column}>
                 <Progress
+                  style={{fontSize: '10px'}}
                   strokeColor={{
                     "0%": "#108ee9",
                     "100%": "#87d068",
@@ -360,6 +356,7 @@ const OpportunityList = ({
                             
                           }
                     </AvatarGroup>
+                    // item.number_of_volunteers_needed - item.volunteer_count === 0 ? 'Full' : `${item.volunteer_count}`
                   )}
                   />
                   {
