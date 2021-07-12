@@ -13,8 +13,8 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import CloseIcon from "@material-ui/icons/Close";
-import "emoji-mart/css/emoji-mart.css";
-import { Picker } from "emoji-mart";
+// import "emoji-mart/css/emoji-mart.css";
+// import { Picker } from "emoji-mart";
 import GifBox from "./GifBox";
 
 import ScrollToBottom, {
