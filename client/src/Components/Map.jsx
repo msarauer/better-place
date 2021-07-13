@@ -5,7 +5,7 @@ import { Popover, Button } from "antd";
 import IconButton from "@material-ui/core/IconButton";
 import Avatar from "@material-ui/core/Avatar";
 import { makeStyles } from "@material-ui/core/styles";
-import { Chat } from "@material-ui/icons";
+import { Chat, PersonPinCircle } from "@material-ui/icons";
 import { dateFormatter } from "../helpers/basic-helpers";
 import { withStyles } from "@material-ui/core/styles";
 import { green } from "@material-ui/core/colors";
@@ -47,7 +47,10 @@ const useStyles = makeStyles({
   },
   pin: {
     color: 'indigo'
-  }
+  },
+  homePin: {
+    fontSize: '50px'
+  } 
 });
 
 export default function Map({
@@ -206,6 +209,7 @@ export default function Map({
       defaultCenter={center}
       defaultZoom={defaultProps.zoom}
     >
+      <PersonPinCircle style={{ transform: "translate(-50%, -100%)" }} className={classes.homePin} lat={latitude} lng={longitude} />
       {pins}
     </GoogleMapReact>
   );

@@ -1,7 +1,7 @@
 INSERT INTO volunteer_reviews (user_id, opportunity_id, user_feedback, rating)
 VALUES 
 (1, 2, 'I had a great time helping Betsy with her chores, lovely lady!', 5), 
-(1, 2, 'I had a great time helping', 3), 
+(1, 2, 'Pretty good time with Betsy', 3), 
 (2, 2, 'Cecil was very helpful, the other day, could not have fixed my door without him, we went for a drink after to celebrate the day!', 5), 
 (2, 2, 'It was fun', 5), 
 (3, 3, 'Frodo, was questionable as a helper, his friend Sam came with him which was fine but to be honest he did most of the work.', 1),

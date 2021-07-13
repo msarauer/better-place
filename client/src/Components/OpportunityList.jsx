@@ -198,7 +198,7 @@ const OpportunityList = ({
       updateRows(
         rowFilter(
           newRows,
-          location,
+          false,
           category,
           timeCommitment,
           search,
@@ -345,24 +345,25 @@ const OpportunityList = ({
                     item.volunteer_count
                     )}
                     format={(percent) => (
-                      <AvatarGroup max={3} className={classes.avatarGroup}>
-                      {
-                        getUsersForOpportunity(
-                          item.id,
-                          users,
-                          usersOpportunities
-                          ).map((user) => {
-                            return (
-                              <Avatar2
-                              alt={user.name}
-                              src={user.picture_url}
-                              className={classes.small}
-                              />
-                              );
-                            })
+                    //   <AvatarGroup max={3} className={classes.avatarGroup}>
+                    //   {
+                    //     getUsersForOpportunity(
+                    //       item.id,
+                    //       users,
+                    //       usersOpportunities
+                    //       ).map((user) => {
+                    //         return (
+                    //           <Avatar2
+                    //           alt={user.name}
+                    //           src={user.picture_url}
+                    //           className={classes.small}
+                    //           />
+                    //           );
+                    //         })
                             
-                          }
-                    </AvatarGroup>
+                    //       }
+                    // </AvatarGroup>
+                    item.number_of_volunteers_needed - item.volunteer_count < 1 ? 'Full' : `${item.number_of_volunteers_needed - item.volunteer_count} Needed`
                   )}
                   />
                   {

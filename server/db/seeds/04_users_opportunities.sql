@@ -33,5 +33,8 @@ INSERT INTO users_opportunities (user_id, opportunity_id) VALUES
 (6,11),
 (7,11),
 (8,11),
-(9,11)
+(9,11),
+(4,53),
+(4,54),
+(4,55)
 

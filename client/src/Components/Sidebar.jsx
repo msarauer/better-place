@@ -69,7 +69,7 @@ export default function Sidebar({ distance, setDistance, timeCommitment, categor
 
   const handleCheck = (event) => {
     setChecked(event.target.checked);
-    setDistance(80000);
+    setDistance(20000);
   }
 
 
@@ -101,14 +101,14 @@ export default function Sidebar({ distance, setDistance, timeCommitment, categor
       <ListItem className="sliderDiv">
         <Slider
           disabled={!checked}
-          defaultValue={70}
+          defaultValue={20}
           getAriaValueText={valuetext}
           aria-labelledby="discrete-slider"
           valueLabelDisplay="auto"
           step={2}
           marks
           min={2}
-          max={80}
+          max={20}
           className={classes.sliderDiv}
           onChange={(e, v) => setDistance(v * 1000)}
           value={distance / 1000}
